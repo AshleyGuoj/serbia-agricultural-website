@@ -1,0 +1,939 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Household Energy Storage Detail</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 1920
+                const height = 1080
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'homepage': 'Homepage',
+    'irrigation': 'Irrigation Systems',
+    'irrigation_center_pivot': 'Center Pivot Irrigation Detail',
+    'irrigation_linear': 'Linear Irrigation Detail',
+    'irrigation_hose_reel': 'Hose Reel Irrigation Detail',
+    'irrigation_drip': 'Drip Irrigation Detail',
+    'solar': 'Solar Solutions',
+    'solar_agri_irrigation': 'Agricultural Solar Irrigation Detail',
+    'solar_household_storage': 'Household Energy Storage Detail',
+    'solar_commercial_industrial': 'Commercial/Industrial Solar Detail',
+    'solar_water_pumps': 'Solar Water Pumps Detail',
+    'bird_repellent': 'Bird Repellent Systems',
+    'bird_ultrasonic': 'Ultrasonic Repellent Detail',
+    'bird_visual': 'Visual Deterrent Detail',
+    'contact': 'Contact',
+    'submission_confirmation': 'Inquiry Confirmation',
+    'compatibility_check': 'Compatibility Check',
+    'case_studies': 'Case Studies',
+    'case_study_farm_irrigation': 'Farm Irrigation Case Study',
+    'case_study_greenhouse_solar': 'Greenhouse Solar Case Study',
+    'case_study_orchard_repellent': 'Orchard Repellent Case Study',
+    'case_study_dryland_farming': 'Dryland Farming Case Study'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="en" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Household Energy Storage Detail - Agricultural Solutions</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+    /* CSS code for common usage*/
+    
+    /* daisyUI Theme Variables Customization
+     * Based on the selected daisyUI theme and UI guidance requirements,
+     * customize only the CSS variables that need to be different from the theme defaults.
+     */
+    
+    :root {
+      /* Brand colors customization */
+      --color-primary: rgba(85, 107, 47, 1); /* Olive Green #556B2F */
+      --color-primary-content: rgba(255, 255, 255, 1); /* White text on primary */
+      --color-secondary: rgba(135, 206, 235, 1); /* Sky Blue #87CEEB */
+      --color-secondary-content: rgba(51, 51, 51, 1); /* Dark gray text on secondary */
+      --color-accent: rgba(139, 69, 19, 1); /* Warm Earth Brown #8B4513 */
+      --color-accent-content: rgba(255, 255, 255, 1); /* White text on accent */
+      
+      /* Background colors */
+      --color-base-100: rgba(255, 255, 255, 1); /* White */
+      --color-base-200: rgba(245, 245, 245, 1); /* Light Gray */
+      --color-base-300: rgba(229, 229, 229, 1); /* Slightly darker gray for borders */
+      --color-base-content: rgba(51, 51, 51, 1); /* Dark Gray text */
+      
+      /* Semantic colors */
+      --color-success: rgba(107, 142, 35, 1); /* Muted green #6B8E23 */
+      --color-success-content: rgba(255, 255, 255, 1);
+      --color-warning: rgba(255, 165, 0, 1); /* Amber #FFA500 */
+      --color-warning-content: rgba(51, 51, 51, 1);
+      --color-error: rgba(205, 92, 92, 1); /* Terra cotta #CD5C5C */
+      --color-error-content: rgba(255, 255, 255, 1);
+      --color-info: rgba(135, 206, 235, 1); /* Soft blue #87CEEB */
+      --color-info-content: rgba(51, 51, 51, 1);
+      
+      /* Border radius - modern but restrained */
+      --radius-box: 0.25rem; /* 4px */
+      --radius-field: 0.25rem; /* 4px */
+      --radius-selector: 0.25rem; /* 4px */
+      
+      /* Border width */
+      --border: 1px;
+    }
+    
+    /* Typography - Times New Roman serif */
+    body {
+      font-family: "Times New Roman", Times, serif;
+    }
+    
+    /* Subtle shadows */
+    .shadow-custom {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Smooth transitions for interactive elements */
+    .nav-link {
+      transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    }
+    
+    .nav-link:hover {
+      border-bottom: 2px solid var(--color-secondary);
+    }
+  </style>
+    <style>
+/* Page-specific styles for household energy storage detail page */
+
+/* Image carousel styling */
+.image-carousel {
+  max-width: 100%;
+}
+
+.carousel-thumbnail {
+  transition: border-color 0.2s ease-in-out;
+}
+
+.carousel-thumbnail:hover {
+  border-color: var(--color-primary);
+}
+
+.carousel-thumbnail.active {
+  border-color: var(--color-primary);
+  border-width: 2px;
+}
+
+/* Table hover effects */
+.capacity-table tbody tr:hover {
+  background-color: var(--color-base-200);
+}
+
+/* Collapsible panel styling */
+.scenario-panel {
+  border: 1px solid var(--color-base-300);
+  border-radius: var(--radius-box);
+  transition: all 0.2s ease-in-out;
+}
+
+.scenario-panel.expanded {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.scenario-header {
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.scenario-header:hover {
+  background-color: var(--color-base-200);
+}
+
+.scenario-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.scenario-content.expanded {
+  max-height: 500px;
+}
+
+/* CTA button hover effect */
+.cta-button {
+  transition: transform 0.2s ease-in-out;
+}
+
+.cta-button:hover {
+  transform: scale(1.05);
+}
+
+/* Related product cards */
+.related-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.related-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--color-primary);
+}
+
+/* Breadcrumb link hover */
+.breadcrumb-link {
+  transition: text-decoration 0.2s ease-in-out;
+}
+
+.breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+/* Indicator badges */
+.scenario-indicator {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Tooltip styling */
+.table-tooltip {
+  position: relative;
+}
+
+.table-tooltip:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tooltip-content {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-base-content);
+  color: var(--color-base-100);
+  padding: 8px 12px;
+  border-radius: var(--radius-box);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  z-index: 10;
+}
+
+.tooltip-content::after {
+  content: &apos;&apos;;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--color-base-content);
+}
+</style>
+<script src="./assets/static/uxbot/25_6/holder.js"></script>
+<script src="./assets/interactive-enhancements.js"></script></head>
+<body class="bg-base-100">
+    <div data-section-id="common_header" data-section-type="common_header" class="navbar bg-base-100 sticky top-0 z-50 shadow-custom h-16">
+    <div class="navbar-start">
+      <button class="btn btn-ghost lg:hidden" data-type="button" onclick="toggleMobileMenu()">
+        <span class="iconify" data-icon="heroicons:bars-3" data-width="24" data-type="icon"></span>
+      </button>
+      <button class="btn btn-ghost normal-case text-xl font-bold text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+        <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="32" data-type="icon"></span>
+        <span data-type="text">AgroTech Solutions</span>
+      </button>
+    </div>
+    
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-2">
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;homepage&apos;)" data-nav="homepage"><span data-type="text">Home</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)" data-nav="irrigation"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;solar&apos;)" data-nav="solar"><span data-type="text">Solar</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)" data-nav="bird_repellent"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)" data-nav="case_studies"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;contact&apos;)" data-nav="contact"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+    
+    <div class="navbar-end">
+      <button class="btn btn-primary" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+        <span data-type="text">Get Quote</span>
+      </button>
+    </div>
+    
+    <!-- Mobile menu dropdown -->
+    <div class="dropdown dropdown-end lg:hidden absolute top-16 right-0 w-full bg-base-100 shadow-lg z-40 hidden" id="mobileMenu" data-type="container">
+      <ul class="menu p-4 gap-2">
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;homepage&apos;)"><span data-type="text">Home</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+  </div>
+  <style>
+    [data-section-id="common_header"] .nav-link.active {
+      border-bottom-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    
+    [data-section-id="common_header"] .navbar {
+      border-bottom: var(--border) solid var(--color-base-300);
+    }
+  </style>
+  <script>
+    (function() {
+      // Toggle mobile menu
+      window.toggleMobileMenu = function() {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        if (mobileMenu) {
+          mobileMenu.classList.toggle(&apos;hidden&apos;);
+        }
+      };
+      
+      // Highlight active navigation item
+      function highlightActiveNav() {
+        const currentPageId = getCurrentPageId();
+        const navLinks = document.querySelectorAll(&apos;[data-section-id="common_header"] [data-nav]&apos;);
+        
+        navLinks.forEach(link => {
+          const navTarget = link.getAttribute(&apos;data-nav&apos;);
+          if (navTarget === currentPageId) {
+            link.classList.add(&apos;active&apos;);
+          } else {
+            link.classList.remove(&apos;active&apos;);
+          }
+        });
+      }
+      
+      // Initialize on page load
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        highlightActiveNav();
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener(&apos;click&apos;, function(e) {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        const menuButton = document.querySelector(&apos;[data-section-id="common_header"] .lg\\:hidden&apos;);
+        
+        if (mobileMenu && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+          mobileMenu.classList.add(&apos;hidden&apos;);
+        }
+      });
+    })();
+  </script>
+    
+    <main class="min-h-screen">
+        <div data-section-id="BreadcrumbSection" data-section-type="section" class="bg-base-200 py-4">
+    <div class="container mx-auto px-6">
+        <div class="text-sm breadcrumbs">
+            <ul>
+                <li>
+                    <button class="breadcrumb-link text-base-content hover:text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+                        <span class="iconify" data-icon="heroicons:home" data-width="16" data-type="icon"></span>
+                        <span data-type="text">Home</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="breadcrumb-link text-base-content hover:text-primary" data-type="button" onclick="navigateTo(&apos;solar&apos;)">
+                        <span data-type="text">Solar Solutions</span>
+                    </button>
+                </li>
+                <li>
+                    <span class="text-base-content/60" data-type="text">Household Energy Storage Detail</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><div data-section-id="ProductDisplaySection" data-section-type="section" class="bg-base-100 py-16">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-12 gap-8">
+            <!-- Left Column - Image Carousel (5 cols) -->
+            <div class="col-span-5" data-type="container">
+                <div class="image-carousel bg-base-200 rounded-lg p-4 shadow-custom">
+                    <!-- Main Image -->
+                    <div class="mb-4" data-type="container">
+                        <img id="mainImage" src="https://images.unsplash.com/photo-1697208386334-cdb57cd8ae75?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxob21lJTIwYmF0dGVyeSUyMHN0b3JhZ2UlMjBzeXN0ZW18ZW58MHx8fHwxNzUzMTYzNTMyfDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=600&amp;h=400" alt="Household Energy Storage System - Main view showing battery unit and control panel" class="w-full h-80 object-cover rounded-lg shadow-sm" data-type="image">
+                    </div>
+                    
+                    <!-- Thumbnail Gallery -->
+                    <div class="flex gap-2 overflow-x-auto" data-type="container">
+                        <img src="https://images.unsplash.com/photo-1725391798478-5fe9cfc8398e?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwxfHxiYXR0ZXJ5JTIwdW5pdCUyMGZyb250JTIwdmlld3xlbnwwfHx8fDE3NTMxNjM1MzN8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=120&amp;h=80" alt="Front view of energy storage unit" class="carousel-thumbnail w-20 h-16 object-cover rounded border-2 border-base-300 cursor-pointer flex-shrink-0" data-type="image" onclick="updateMainImage(this.src, this.alt)">
+                        <img src="https://images.unsplash.com/photo-1746005718013-b24074afb701?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwzfHxiYXR0ZXJ5JTIwc2lkZSUyMHBhbmVsfGVufDB8fHx8MTc1MzE2MzUzM3ww&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=120&amp;h=80" alt="Side panel with connection ports" class="carousel-thumbnail w-20 h-16 object-cover rounded border-2 border-base-300 cursor-pointer flex-shrink-0" data-type="image" onclick="updateMainImage(this.src.replace(&apos;120x80&apos;, &apos;600x400&apos;), this.alt)">
+                        <img src="https://images.unsplash.com/photo-1672689956124-18666b4cdae4?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxkaWdpdGFsJTIwY29udHJvbCUyMHBhbmVsJTIwYmF0dGVyeXxlbnwwfHx8fDE3NTMxNjM1MzR8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=120&amp;h=80" alt="Digital control display interface" class="carousel-thumbnail w-20 h-16 object-cover rounded border-2 border-base-300 cursor-pointer flex-shrink-0" data-type="image" onclick="updateMainImage(this.src.replace(&apos;120x80&apos;, &apos;600x400&apos;), this.alt)">
+                        <img src="https://images.unsplash.com/photo-1697208386334-cdb57cd8ae75?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxiYXR0ZXJ5JTIwaW5zdGFsbGF0aW9uJTIwcmVzaWRlbnRpYWx8ZW58MHx8fHwxNzUzMTYzNTM1fDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=120&amp;h=80" alt="Installation setup in residential setting" class="carousel-thumbnail w-20 h-16 object-cover rounded border-2 border-base-300 cursor-pointer flex-shrink-0" data-type="image" onclick="updateMainImage(this.src.replace(&apos;120x80&apos;, &apos;600x400&apos;), this.alt)">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - Product Details (7 cols) -->
+            <div class="col-span-7" data-type="container">
+                <h1 class="text-4xl font-bold text-primary mb-4" data-type="text">Household Energy Storage Systems</h1>
+                
+                <p class="text-lg text-base-content mb-6" data-type="text">
+                    Reliable backup power and energy independence for rural households. Our storage systems integrate seamlessly with solar panels to provide continuous electricity during outages and reduce grid dependency.
+                </p>
+                
+                <div class="space-y-4" data-type="container">
+                    <h3 class="text-xl font-semibold text-base-content mb-3" data-type="text">Key Specifications</h3>
+                    
+                    <ul class="space-y-2" data-type="container">
+                        <li class="flex items-start gap-3" data-type="container">
+                            <span class="iconify text-success mt-1" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Capacity Range: 5kWh to 20kWh modular systems</span>
+                        </li>
+                        <li class="flex items-start gap-3" data-type="container">
+                            <span class="iconify text-success mt-1" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Battery Type: LiFePO4 with 6000+ cycle life</span>
+                        </li>
+                        <li class="flex items-start gap-3" data-type="container">
+                            <span class="iconify text-success mt-1" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Inverter Output: 3kW to 10kW pure sine wave</span>
+                        </li>
+                        <li class="flex items-start gap-3" data-type="container">
+                            <span class="iconify text-success mt-1" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Operating Temperature: -10°C to 50°C</span>
+                        </li>
+                        <li class="flex items-start gap-3" data-type="container">
+                            <span class="iconify text-success mt-1" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Warranty: 10 years comprehensive coverage</span>
+                        </li>
+                        <li class="flex items-start gap-3" data-type="container">
+                            <span class="iconify text-success mt-1" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Smart monitoring via mobile app</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="CapacityComparisonSection" data-section-type="section" class="bg-base-200 py-16">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-base-content mb-8 text-center" data-type="text">Capacity Comparison Guide</h2>
+        
+        <div class="overflow-x-auto shadow-custom rounded-lg">
+            <table class="table table-zebra capacity-table bg-base-100">
+                <thead>
+                    <tr class="bg-primary text-primary-content">
+                        <th class="table-tooltip" data-type="text">
+                            Model
+                            <div class="tooltip-content">Storage system model designation</div>
+                        </th>
+                        <th class="table-tooltip" data-type="text">
+                            Capacity (kWh)
+                            <div class="tooltip-content">Total energy storage capacity in kilowatt-hours</div>
+                        </th>
+                        <th class="table-tooltip" data-type="text">
+                            Typical Use (days)
+                            <div class="tooltip-content">Days of backup power for average household</div>
+                        </th>
+                        <th class="table-tooltip" data-type="text">
+                            Notes
+                            <div class="tooltip-content">Additional specifications and recommendations</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-semibold" data-type="text">ES-5000</td>
+                        <td data-type="text">5 kWh</td>
+                        <td data-type="text">1-2 days</td>
+                        <td data-type="text">Ideal for small households, essential appliances only</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold" data-type="text">ES-10000</td>
+                        <td data-type="text">10 kWh</td>
+                        <td data-type="text">2-3 days</td>
+                        <td data-type="text">Most popular choice for average rural households</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold" data-type="text">ES-15000</td>
+                        <td data-type="text">15 kWh</td>
+                        <td data-type="text">3-4 days</td>
+                        <td data-type="text">Extended backup for larger families or small businesses</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold" data-type="text">ES-20000</td>
+                        <td data-type="text">20 kWh</td>
+                        <td data-type="text">4-5 days</td>
+                        <td data-type="text">Maximum capacity for complete energy independence</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="mt-6 text-center">
+            <p class="text-sm text-base-content/70" data-type="text">
+                * Backup duration estimates based on 5kWh daily consumption for essential appliances (lighting, refrigeration, communication)
+            </p>
+        </div>
+    </div>
+</div><div data-section-id="ScenarioGuidelinesSection" data-section-type="section" class="bg-base-100 py-16">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-base-content mb-8 text-center" data-type="text">Sizing Scenario Guidelines</h2>
+        
+        <div class="space-y-6 max-w-4xl mx-auto">
+            <!-- Small Family Scenario -->
+            <div class="scenario-panel bg-base-100 border border-base-300 rounded-lg" data-type="container">
+                <div class="scenario-header p-6 flex items-center justify-between" onclick="toggleScenario(&apos;scenario1&apos;)">
+                    <div class="flex items-center gap-4">
+                        <div class="scenario-indicator badge badge-primary" data-type="other">1</div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-base-content" data-type="text">Small Family (2-3 people)</h3>
+                            <p class="text-base-content/70" data-type="text">Basic energy needs with essential appliances</p>
+                        </div>
+                    </div>
+                    <span class="iconify text-base-content" data-icon="heroicons:chevron-down" data-width="24" data-type="icon" id="icon1"></span>
+                </div>
+                <div class="scenario-content" id="content1">
+                    <div class="p-6 pt-0 border-t border-base-300">
+                        <ul class="space-y-3" data-type="container">
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Recommended: ES-5000 or ES-10000 (5-10 kWh)</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Covers: LED lighting, refrigerator, mobile charging, small TV</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Daily consumption: 3-5 kWh typical usage</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Backup duration: 1-3 days during outages</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Off-Grid Rural Scenario -->
+            <div class="scenario-panel bg-base-100 border border-base-300 rounded-lg" data-type="container">
+                <div class="scenario-header p-6 flex items-center justify-between" onclick="toggleScenario(&apos;scenario2&apos;)">
+                    <div class="flex items-center gap-4">
+                        <div class="scenario-indicator badge badge-primary" data-type="other">2</div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-base-content" data-type="text">Off-Grid Rural (4-6 people)</h3>
+                            <p class="text-base-content/70" data-type="text">Complete energy independence for larger households</p>
+                        </div>
+                    </div>
+                    <span class="iconify text-base-content" data-icon="heroicons:chevron-down" data-width="24" data-type="icon" id="icon2"></span>
+                </div>
+                <div class="scenario-content" id="content2">
+                    <div class="p-6 pt-0 border-t border-base-300">
+                        <ul class="space-y-3" data-type="container">
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Recommended: ES-15000 or ES-20000 (15-20 kWh)</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Covers: All lighting, appliances, water pump, workshop tools</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Daily consumption: 8-12 kWh with full household load</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Autonomy: 3-5 days without solar generation</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Emergency Backup Scenario -->
+            <div class="scenario-panel bg-base-100 border border-base-300 rounded-lg" data-type="container">
+                <div class="scenario-header p-6 flex items-center justify-between" onclick="toggleScenario(&apos;scenario3&apos;)">
+                    <div class="flex items-center gap-4">
+                        <div class="scenario-indicator badge badge-primary" data-type="other">3</div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-base-content" data-type="text">Emergency Backup Power</h3>
+                            <p class="text-base-content/70" data-type="text">Grid-tied homes with backup requirements</p>
+                        </div>
+                    </div>
+                    <span class="iconify text-base-content" data-icon="heroicons:chevron-down" data-width="24" data-type="icon" id="icon3"></span>
+                </div>
+                <div class="scenario-content" id="content3">
+                    <div class="p-6 pt-0 border-t border-base-300">
+                        <ul class="space-y-3" data-type="container">
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Recommended: ES-10000 to ES-15000 (10-15 kWh)</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Priority loads: Medical equipment, security systems, communication</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Automatic transfer switch for seamless operation</span>
+                            </li>
+                            <li class="flex items-start gap-3" data-type="container">
+                                <span class="iconify text-secondary mt-1" data-icon="heroicons:light-bulb" data-width="20" data-type="icon"></span>
+                                <span data-type="text">Backup duration: 2-4 days for critical systems</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="CTASection" data-section-type="section" class="bg-base-200 py-16">
+    <div class="container mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto">
+            <h2 class="text-3xl font-bold text-base-content mb-6" data-type="text">Ready to Achieve Energy Independence?</h2>
+            <p class="text-lg text-base-content/80 mb-8" data-type="text">
+                Let our experts help you choose the right storage capacity for your specific needs and location.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button class="cta-button btn btn-primary btn-lg px-8" data-type="button" onclick="navigateTo(&apos;compatibility_check&apos;)">
+                    <span class="iconify" data-icon="heroicons:calculator" data-width="24" data-type="icon"></span>
+                    <span data-type="text">Check Compatibility</span>
+                </button>
+                
+                <button class="btn btn-secondary btn-outline btn-lg px-8" data-type="button" onclick="navigateTo(&apos;solar&apos;)">
+                    <span class="iconify" data-icon="heroicons:arrow-left" data-width="20" data-type="icon"></span>
+                    <span data-type="text">Back to Solar Solutions</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="RelatedProductsSection" data-section-type="section" class="bg-base-100 py-16">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-base-content mb-8 text-center" data-type="text">Related Solar Solutions</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Commercial/Industrial Solar Card -->
+            <div class="related-card card bg-base-100 shadow-custom border border-base-300 hover:border-primary" data-type="container" data-repeatable="true">
+                <figure class="px-6 pt-6">
+                    <img src="https://images.unsplash.com/photo-1713544123580-12096cc9eb12?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwxfHxjb21tZXJjaWFsJTIwc29sYXIlMjBwYW5lbHMlMjByb29mdG9wfGVufDB8fHx8MTc1MzE2MzUzNnww&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=400&amp;h=240" alt="Large-scale commercial solar panel installation on industrial building" class="rounded-lg w-full h-48 object-cover" data-type="image">
+                </figure>
+                <div class="card-body">
+                    <h3 class="card-title text-xl text-base-content" data-type="text">Commercial &amp; Industrial Solar</h3>
+                    <p class="text-base-content/70" data-type="text">
+                        Large-scale solar installations for businesses, farms, and industrial facilities with high energy demands.
+                    </p>
+                    <div class="card-actions justify-end mt-4">
+                        <button class="btn btn-primary btn-sm" data-type="button" onclick="navigateTo(&apos;commercial_industrial_solar_detail&apos;)">
+                            <span data-type="text">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Solar Water Pumps Card -->
+            <div class="related-card card bg-base-100 shadow-custom border border-base-300 hover:border-primary" data-type="container" data-repeatable="true">
+                <figure class="px-6 pt-6">
+                    <img src="https://images.unsplash.com/photo-1723407653103-7a9c6b579acf?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwxfHxzb2xhciUyMHdhdGVyJTIwcHVtcCUyMGFncmljdWx0dXJlfGVufDB8fHx8MTc1MzE2MzQ1M3ww&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=400&amp;h=240" alt="Solar-powered water pump system in agricultural field setting" class="rounded-lg w-full h-48 object-cover" data-type="image">
+                </figure>
+                <div class="card-body">
+                    <h3 class="card-title text-xl text-base-content" data-type="text">Solar Water Pumps</h3>
+                    <p class="text-base-content/70" data-type="text">
+                        Reliable water pumping solutions for irrigation, livestock, and domestic use powered entirely by solar energy.
+                    </p>
+                    <div class="card-actions justify-end mt-4">
+                        <button class="btn btn-primary btn-sm" data-type="button" onclick="navigateTo(&apos;solar_water_pumps_detail&apos;)">
+                            <span data-type="text">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Agricultural Solar Irrigation Card -->
+            <div class="related-card card bg-base-100 shadow-custom border border-base-300 hover:border-primary" data-type="container" data-repeatable="true">
+                <figure class="px-6 pt-6">
+                    <img src="https://images.unsplash.com/photo-1633361601049-d148804fd1a2?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwzfHxzb2xhciUyMGlycmlnYXRpb24lMjBzeXN0ZW0lMjBmaWVsZHxlbnwwfHx8fDE3NTMxNjM1MzZ8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=400&amp;h=240" alt="Solar-powered irrigation system with panels and sprinkler setup" class="rounded-lg w-full h-48 object-cover" data-type="image">
+                </figure>
+                <div class="card-body">
+                    <h3 class="card-title text-xl text-base-content" data-type="text">Agricultural Solar Irrigation</h3>
+                    <p class="text-base-content/70" data-type="text">
+                        Complete solar-powered irrigation systems designed specifically for agricultural applications and crop management.
+                    </p>
+                    <div class="card-actions justify-end mt-4">
+                        <button class="btn btn-primary btn-sm" data-type="button" onclick="navigateTo(&apos;agricultural_solar_irrigation_detail&apos;)">
+                            <span data-type="text">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+    
+    <div data-section-id="common_footer" data-section-type="common_footer" class="bg-base-200 mt-16">
+    <footer class="footer footer-horizontal p-10 text-base-content" data-type="container">
+      <aside data-type="container">
+        <div class="flex items-center gap-3 mb-4" data-type="container">
+          <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="48" data-type="icon"></span>
+          <div data-type="container">
+            <h3 class="font-bold text-lg text-primary" data-type="text">AgroTech Solutions</h3>
+            <p class="text-sm text-base-content opacity-70" data-type="text">Advanced agricultural technology since 2010</p>
+          </div>
+        </div>
+        <p class="text-sm max-w-sm" data-type="text">Providing energy-efficient irrigation, solar solutions, and bird repellent systems for modern farming operations worldwide.</p>
+        <div class="flex gap-3 mt-4" data-type="container">
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:phone" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:email" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:whatsapp" data-width="20" data-type="icon"></span>
+        </div>
+      </aside>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Products</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation Systems</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar Solutions</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Support</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact Us</span></button>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Technical Support</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Installation Guide</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Warranty</span></a>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Language &amp; Legal</header>
+        <div class="form-control" data-type="container">
+          <label class="label cursor-pointer w-max gap-2" data-type="container">
+            <span class="iconify" data-icon="mdi:translate" data-width="16" data-type="icon"></span>
+            <select class="select select-bordered select-sm w-32" data-type="input">
+              <option selected="" data-type="text">English</option>
+              <option data-type="text">Serbian</option>
+            </select>
+          </label>
+        </div>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Privacy Policy</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Terms of Service</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">GDPR Notice</span></a>
+      </nav>
+    </footer>
+    
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content border-t border-base-300" data-type="container">
+      <aside data-type="container">
+        <p class="text-sm" data-type="text">Copyright © 2025 AgroTech Solutions. All rights reserved. | Belgrade, Serbia</p>
+      </aside>
+    </footer>
+  </div>
+  <style>
+    [data-section-id="common_footer"] .link:hover {
+      color: var(--color-secondary);
+      transition: color 0.2s ease-in-out;
+    }
+    
+    [data-section-id="common_footer"] .iconify:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+  </style>
+  <script>
+    (function() {
+      // Language toggle functionality
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        const languageSelect = document.querySelector(&apos;[data-section-id="common_footer"] select&apos;);
+        if (languageSelect) {
+          languageSelect.addEventListener(&apos;change&apos;, function(e) {
+            const selectedLanguage = e.target.value;
+            // Here you would implement actual language switching logic
+            console.log(&apos;Language changed to:&apos;, selectedLanguage);
+            // For demo purposes, just show an alert
+            // In a real application, this would trigger translation updates
+          });
+        }
+      });
+    })();
+  </script>
+    
+    <script>
+    /* JavaScript code for common usage, should be wrapped in a closure */
+    (function() {
+      // Navigation function for page transitions
+      window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        if (isInIframe) {
+          window.parent.postMessage({
+            type: &apos;iframeNavigation&apos;,
+            targetPageId: targetPageId
+          }, &apos;*&apos;);
+        } else {
+          window.location.href = targetFileName;
+        }
+      };
+      
+      // Get current page for navigation highlighting
+      window.getCurrentPageId = function() {
+        const path = window.location.pathname;
+        const filename = path.split(&apos;/&apos;).pop();
+        return filename.replace(&apos;.html&apos;, &apos;&apos;) || &apos;homepage&apos;;
+      };
+    })();
+  </script>
+    <script>
+/* JavaScript for household energy storage detail page */
+(function() {
+    // Image carousel functionality
+    window.updateMainImage = function(src, alt) {
+        const mainImage = document.getElementById(&apos;mainImage&apos;);
+        if (mainImage) {
+            mainImage.src = src;
+            mainImage.alt = alt;
+            
+            // Update active thumbnail
+            const thumbnails = document.querySelectorAll(&apos;.carousel-thumbnail&apos;);
+            thumbnails.forEach(thumb => {
+                thumb.classList.remove(&apos;active&apos;);
+                if (thumb.src === src || thumb.src.replace(&apos;600x400&apos;, &apos;120x80&apos;) === src) {
+                    thumb.classList.add(&apos;active&apos;);
+                }
+            });
+        }
+    };
+    
+    // Collapsible scenario panels
+    window.toggleScenario = function(scenarioId) {
+        const content = document.getElementById(&apos;content&apos; + scenarioId.slice(-1));
+        const icon = document.getElementById(&apos;icon&apos; + scenarioId.slice(-1));
+        const panel = content.closest(&apos;.scenario-panel&apos;);
+        
+        if (content && icon && panel) {
+            const isExpanded = content.classList.contains(&apos;expanded&apos;);
+            
+            if (isExpanded) {
+                content.classList.remove(&apos;expanded&apos;);
+                panel.classList.remove(&apos;expanded&apos;);
+                icon.style.transform = &apos;rotate(0deg)&apos;;
+            } else {
+                content.classList.add(&apos;expanded&apos;);
+                panel.classList.add(&apos;expanded&apos;);
+                icon.style.transform = &apos;rotate(180deg)&apos;;
+            }
+        }
+    };
+    
+    // Initialize page
+    document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        // Set first thumbnail as active
+        const firstThumbnail = document.querySelector(&apos;.carousel-thumbnail&apos;);
+        if (firstThumbnail) {
+            firstThumbnail.classList.add(&apos;active&apos;);
+        }
+        
+        // Add hover effects to table rows
+        const tableRows = document.querySelectorAll(&apos;.capacity-table tbody tr&apos;);
+        tableRows.forEach(row => {
+            row.addEventListener(&apos;mouseenter&apos;, function() {
+                this.style.backgroundColor = &apos;var(--color-base-200)&apos;;
+            });
+            row.addEventListener(&apos;mouseleave&apos;, function() {
+                this.style.backgroundColor = &apos;&apos;;
+            });
+        });
+    });
+})();
+</script>
+
+<script>
+      Holder.run({
+        domain: "placehold.co"
+      })
+    </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

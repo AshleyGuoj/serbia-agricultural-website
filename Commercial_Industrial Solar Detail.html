@@ -1,0 +1,968 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Commercial/Industrial Solar Detail</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 1920
+                const height = 1080
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'homepage': 'Homepage',
+    'irrigation': 'Irrigation Systems',
+    'irrigation_center_pivot': 'Center Pivot Irrigation Detail',
+    'irrigation_linear': 'Linear Irrigation Detail',
+    'irrigation_hose_reel': 'Hose Reel Irrigation Detail',
+    'irrigation_drip': 'Drip Irrigation Detail',
+    'solar': 'Solar Solutions',
+    'solar_agri_irrigation': 'Agricultural Solar Irrigation Detail',
+    'solar_household_storage': 'Household Energy Storage Detail',
+    'solar_commercial_industrial': 'Commercial/Industrial Solar Detail',
+    'solar_water_pumps': 'Solar Water Pumps Detail',
+    'bird_repellent': 'Bird Repellent Systems',
+    'bird_ultrasonic': 'Ultrasonic Repellent Detail',
+    'bird_visual': 'Visual Deterrent Detail',
+    'contact': 'Contact',
+    'submission_confirmation': 'Inquiry Confirmation',
+    'compatibility_check': 'Compatibility Check',
+    'case_studies': 'Case Studies',
+    'case_study_farm_irrigation': 'Farm Irrigation Case Study',
+    'case_study_greenhouse_solar': 'Greenhouse Solar Case Study',
+    'case_study_orchard_repellent': 'Orchard Repellent Case Study',
+    'case_study_dryland_farming': 'Dryland Farming Case Study'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="en" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial/Industrial Solar Detail - Agricultural Solutions</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+    /* CSS code for common usage*/
+    
+    /* daisyUI Theme Variables Customization
+     * Based on the selected daisyUI theme and UI guidance requirements,
+     * customize only the CSS variables that need to be different from the theme defaults.
+     */
+    
+    :root {
+      /* Brand colors customization */
+      --color-primary: rgba(85, 107, 47, 1); /* Olive Green #556B2F */
+      --color-primary-content: rgba(255, 255, 255, 1); /* White text on primary */
+      --color-secondary: rgba(135, 206, 235, 1); /* Sky Blue #87CEEB */
+      --color-secondary-content: rgba(51, 51, 51, 1); /* Dark gray text on secondary */
+      --color-accent: rgba(139, 69, 19, 1); /* Warm Earth Brown #8B4513 */
+      --color-accent-content: rgba(255, 255, 255, 1); /* White text on accent */
+      
+      /* Background colors */
+      --color-base-100: rgba(255, 255, 255, 1); /* White */
+      --color-base-200: rgba(245, 245, 245, 1); /* Light Gray */
+      --color-base-300: rgba(229, 229, 229, 1); /* Slightly darker gray for borders */
+      --color-base-content: rgba(51, 51, 51, 1); /* Dark Gray text */
+      
+      /* Semantic colors */
+      --color-success: rgba(107, 142, 35, 1); /* Muted green #6B8E23 */
+      --color-success-content: rgba(255, 255, 255, 1);
+      --color-warning: rgba(255, 165, 0, 1); /* Amber #FFA500 */
+      --color-warning-content: rgba(51, 51, 51, 1);
+      --color-error: rgba(205, 92, 92, 1); /* Terra cotta #CD5C5C */
+      --color-error-content: rgba(255, 255, 255, 1);
+      --color-info: rgba(135, 206, 235, 1); /* Soft blue #87CEEB */
+      --color-info-content: rgba(51, 51, 51, 1);
+      
+      /* Border radius - modern but restrained */
+      --radius-box: 0.25rem; /* 4px */
+      --radius-field: 0.25rem; /* 4px */
+      --radius-selector: 0.25rem; /* 4px */
+      
+      /* Border width */
+      --border: 1px;
+    }
+    
+    /* Typography - Times New Roman serif */
+    body {
+      font-family: "Times New Roman", Times, serif;
+    }
+    
+    /* Subtle shadows */
+    .shadow-custom {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Smooth transitions for interactive elements */
+    .nav-link {
+      transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    }
+    
+    .nav-link:hover {
+      border-bottom: 2px solid var(--color-secondary);
+    }
+  </style>
+    <style>
+/* Page-specific styles for Commercial/Industrial Solar Detail */
+
+/* Hover effects for table rows */
+.specs-table tbody tr:hover {
+    background-color: var(--color-base-200);
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Scenario card hover effects */
+.scenario-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.scenario-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Lightbox overlay styles */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.lightbox-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-content {
+    background: var(--color-base-100);
+    border-radius: var(--radius-box);
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    position: relative;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--color-base-100);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* Download modal styles */
+.download-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.download-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.download-modal-content {
+    background: var(--color-base-100);
+    border-radius: var(--radius-box);
+    padding: 32px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+}
+
+/* Focus outlines for accessibility */
+button:focus,
+a:focus,
+input:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Icon indicators for spec headings */
+.spec-icon {
+    color: var(--color-primary);
+    margin-right: 8px;
+}
+</style>
+<script src="./assets/static/uxbot/25_6/holder.js"></script>
+<script src="./assets/interactive-enhancements.js"></script></head>
+<body class="bg-base-100">
+    <div data-section-id="common_header" data-section-type="common_header" class="navbar bg-base-100 sticky top-0 z-50 shadow-custom h-16">
+    <div class="navbar-start">
+      <button class="btn btn-ghost lg:hidden" data-type="button" onclick="toggleMobileMenu()">
+        <span class="iconify" data-icon="heroicons:bars-3" data-width="24" data-type="icon"></span>
+      </button>
+      <button class="btn btn-ghost normal-case text-xl font-bold text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+        <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="32" data-type="icon"></span>
+        <span data-type="text">AgroTech Solutions</span>
+      </button>
+    </div>
+    
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-2">
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;homepage&apos;)" data-nav="homepage"><span data-type="text">Home</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)" data-nav="irrigation"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;solar&apos;)" data-nav="solar"><span data-type="text">Solar</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)" data-nav="bird_repellent"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)" data-nav="case_studies"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;contact&apos;)" data-nav="contact"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+    
+    <div class="navbar-end">
+      <button class="btn btn-primary" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+        <span data-type="text">Get Quote</span>
+      </button>
+    </div>
+    
+    <!-- Mobile menu dropdown -->
+    <div class="dropdown dropdown-end lg:hidden absolute top-16 right-0 w-full bg-base-100 shadow-lg z-40 hidden" id="mobileMenu" data-type="container">
+      <ul class="menu p-4 gap-2">
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;homepage&apos;)"><span data-type="text">Home</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+  </div>
+  <style>
+    [data-section-id="common_header"] .nav-link.active {
+      border-bottom-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    
+    [data-section-id="common_header"] .navbar {
+      border-bottom: var(--border) solid var(--color-base-300);
+    }
+  </style>
+  <script>
+    (function() {
+      // Toggle mobile menu
+      window.toggleMobileMenu = function() {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        if (mobileMenu) {
+          mobileMenu.classList.toggle(&apos;hidden&apos;);
+        }
+      };
+      
+      // Highlight active navigation item
+      function highlightActiveNav() {
+        const currentPageId = getCurrentPageId();
+        const navLinks = document.querySelectorAll(&apos;[data-section-id="common_header"] [data-nav]&apos;);
+        
+        navLinks.forEach(link => {
+          const navTarget = link.getAttribute(&apos;data-nav&apos;);
+          if (navTarget === currentPageId) {
+            link.classList.add(&apos;active&apos;);
+          } else {
+            link.classList.remove(&apos;active&apos;);
+          }
+        });
+      }
+      
+      // Initialize on page load
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        highlightActiveNav();
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener(&apos;click&apos;, function(e) {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        const menuButton = document.querySelector(&apos;[data-section-id="common_header"] .lg\\:hidden&apos;);
+        
+        if (mobileMenu && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+          mobileMenu.classList.add(&apos;hidden&apos;);
+        }
+      });
+    })();
+  </script>
+    
+    <main class="min-h-screen">
+        <div data-section-id="PageTitleSection" data-section-type="section" class="bg-base-200 py-8">
+    <div class="container mx-auto px-6">
+        <div class="text-sm breadcrumbs mb-4" data-type="container">
+            <ul>
+                <li>
+                    <button onclick="navigateTo(&apos;homepage&apos;)" class="text-secondary hover:text-primary" data-type="button">
+                        <span class="iconify" data-icon="heroicons:home" data-width="16" data-type="icon"></span>
+                        <span data-type="text">Home</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="navigateTo(&apos;solar&apos;)" class="text-secondary hover:text-primary" data-type="button">
+                        <span data-type="text">Solar Solutions</span>
+                    </button>
+                </li>
+                <li>
+                    <span class="text-base-content" data-type="text">Commercial/Industrial Solar Detail</span>
+                </li>
+            </ul>
+        </div>
+        <h1 class="text-4xl font-bold text-primary" data-type="text">Commercial &amp; Industrial Solar Solutions</h1>
+        <p class="text-lg text-base-content mt-2" data-type="text">Comprehensive solar energy systems for large-scale operations</p>
+    </div>
+</div><div data-section-id="DetailOverviewSection" data-section-type="section" class="py-16">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-12 gap-8 items-center">
+            <!-- Product Image -->
+            <div class="col-span-5" data-type="container">
+                <div class="shadow-custom rounded-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1726866492047-7f9516558c6e?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxjb21tZXJjaWFsJTIwc29sYXIlMjBpbnN0YWxsYXRpb24lMjBidWlsZGluZ3xlbnwwfHx8fDE3NTMxNjM1NDB8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=600&amp;h=400" alt="Commercial solar panel installation on industrial building with multiple arrays" class="w-full h-full object-cover" data-type="image">
+                </div>
+            </div>
+            
+            <!-- Product Information -->
+            <div class="col-span-7" data-type="container">
+                <h2 class="text-3xl font-bold text-primary mb-4" data-type="text">Enterprise Solar Power Systems</h2>
+                <p class="text-lg text-base-content mb-6" data-type="text">
+                    Scalable solar solutions designed for commercial and industrial facilities, 
+                    providing reliable renewable energy to reduce operational costs and carbon footprint.
+                </p>
+                
+                <!-- Key Highlights -->
+                <div class="mb-8" data-type="container">
+                    <h3 class="text-xl font-semibold text-base-content mb-4" data-type="text">Key Features:</h3>
+                    <ul class="space-y-3" data-type="container">
+                        <li class="flex items-center gap-3" data-type="container">
+                            <span class="iconify text-success" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">High-efficiency monocrystalline panels (22%+ efficiency)</span>
+                        </li>
+                        <li class="flex items-center gap-3" data-type="container">
+                            <span class="iconify text-success" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">25-year performance warranty</span>
+                        </li>
+                        <li class="flex items-center gap-3" data-type="container">
+                            <span class="iconify text-success" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Grid-tie and hybrid storage options</span>
+                        </li>
+                        <li class="flex items-center gap-3" data-type="container">
+                            <span class="iconify text-success" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Remote monitoring and maintenance</span>
+                        </li>
+                        <li class="flex items-center gap-3" data-type="container">
+                            <span class="iconify text-success" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Scalable from 100kW to 10MW+ installations</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-4 items-center" data-type="container">
+                    <button onclick="navigateTo(&apos;compatibility_check&apos;)" class="btn btn-primary btn-lg" data-type="button">
+                        <span class="iconify" data-icon="heroicons:clipboard-document-check" data-width="20" data-type="icon"></span>
+                        <span data-type="text">Check Compatibility</span>
+                    </button>
+                    <button onclick="openDownloadModal()" class="btn btn-outline btn-lg" data-type="button">
+                        <span class="iconify" data-icon="heroicons:arrow-down-tray" data-width="20" data-type="icon"></span>
+                        <span data-type="text">Download Brochure</span>
+                    </button>
+                    <button onclick="navigateTo(&apos;solar&apos;)" class="text-secondary hover:text-primary underline" data-type="button">
+                        <span data-type="text">← Back to Solar Solutions</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="SpecsTableSection" data-section-type="section" class="py-16 bg-base-200">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-primary mb-8 text-center" data-type="text">Technical Specifications</h2>
+        
+        <!-- Electrical Specifications -->
+        <div class="collapse collapse-arrow bg-base-100 mb-4 shadow-custom" data-type="container">
+            <input type="radio" name="specs-accordion" checked="checked"> 
+            <div class="collapse-title font-medium text-lg flex items-center">
+                <span class="iconify spec-icon" data-icon="heroicons:bolt" data-width="24" data-type="icon"></span>
+                <span data-type="text">Electrical Specifications</span>
+            </div>
+            <div class="collapse-content"> 
+                <div class="overflow-x-auto">
+                    <table class="table specs-table w-full">
+                        <thead>
+                            <tr class="bg-base-200">
+                                <th class="text-base-content font-semibold" data-type="text">Parameter</th>
+                                <th class="text-base-content font-semibold" data-type="text">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-type="text">Panel Power Output</td>
+                                <td data-type="text">400W - 550W per panel</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">System Efficiency</td>
+                                <td data-type="text">22.1% - 22.8%</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Maximum System Voltage</td>
+                                <td data-type="text">1500V DC</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Operating Voltage Range</td>
+                                <td data-type="text">31.2V - 41.8V</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Short Circuit Current</td>
+                                <td data-type="text">13.25A - 14.15A</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Inverter Efficiency</td>
+                                <td data-type="text">98.5% peak efficiency</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mechanical Specifications -->
+        <div class="collapse collapse-arrow bg-base-100 mb-4 shadow-custom" data-type="container">
+            <input type="radio" name="specs-accordion"> 
+            <div class="collapse-title font-medium text-lg flex items-center">
+                <span class="iconify spec-icon" data-icon="heroicons:wrench-screwdriver" data-width="24" data-type="icon"></span>
+                <span data-type="text">Mechanical Specifications</span>
+            </div>
+            <div class="collapse-content"> 
+                <div class="overflow-x-auto">
+                    <table class="table specs-table w-full">
+                        <thead>
+                            <tr class="bg-base-200">
+                                <th class="text-base-content font-semibold" data-type="text">Parameter</th>
+                                <th class="text-base-content font-semibold" data-type="text">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-type="text">Panel Dimensions</td>
+                                <td data-type="text">2094 × 1038 × 35mm</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Panel Weight</td>
+                                <td data-type="text">22.5kg per panel</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Frame Material</td>
+                                <td data-type="text">Anodized aluminum alloy</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Glass Type</td>
+                                <td data-type="text">3.2mm tempered glass</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Junction Box Rating</td>
+                                <td data-type="text">IP68</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Cable Length</td>
+                                <td data-type="text">1200mm with MC4 connectors</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Environmental Specifications -->
+        <div class="collapse collapse-arrow bg-base-100 shadow-custom" data-type="container">
+            <input type="radio" name="specs-accordion"> 
+            <div class="collapse-title font-medium text-lg flex items-center">
+                <span class="iconify spec-icon" data-icon="heroicons:globe-alt" data-width="24" data-type="icon"></span>
+                <span data-type="text">Environmental Specifications</span>
+            </div>
+            <div class="collapse-content"> 
+                <div class="overflow-x-auto">
+                    <table class="table specs-table w-full">
+                        <thead>
+                            <tr class="bg-base-200">
+                                <th class="text-base-content font-semibold" data-type="text">Parameter</th>
+                                <th class="text-base-content font-semibold" data-type="text">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-type="text">Operating Temperature</td>
+                                <td data-type="text">-40°C to +85°C</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Maximum Wind Load</td>
+                                <td data-type="text">2400 Pa (245 km/h)</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Maximum Snow Load</td>
+                                <td data-type="text">5400 Pa</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Hail Resistance</td>
+                                <td data-type="text">25mm at 23 m/s</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Fire Safety Rating</td>
+                                <td data-type="text">Class C (UL 1703)</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">Warranty Period</td>
+                                <td data-type="text">25 years performance, 12 years product</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="DeploymentScenariosSection" data-section-type="section" class="py-16">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-primary mb-8 text-center" data-type="text">Deployment Scenarios</h2>
+        <p class="text-lg text-base-content text-center mb-12 max-w-3xl mx-auto" data-type="text">
+            Our commercial and industrial solar solutions are deployed across various sectors, 
+            providing reliable renewable energy for diverse operational needs.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-type="container">
+            <!-- Manufacturing Facility -->
+            <div class="card bg-base-100 shadow-custom scenario-card cursor-pointer" onclick="openLightbox(&apos;manufacturing&apos;)" data-type="container" data-repeatable="true">
+                <figure>
+                    <img src="https://images.unsplash.com/photo-1726866492047-7f9516558c6e?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwxfHxpbmR1c3RyaWFsJTIwc29sYXIlMjBwYW5lbHMlMjByb29mfGVufDB8fHx8MTc1MzE2MzUzOHww&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=400&amp;h=225" alt="Solar panels installed on large manufacturing facility roof with industrial equipment" class="w-full h-56 object-cover" data-type="image">
+                </figure>
+                <div class="card-body">
+                    <h3 class="card-title text-primary" data-type="text">Manufacturing Facilities</h3>
+                    <p class="text-base-content" data-type="text">
+                        Large-scale rooftop installations for factories and production facilities, 
+                        reducing energy costs and supporting sustainable manufacturing.
+                    </p>
+                    <div class="card-actions justify-end mt-4">
+                        <div class="badge badge-outline" data-type="text">500kW - 2MW</div>
+                        <div class="badge badge-outline" data-type="text">ROI: 6-8 years</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commercial Buildings -->
+            <div class="card bg-base-100 shadow-custom scenario-card cursor-pointer" onclick="openLightbox(&apos;commercial&apos;)" data-type="container" data-repeatable="true">
+                <figure>
+                    <img src="https://images.unsplash.com/photo-1618333251902-959caee935a7?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwxfHxzb2xhciUyMHBhbmVscyUyMGNvbW1lcmNpYWwlMjBidWlsZGluZ3xlbnwwfHx8fDE3NTMxNjM1NDF8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=400&amp;h=225" alt="Office building with integrated solar panels on roof and facade" class="w-full h-56 object-cover" data-type="image">
+                </figure>
+                <div class="card-body">
+                    <h3 class="card-title text-primary" data-type="text">Commercial Buildings</h3>
+                    <p class="text-base-content" data-type="text">
+                        Office complexes, shopping centers, and commercial properties utilizing 
+                        solar energy to reduce operational expenses and enhance sustainability.
+                    </p>
+                    <div class="card-actions justify-end mt-4">
+                        <div class="badge badge-outline" data-type="text">100kW - 1MW</div>
+                        <div class="badge badge-outline" data-type="text">ROI: 7-9 years</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agricultural Operations -->
+            <div class="card bg-base-100 shadow-custom scenario-card cursor-pointer" onclick="openLightbox(&apos;agricultural&apos;)" data-type="container" data-repeatable="true">
+                <figure>
+                    <img src="https://images.unsplash.com/photo-1715605569694-4cc47c9fb535?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxhZ3JpY3VsdHVyYWwlMjBzb2xhciUyMGFycmF5fGVufDB8fHx8MTc1MzE2MzU0MHww&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=400&amp;h=225" alt="Ground-mounted solar arrays in agricultural setting with crops and farm buildings" class="w-full h-56 object-cover" data-type="image">
+                </figure>
+                <div class="card-body">
+                    <h3 class="card-title text-primary" data-type="text">Agricultural Operations</h3>
+                    <p class="text-base-content" data-type="text">
+                        Ground-mounted and agrivoltaic systems for farms, providing clean energy 
+                        while maintaining agricultural productivity and supporting irrigation systems.
+                    </p>
+                    <div class="card-actions justify-end mt-4">
+                        <div class="badge badge-outline" data-type="text">250kW - 5MW</div>
+                        <div class="badge badge-outline" data-type="text">ROI: 5-7 years</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Overlay -->
+    <div id="lightboxOverlay" class="lightbox-overlay" onclick="closeLightbox()">
+        <div class="lightbox-content p-8 max-w-4xl" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="closeLightbox()" data-type="button">
+                <span class="iconify" data-icon="heroicons:x-mark" data-width="24" data-type="icon"></span>
+            </button>
+            <div id="lightboxContent">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Modal -->
+    <div id="downloadModal" class="download-modal" onclick="closeDownloadModal()">
+        <div class="download-modal-content" onclick="event.stopPropagation()">
+            <button class="absolute top-4 right-4 btn btn-ghost btn-sm" onclick="closeDownloadModal()" data-type="button">
+                <span class="iconify" data-icon="heroicons:x-mark" data-width="20" data-type="icon"></span>
+            </button>
+            <h3 class="text-2xl font-bold text-primary mb-4" data-type="text">Download Brochure</h3>
+            <p class="text-base-content mb-6" data-type="text">
+                Get detailed specifications, case studies, and pricing information for our 
+                commercial and industrial solar solutions.
+            </p>
+            <div class="form-control mb-6">
+                <label class="label">
+                    <span class="label-text" data-type="text">Email Address</span>
+                </label>
+                <input type="email" placeholder="Enter your email" class="input input-bordered" data-type="input">
+            </div>
+            <div class="form-control mb-6">
+                <label class="label">
+                    <span class="label-text" data-type="text">Company Name</span>
+                </label>
+                <input type="text" placeholder="Enter company name" class="input input-bordered" data-type="input">
+            </div>
+            <div class="flex gap-4">
+                <button onclick="downloadBrochure()" class="btn btn-primary flex-1" data-type="button">
+                    <span class="iconify" data-icon="heroicons:arrow-down-tray" data-width="20" data-type="icon"></span>
+                    <span data-type="text">Download PDF</span>
+                </button>
+                <button onclick="closeDownloadModal()" class="btn btn-outline" data-type="button">
+                    <span data-type="text">Cancel</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+    
+    <div data-section-id="common_footer" data-section-type="common_footer" class="bg-base-200 mt-16">
+    <footer class="footer footer-horizontal p-10 text-base-content" data-type="container">
+      <aside data-type="container">
+        <div class="flex items-center gap-3 mb-4" data-type="container">
+          <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="48" data-type="icon"></span>
+          <div data-type="container">
+            <h3 class="font-bold text-lg text-primary" data-type="text">AgroTech Solutions</h3>
+            <p class="text-sm text-base-content opacity-70" data-type="text">Advanced agricultural technology since 2010</p>
+          </div>
+        </div>
+        <p class="text-sm max-w-sm" data-type="text">Providing energy-efficient irrigation, solar solutions, and bird repellent systems for modern farming operations worldwide.</p>
+        <div class="flex gap-3 mt-4" data-type="container">
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:phone" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:email" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:whatsapp" data-width="20" data-type="icon"></span>
+        </div>
+      </aside>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Products</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation Systems</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar Solutions</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Support</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact Us</span></button>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Technical Support</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Installation Guide</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Warranty</span></a>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Language &amp; Legal</header>
+        <div class="form-control" data-type="container">
+          <label class="label cursor-pointer w-max gap-2" data-type="container">
+            <span class="iconify" data-icon="mdi:translate" data-width="16" data-type="icon"></span>
+            <select class="select select-bordered select-sm w-32" data-type="input">
+              <option selected="" data-type="text">English</option>
+              <option data-type="text">Serbian</option>
+            </select>
+          </label>
+        </div>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Privacy Policy</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Terms of Service</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">GDPR Notice</span></a>
+      </nav>
+    </footer>
+    
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content border-t border-base-300" data-type="container">
+      <aside data-type="container">
+        <p class="text-sm" data-type="text">Copyright © 2025 AgroTech Solutions. All rights reserved. | Belgrade, Serbia</p>
+      </aside>
+    </footer>
+  </div>
+  <style>
+    [data-section-id="common_footer"] .link:hover {
+      color: var(--color-secondary);
+      transition: color 0.2s ease-in-out;
+    }
+    
+    [data-section-id="common_footer"] .iconify:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+  </style>
+  <script>
+    (function() {
+      // Language toggle functionality
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        const languageSelect = document.querySelector(&apos;[data-section-id="common_footer"] select&apos;);
+        if (languageSelect) {
+          languageSelect.addEventListener(&apos;change&apos;, function(e) {
+            const selectedLanguage = e.target.value;
+            // Here you would implement actual language switching logic
+            console.log(&apos;Language changed to:&apos;, selectedLanguage);
+            // For demo purposes, just show an alert
+            // In a real application, this would trigger translation updates
+          });
+        }
+      });
+    })();
+  </script>
+    
+    <script>
+    /* JavaScript code for common usage, should be wrapped in a closure */
+    (function() {
+      // Navigation function for page transitions
+      window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        if (isInIframe) {
+          window.parent.postMessage({
+            type: &apos;iframeNavigation&apos;,
+            targetPageId: targetPageId
+          }, &apos;*&apos;);
+        } else {
+          window.location.href = targetFileName;
+        }
+      };
+      
+      // Get current page for navigation highlighting
+      window.getCurrentPageId = function() {
+        const path = window.location.pathname;
+        const filename = path.split(&apos;/&apos;).pop();
+        return filename.replace(&apos;.html&apos;, &apos;&apos;) || &apos;homepage&apos;;
+      };
+    })();
+  </script>
+    <script>
+/* JavaScript for Commercial/Industrial Solar Detail page */
+
+// Lightbox functionality
+function openLightbox(scenario) {
+    const lightboxContent = document.getElementById(&apos;lightboxContent&apos;);
+    const lightboxOverlay = document.getElementById(&apos;lightboxOverlay&apos;);
+    
+    const scenarios = {
+        manufacturing: {
+            title: &apos;Manufacturing Facilities&apos;,
+            image: &apos;https://images.unsplash.com/photo-1680050977821-e4e9a2f09d55?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwxfHxzb2xhciUyMHBhbmVsJTIwbW91bnRpbmclMjBoYXJkd2FyZXxlbnwwfHx8fDE3NTMxNjM1Mzl8MA&ixlib=rb-4.1.0&q=80&w=800&h=450&apos;,
+            description: `
+                <h4 class="text-xl font-semibold mb-4">Large-Scale Manufacturing Solar Solutions</h4>
+                <p class="mb-4">Our manufacturing facility installations typically range from 500kW to 2MW, designed to meet the high energy demands of industrial operations. These systems feature:</p>
+                <ul class="list-disc list-inside space-y-2 mb-4">
+                    <li>Robust mounting systems designed for industrial roof loads</li>
+                    <li>High-efficiency panels optimized for commercial-scale deployment</li>
+                    <li>Advanced monitoring systems for real-time performance tracking</li>
+                    <li>Grid-tie capabilities with optional battery backup</li>
+                    <li>Compliance with industrial safety and electrical standards</li>
+                </ul>
+                <p class="mb-4"><strong>Typical ROI:</strong> 6-8 years with significant long-term savings</p>
+                <p><strong>Case Study:</strong> A 1.2MW installation at a textile manufacturing facility reduced energy costs by 65% and achieved carbon neutrality within the first year of operation.</p>
+            `
+        },
+        commercial: {
+            title: &apos;Commercial Buildings&apos;,
+            image: &apos;https://images.unsplash.com/photo-1618518042562-c17a14839137?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxzb2xhciUyMGZhY2FkZSUyMGludGVncmF0aW9ufGVufDB8fHx8MTc1MzE2MzU0Mnww&ixlib=rb-4.1.0&q=80&w=800&h=450&apos;,
+            description: `
+                <h4 class="text-xl font-semibold mb-4">Commercial Building Solar Integration</h4>
+                <p class="mb-4">Perfect for office complexes, retail centers, and mixed-use developments. Our commercial solutions range from 100kW to 1MW and include:</p>
+                <ul class="list-disc list-inside space-y-2 mb-4">
+                    <li>Aesthetic integration with building architecture</li>
+                    <li>Flexible mounting options for various roof types</li>
+                    <li>Smart energy management systems</li>
+                    <li>Net metering capabilities for maximum savings</li>
+                    <li>Minimal disruption during installation</li>
+                </ul>
+                <p class="mb-4"><strong>Typical ROI:</strong> 7-9 years with ongoing operational savings</p>
+                <p><strong>Case Study:</strong> A 750kW installation on a shopping center reduced electricity bills by 70% while providing covered parking for customers through innovative canopy design.</p>
+            `
+        },
+        agricultural: {
+            title: &apos;Agricultural Operations&apos;,
+            image: &apos;https://images.unsplash.com/photo-1670519808728-335b1eb2ef52?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxhZ3Jpdm9sdGFpYyUyMHNvbGFyJTIwZmFybXxlbnwwfHx8fDE3NTMxNjM1Mzd8MA&ixlib=rb-4.1.0&q=80&w=800&h=450&apos;,
+            description: `
+                <h4 class="text-xl font-semibold mb-4">Agricultural Solar Solutions</h4>
+                <p class="mb-4">Designed specifically for farming operations, our agricultural solar systems range from 250kW to 5MW and feature:</p>
+                <ul class="list-disc list-inside space-y-2 mb-4">
+                    <li>Ground-mounted systems that preserve farmable land</li>
+                    <li>Agrivoltaic designs allowing dual land use</li>
+                    <li>Integration with irrigation and water pumping systems</li>
+                    <li>Weather-resistant components for harsh outdoor conditions</li>
+                    <li>Remote monitoring for rural locations</li>
+                </ul>
+                <p class="mb-4"><strong>Typical ROI:</strong> 5-7 years with additional agricultural benefits</p>
+                <p><strong>Case Study:</strong> A 2MW agrivoltaic installation increased crop yields by 15% while generating enough clean energy to power the entire farming operation and nearby community.</p>
+            `
+        }
+    };
+    
+    const scenarioData = scenarios[scenario];
+    if (scenarioData) {
+        lightboxContent.innerHTML = `
+            <img src="${scenarioData.image}" alt="${scenarioData.title} detailed view" class="w-full h-64 object-cover rounded-lg mb-6" />
+            <h3 class="text-2xl font-bold text-primary mb-4">${scenarioData.title}</h3>
+            <div class="text-base-content">${scenarioData.description}</div>
+        `;
+        lightboxOverlay.classList.add(&apos;active&apos;);
+    }
+}
+
+function closeLightbox() {
+    const lightboxOverlay = document.getElementById(&apos;lightboxOverlay&apos;);
+    lightboxOverlay.classList.remove(&apos;active&apos;);
+}
+
+// Download modal functionality
+function openDownloadModal() {
+    const downloadModal = document.getElementById(&apos;downloadModal&apos;);
+    downloadModal.classList.add(&apos;active&apos;);
+}
+
+function closeDownloadModal() {
+    const downloadModal = document.getElementById(&apos;downloadModal&apos;);
+    downloadModal.classList.remove(&apos;active&apos;);
+}
+
+function downloadBrochure() {
+    // In a real application, this would handle the actual download
+    // For demo purposes, we&apos;ll just show a success message
+    alert(&apos;Brochure download initiated! Check your email for the PDF.&apos;);
+    closeDownloadModal();
+}
+
+// Keyboard accessibility
+document.addEventListener(&apos;keydown&apos;, function(e) {
+    if (e.key === &apos;Escape&apos;) {
+        closeLightbox();
+        closeDownloadModal();
+    }
+});
+
+// Initialize page
+document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+    // Any initialization code can go here
+    console.log(&apos;Commercial/Industrial Solar Detail page loaded&apos;);
+});
+</script>
+
+<script>
+      Holder.run({
+        domain: "placehold.co"
+      })
+    </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

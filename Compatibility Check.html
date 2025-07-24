@@ -1,0 +1,824 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Compatibility Check</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 1920
+                const height = 1080
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'homepage': 'Homepage',
+    'irrigation': 'Irrigation Systems',
+    'irrigation_center_pivot': 'Center Pivot Irrigation Detail',
+    'irrigation_linear': 'Linear Irrigation Detail',
+    'irrigation_hose_reel': 'Hose Reel Irrigation Detail',
+    'irrigation_drip': 'Drip Irrigation Detail',
+    'solar': 'Solar Solutions',
+    'solar_agri_irrigation': 'Agricultural Solar Irrigation Detail',
+    'solar_household_storage': 'Household Energy Storage Detail',
+    'solar_commercial_industrial': 'Commercial/Industrial Solar Detail',
+    'solar_water_pumps': 'Solar Water Pumps Detail',
+    'bird_repellent': 'Bird Repellent Systems',
+    'bird_ultrasonic': 'Ultrasonic Repellent Detail',
+    'bird_visual': 'Visual Deterrent Detail',
+    'contact': 'Contact',
+    'submission_confirmation': 'Inquiry Confirmation',
+    'compatibility_check': 'Compatibility Check',
+    'case_studies': 'Case Studies',
+    'case_study_farm_irrigation': 'Farm Irrigation Case Study',
+    'case_study_greenhouse_solar': 'Greenhouse Solar Case Study',
+    'case_study_orchard_repellent': 'Orchard Repellent Case Study',
+    'case_study_dryland_farming': 'Dryland Farming Case Study'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="en" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compatibility Check - Agricultural Solutions</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+    /* CSS code for common usage*/
+    
+    /* daisyUI Theme Variables Customization
+     * Based on the selected daisyUI theme and UI guidance requirements,
+     * customize only the CSS variables that need to be different from the theme defaults.
+     */
+    
+    :root {
+      /* Brand colors customization */
+      --color-primary: rgba(85, 107, 47, 1); /* Olive Green #556B2F */
+      --color-primary-content: rgba(255, 255, 255, 1); /* White text on primary */
+      --color-secondary: rgba(135, 206, 235, 1); /* Sky Blue #87CEEB */
+      --color-secondary-content: rgba(51, 51, 51, 1); /* Dark gray text on secondary */
+      --color-accent: rgba(139, 69, 19, 1); /* Warm Earth Brown #8B4513 */
+      --color-accent-content: rgba(255, 255, 255, 1); /* White text on accent */
+      
+      /* Background colors */
+      --color-base-100: rgba(255, 255, 255, 1); /* White */
+      --color-base-200: rgba(245, 245, 245, 1); /* Light Gray */
+      --color-base-300: rgba(229, 229, 229, 1); /* Slightly darker gray for borders */
+      --color-base-content: rgba(51, 51, 51, 1); /* Dark Gray text */
+      
+      /* Semantic colors */
+      --color-success: rgba(107, 142, 35, 1); /* Muted green #6B8E23 */
+      --color-success-content: rgba(255, 255, 255, 1);
+      --color-warning: rgba(255, 165, 0, 1); /* Amber #FFA500 */
+      --color-warning-content: rgba(51, 51, 51, 1);
+      --color-error: rgba(205, 92, 92, 1); /* Terra cotta #CD5C5C */
+      --color-error-content: rgba(255, 255, 255, 1);
+      --color-info: rgba(135, 206, 235, 1); /* Soft blue #87CEEB */
+      --color-info-content: rgba(51, 51, 51, 1);
+      
+      /* Border radius - modern but restrained */
+      --radius-box: 0.25rem; /* 4px */
+      --radius-field: 0.25rem; /* 4px */
+      --radius-selector: 0.25rem; /* 4px */
+      
+      /* Border width */
+      --border: 1px;
+    }
+    
+    /* Typography - Times New Roman serif */
+    body {
+      font-family: "Times New Roman", Times, serif;
+    }
+    
+    /* Subtle shadows */
+    .shadow-custom {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Smooth transitions for interactive elements */
+    .nav-link {
+      transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    }
+    
+    .nav-link:hover {
+      border-bottom: 2px solid var(--color-secondary);
+    }
+  </style>
+    <style>
+/* Page-specific styles for compatibility check */
+.status-badge-success {
+    background-color: var(--color-success);
+    color: var(--color-success-content);
+}
+
+.status-badge-warning {
+    background-color: var(--color-warning);
+    color: var(--color-warning-content);
+}
+
+.status-badge-error {
+    background-color: var(--color-error);
+    color: var(--color-error-content);
+}
+
+.table-row-hover:hover {
+    background-color: var(--color-base-200);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.config-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+}
+
+.expandable-row {
+    background-color: var(--color-base-100);
+    border-top: 1px solid var(--color-base-300);
+}
+
+.section-separator {
+    background-color: var(--color-base-200);
+    border-top: 1px solid var(--color-base-300);
+    border-bottom: 1px solid var(--color-base-300);
+}
+
+.btn-hover-underline:hover {
+    text-decoration: underline;
+    transition: text-decoration 0.2s ease-in-out;
+}
+
+.tooltip-custom {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-custom .tooltip-text {
+    visibility: hidden;
+    background-color: var(--color-base-content);
+    color: var(--color-base-100);
+    text-align: center;
+    border-radius: var(--radius-box);
+    padding: 8px 12px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+.tooltip-custom:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+</style>
+<script src="./assets/static/uxbot/25_6/holder.js"></script>
+<script src="./assets/interactive-enhancements.js"></script></head>
+<body class="bg-base-100">
+    <div data-section-id="common_header" data-section-type="common_header" class="navbar bg-base-100 sticky top-0 z-50 shadow-custom h-16">
+    <div class="navbar-start">
+      <button class="btn btn-ghost lg:hidden" data-type="button" onclick="toggleMobileMenu()">
+        <span class="iconify" data-icon="heroicons:bars-3" data-width="24" data-type="icon"></span>
+      </button>
+      <button class="btn btn-ghost normal-case text-xl font-bold text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+        <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="32" data-type="icon"></span>
+        <span data-type="text">AgroTech Solutions</span>
+      </button>
+    </div>
+    
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-2">
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;homepage&apos;)" data-nav="homepage"><span data-type="text">Home</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)" data-nav="irrigation"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;solar&apos;)" data-nav="solar"><span data-type="text">Solar</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)" data-nav="bird_repellent"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)" data-nav="case_studies"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;contact&apos;)" data-nav="contact"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+    
+    <div class="navbar-end">
+      <button class="btn btn-primary" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+        <span data-type="text">Get Quote</span>
+      </button>
+    </div>
+    
+    <!-- Mobile menu dropdown -->
+    <div class="dropdown dropdown-end lg:hidden absolute top-16 right-0 w-full bg-base-100 shadow-lg z-40 hidden" id="mobileMenu" data-type="container">
+      <ul class="menu p-4 gap-2">
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;homepage&apos;)"><span data-type="text">Home</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+  </div>
+  <style>
+    [data-section-id="common_header"] .nav-link.active {
+      border-bottom-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    
+    [data-section-id="common_header"] .navbar {
+      border-bottom: var(--border) solid var(--color-base-300);
+    }
+  </style>
+  <script>
+    (function() {
+      // Toggle mobile menu
+      window.toggleMobileMenu = function() {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        if (mobileMenu) {
+          mobileMenu.classList.toggle(&apos;hidden&apos;);
+        }
+      };
+      
+      // Highlight active navigation item
+      function highlightActiveNav() {
+        const currentPageId = getCurrentPageId();
+        const navLinks = document.querySelectorAll(&apos;[data-section-id="common_header"] [data-nav]&apos;);
+        
+        navLinks.forEach(link => {
+          const navTarget = link.getAttribute(&apos;data-nav&apos;);
+          if (navTarget === currentPageId) {
+            link.classList.add(&apos;active&apos;);
+          } else {
+            link.classList.remove(&apos;active&apos;);
+          }
+        });
+      }
+      
+      // Initialize on page load
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        highlightActiveNav();
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener(&apos;click&apos;, function(e) {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        const menuButton = document.querySelector(&apos;[data-section-id="common_header"] .lg\\:hidden&apos;);
+        
+        if (mobileMenu && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+          mobileMenu.classList.add(&apos;hidden&apos;);
+        }
+      });
+    })();
+  </script>
+    
+    <div class="container mx-auto px-6 py-8 max-w-7xl">
+        <div data-section-id="TitleSection" data-section-type="section" class="mb-12">
+    <div class="flex items-center justify-between mb-6">
+        <div data-type="container">
+            <button class="btn btn-ghost text-secondary btn-hover-underline mb-4" data-type="button" onclick="navigateTo(&apos;solar&apos;)">
+                <span class="iconify text-secondary" data-icon="heroicons:arrow-left" data-width="20" data-type="icon"></span>
+                <span data-type="text">Back to Solar Solutions</span>
+            </button>
+            <h1 class="text-5xl font-bold text-primary mb-4" data-type="text">Compatibility Check</h1>
+            <p class="text-xl text-base-content opacity-80 max-w-3xl" data-type="text">
+                Review the compatibility analysis for your selected solar products and explore our recommended configurations tailored to your specific requirements.
+            </p>
+        </div>
+        <div class="hidden lg:block" data-type="container">
+            <span class="iconify text-primary opacity-30" data-icon="mdi:solar-panel-large" data-width="120" data-type="icon"></span>
+        </div>
+    </div>
+</div><div data-section-id="CompatibilityResultsSection" data-section-type="section" class="section-separator py-12 mb-12">
+    <div class="flex items-center gap-3 mb-8" data-type="container">
+        <span class="iconify text-primary" data-icon="mdi:check-circle-outline" data-width="32" data-type="icon"></span>
+        <h2 class="text-3xl font-bold text-primary" data-type="text">Compatibility Results</h2>
+    </div>
+    
+    <div class="bg-base-100 rounded-lg shadow-custom p-6" data-type="container">
+        <div class="overflow-x-auto">
+            <table class="table w-full" data-type="container">
+                <thead>
+                    <tr>
+                        <th class="cursor-pointer hover:bg-base-200" data-type="button" onclick="sortTable(&apos;product&apos;)">
+                            <div class="flex items-center gap-2" data-type="container">
+                                <span data-type="text">Product</span>
+                                <span class="iconify" data-icon="heroicons:arrows-up-down" data-width="16" data-type="icon"></span>
+                            </div>
+                        </th>
+                        <th class="cursor-pointer hover:bg-base-200" data-type="button" onclick="sortTable(&apos;type&apos;)">
+                            <div class="flex items-center gap-2" data-type="container">
+                                <span data-type="text">Type</span>
+                                <span class="iconify" data-icon="heroicons:arrows-up-down" data-width="16" data-type="icon"></span>
+                            </div>
+                        </th>
+                        <th class="cursor-pointer hover:bg-base-200" data-type="button" onclick="sortTable(&apos;status&apos;)">
+                            <div class="flex items-center gap-2" data-type="container">
+                                <span data-type="text">Status</span>
+                                <span class="iconify" data-icon="heroicons:arrows-up-down" data-width="16" data-type="icon"></span>
+                            </div>
+                        </th>
+                        <th data-type="text">Comments</th>
+                        <th data-type="text">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-row-hover" data-repeatable="true" data-type="container">
+                        <td data-type="container">
+                            <div class="flex items-center gap-3" data-type="container">
+                                <div class="avatar" data-type="container">
+                                    <div class="mask mask-squircle w-12 h-12">
+                                        <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/98bd07a5-05e8-486e-a397-2bfc31a7017e.png" alt="Solar Panel" data-type="image">
+                                    </div>
+                                </div>
+                                <div data-type="container">
+                                    <div class="font-bold" data-type="text">Agricultural Solar Irrigation System</div>
+                                    <div class="text-sm opacity-50" data-type="text">Model: ASI-2000</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-type="text">Irrigation</td>
+                        <td data-type="container">
+                            <div class="tooltip-custom">
+                                <span class="badge status-badge-success" data-type="text">Compatible</span>
+                                <span class="tooltip-text">Fully compatible with your requirements</span>
+                            </div>
+                        </td>
+                        <td data-type="text">Optimal for 50-acre coverage with high efficiency rating</td>
+                        <td data-type="container">
+                            <button class="btn btn-ghost btn-xs text-secondary" data-type="button" onclick="navigateTo(&apos;agricultural_solar_irrigation_detail&apos;)">
+                                <span class="iconify" data-icon="heroicons:eye" data-width="16" data-type="icon"></span>
+                                <span data-type="text">View Details</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="table-row-hover" data-repeatable="true" data-type="container">
+                        <td data-type="container">
+                            <div class="flex items-center gap-3" data-type="container">
+                                <div class="avatar" data-type="container">
+                                    <div class="mask mask-squircle w-12 h-12">
+                                        <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/0e93cf74-a871-49f6-93f9-fe4d933d1584.png" alt="Battery Storage" data-type="image">
+                                    </div>
+                                </div>
+                                <div data-type="container">
+                                    <div class="font-bold" data-type="text">Household Energy Storage</div>
+                                    <div class="text-sm opacity-50" data-type="text">Model: HES-1500</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-type="text">Storage</td>
+                        <td data-type="container">
+                            <div class="tooltip-custom">
+                                <span class="badge status-badge-warning" data-type="text">Partial</span>
+                                <span class="tooltip-text">Compatible with minor modifications</span>
+                            </div>
+                        </td>
+                        <td data-type="text">Requires additional inverter for optimal performance</td>
+                        <td data-type="container">
+                            <button class="btn btn-ghost btn-xs text-secondary" data-type="button" onclick="navigateTo(&apos;household_energy_storage_detail&apos;)">
+                                <span class="iconify" data-icon="heroicons:eye" data-width="16" data-type="icon"></span>
+                                <span data-type="text">View Details</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="table-row-hover" data-repeatable="true" data-type="container">
+                        <td data-type="container">
+                            <div class="flex items-center gap-3" data-type="container">
+                                <div class="avatar" data-type="container">
+                                    <div class="mask mask-squircle w-12 h-12">
+                                        <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/50cf2263-a4f8-48a8-aadc-fb60434c2d52.png" alt="Water Pump" data-type="image">
+                                    </div>
+                                </div>
+                                <div data-type="container">
+                                    <div class="font-bold" data-type="text">Solar Water Pumps</div>
+                                    <div class="text-sm opacity-50" data-type="text">Model: SWP-800</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-type="text">Pumping</td>
+                        <td data-type="container">
+                            <div class="tooltip-custom">
+                                <span class="badge status-badge-success" data-type="text">Compatible</span>
+                                <span class="tooltip-text">Perfect match for your water needs</span>
+                            </div>
+                        </td>
+                        <td data-type="text">Excellent flow rate for agricultural applications</td>
+                        <td data-type="container">
+                            <button class="btn btn-ghost btn-xs text-secondary" data-type="button" onclick="navigateTo(&apos;solar_water_pumps_detail&apos;)">
+                                <span class="iconify" data-icon="heroicons:eye" data-width="16" data-type="icon"></span>
+                                <span data-type="text">View Details</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div><div data-section-id="RecommendedConfigurationsSection" data-section-type="section" class="mb-12">
+    <div class="flex items-center gap-3 mb-8" data-type="container">
+        <span class="iconify text-primary" data-icon="mdi:cog-outline" data-width="32" data-type="icon"></span>
+        <h2 class="text-3xl font-bold text-primary" data-type="text">Recommended Configurations</h2>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-type="container">
+        <div class="card bg-base-100 shadow-custom config-card" data-repeatable="true" data-type="container">
+            <div class="card-body p-6">
+                <div class="flex items-center gap-3 mb-4" data-type="container">
+                    <span class="iconify text-accent" data-icon="mdi:package-variant" data-width="48" data-type="icon"></span>
+                    <h3 class="card-title text-primary" data-type="text">Basic Package</h3>
+                </div>
+                <div class="space-y-3 mb-6" data-type="container">
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Coverage:</span>
+                        <span class="text-sm" data-type="text">25-30 acres</span>
+                    </div>
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Power Output:</span>
+                        <span class="text-sm" data-type="text">15 kW</span>
+                    </div>
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Estimated ROI:</span>
+                        <span class="text-sm font-bold text-success" data-type="text">3-4 years</span>
+                    </div>
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Investment:</span>
+                        <span class="text-sm font-bold" data-type="text">$25,000 - $30,000</span>
+                    </div>
+                </div>
+                <div class="card-actions justify-end">
+                    <button class="btn btn-secondary w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+                        <span data-type="text">Select Package</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card bg-base-100 shadow-custom config-card" data-repeatable="true" data-type="container">
+            <div class="card-body p-6">
+                <div class="flex items-center gap-3 mb-4" data-type="container">
+                    <span class="iconify text-accent" data-icon="mdi:package-variant-closed" data-width="48" data-type="icon"></span>
+                    <h3 class="card-title text-primary" data-type="text">Standard Package</h3>
+                    <div class="badge badge-secondary" data-type="text">Popular</div>
+                </div>
+                <div class="space-y-3 mb-6" data-type="container">
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Coverage:</span>
+                        <span class="text-sm" data-type="text">40-50 acres</span>
+                    </div>
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Power Output:</span>
+                        <span class="text-sm" data-type="text">25 kW</span>
+                    </div>
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Estimated ROI:</span>
+                        <span class="text-sm font-bold text-success" data-type="text">2-3 years</span>
+                    </div>
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Investment:</span>
+                        <span class="text-sm font-bold" data-type="text">$40,000 - $50,000</span>
+                    </div>
+                </div>
+                <div class="card-actions justify-end">
+                    <button class="btn btn-secondary w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+                        <span data-type="text">Select Package</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card bg-base-100 shadow-custom config-card" data-repeatable="true" data-type="container">
+            <div class="card-body p-6">
+                <div class="flex items-center gap-3 mb-4" data-type="container">
+                    <span class="iconify text-accent" data-icon="mdi:package-variant-plus" data-width="48" data-type="icon"></span>
+                    <h3 class="card-title text-primary" data-type="text">Premium Package</h3>
+                </div>
+                <div class="space-y-3 mb-6" data-type="container">
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Coverage:</span>
+                        <span class="text-sm" data-type="text">75+ acres</span>
+                    </div>
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Power Output:</span>
+                        <span class="text-sm" data-type="text">40 kW</span>
+                    </div>
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Estimated ROI:</span>
+                        <span class="text-sm font-bold text-success" data-type="text">1.5-2 years</span>
+                    </div>
+                    <div class="flex justify-between" data-type="container">
+                        <span class="text-sm font-medium" data-type="text">Investment:</span>
+                        <span class="text-sm font-bold" data-type="text">$65,000 - $80,000</span>
+                    </div>
+                </div>
+                <div class="card-actions justify-end">
+                    <button class="btn btn-secondary w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+                        <span data-type="text">Select Package</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="NextStepsSection" data-section-type="section" class="section-separator py-12">
+    <div class="text-center max-w-4xl mx-auto" data-type="container">
+        <div class="flex items-center justify-center gap-3 mb-6" data-type="container">
+            <span class="iconify text-primary" data-icon="mdi:arrow-right-circle-outline" data-width="32" data-type="icon"></span>
+            <h2 class="text-3xl font-bold text-primary" data-type="text">Next Steps</h2>
+        </div>
+        
+        <p class="text-lg text-base-content opacity-80 mb-8" data-type="text">
+            Ready to move forward with your solar solution? Our team is here to help you implement the perfect configuration for your agricultural needs.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-type="container">
+            <button class="btn btn-primary btn-lg px-8" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+                <span class="iconify" data-icon="mdi:email-outline" data-width="20" data-type="icon"></span>
+                <span data-type="text">Request Quote</span>
+            </button>
+            
+            <button class="btn btn-ghost btn-lg text-secondary btn-hover-underline" data-type="button" onclick="navigateTo(&apos;solar&apos;)">
+                <span class="iconify text-secondary" data-icon="heroicons:arrow-left" data-width="20" data-type="icon"></span>
+                <span data-type="text">Back to Solar Solutions</span>
+            </button>
+        </div>
+        
+        <div class="mt-8 p-6 bg-base-200 rounded-lg" data-type="container">
+            <div class="flex items-center justify-center gap-2 mb-3" data-type="container">
+                <span class="iconify text-info" data-icon="mdi:information-outline" data-width="24" data-type="icon"></span>
+                <h3 class="font-semibold text-base-content" data-type="text">What happens next?</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm" data-type="container">
+                <div class="flex items-center gap-2" data-type="container">
+                    <span class="badge badge-primary badge-sm" data-type="text">1</span>
+                    <span data-type="text">Site assessment and consultation</span>
+                </div>
+                <div class="flex items-center gap-2" data-type="container">
+                    <span class="badge badge-primary badge-sm" data-type="text">2</span>
+                    <span data-type="text">Custom proposal and timeline</span>
+                </div>
+                <div class="flex items-center gap-2" data-type="container">
+                    <span class="badge badge-primary badge-sm" data-type="text">3</span>
+                    <span data-type="text">Professional installation and support</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+    
+    <div data-section-id="common_footer" data-section-type="common_footer" class="bg-base-200 mt-16">
+    <footer class="footer footer-horizontal p-10 text-base-content" data-type="container">
+      <aside data-type="container">
+        <div class="flex items-center gap-3 mb-4" data-type="container">
+          <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="48" data-type="icon"></span>
+          <div data-type="container">
+            <h3 class="font-bold text-lg text-primary" data-type="text">AgroTech Solutions</h3>
+            <p class="text-sm text-base-content opacity-70" data-type="text">Advanced agricultural technology since 2010</p>
+          </div>
+        </div>
+        <p class="text-sm max-w-sm" data-type="text">Providing energy-efficient irrigation, solar solutions, and bird repellent systems for modern farming operations worldwide.</p>
+        <div class="flex gap-3 mt-4" data-type="container">
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:phone" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:email" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:whatsapp" data-width="20" data-type="icon"></span>
+        </div>
+      </aside>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Products</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation Systems</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar Solutions</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Support</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact Us</span></button>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Technical Support</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Installation Guide</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Warranty</span></a>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Language &amp; Legal</header>
+        <div class="form-control" data-type="container">
+          <label class="label cursor-pointer w-max gap-2" data-type="container">
+            <span class="iconify" data-icon="mdi:translate" data-width="16" data-type="icon"></span>
+            <select class="select select-bordered select-sm w-32" data-type="input">
+              <option selected="" data-type="text">English</option>
+              <option data-type="text">Serbian</option>
+            </select>
+          </label>
+        </div>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Privacy Policy</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Terms of Service</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">GDPR Notice</span></a>
+      </nav>
+    </footer>
+    
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content border-t border-base-300" data-type="container">
+      <aside data-type="container">
+        <p class="text-sm" data-type="text">Copyright © 2025 AgroTech Solutions. All rights reserved. | Belgrade, Serbia</p>
+      </aside>
+    </footer>
+  </div>
+  <style>
+    [data-section-id="common_footer"] .link:hover {
+      color: var(--color-secondary);
+      transition: color 0.2s ease-in-out;
+    }
+    
+    [data-section-id="common_footer"] .iconify:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+  </style>
+  <script>
+    (function() {
+      // Language toggle functionality
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        const languageSelect = document.querySelector(&apos;[data-section-id="common_footer"] select&apos;);
+        if (languageSelect) {
+          languageSelect.addEventListener(&apos;change&apos;, function(e) {
+            const selectedLanguage = e.target.value;
+            // Here you would implement actual language switching logic
+            console.log(&apos;Language changed to:&apos;, selectedLanguage);
+            // For demo purposes, just show an alert
+            // In a real application, this would trigger translation updates
+          });
+        }
+      });
+    })();
+  </script>
+    
+    <script>
+    /* JavaScript code for common usage, should be wrapped in a closure */
+    (function() {
+      // Navigation function for page transitions
+      window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        if (isInIframe) {
+          window.parent.postMessage({
+            type: &apos;iframeNavigation&apos;,
+            targetPageId: targetPageId
+          }, &apos;*&apos;);
+        } else {
+          window.location.href = targetFileName;
+        }
+      };
+      
+      // Get current page for navigation highlighting
+      window.getCurrentPageId = function() {
+        const path = window.location.pathname;
+        const filename = path.split(&apos;/&apos;).pop();
+        return filename.replace(&apos;.html&apos;, &apos;&apos;) || &apos;homepage&apos;;
+      };
+    })();
+  </script>
+    <script>
+/* JavaScript for compatibility check page functionality */
+(function() {
+    // Table sorting functionality
+    window.sortTable = function(column) {
+        console.log(&apos;Sorting table by:&apos;, column);
+        // Stub function for table sorting
+        // In a real implementation, this would sort the table data
+    };
+    
+    // Initialize page functionality
+    document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        // Add hover effects to table rows
+        const tableRows = document.querySelectorAll(&apos;.table-row-hover&apos;);
+        tableRows.forEach(row => {
+            row.addEventListener(&apos;mouseenter&apos;, function() {
+                this.style.backgroundColor = &apos;var(--color-base-200)&apos;;
+            });
+            
+            row.addEventListener(&apos;mouseleave&apos;, function() {
+                this.style.backgroundColor = &apos;&apos;;
+            });
+        });
+        
+        // Add hover effects to configuration cards
+        const configCards = document.querySelectorAll(&apos;.config-card&apos;);
+        configCards.forEach(card => {
+            card.addEventListener(&apos;mouseenter&apos;, function() {
+                this.style.transform = &apos;translateY(-2px)&apos;;
+                this.style.boxShadow = &apos;0 8px 16px rgba(0, 0, 0, 0.15)&apos;;
+            });
+            
+            card.addEventListener(&apos;mouseleave&apos;, function() {
+                this.style.transform = &apos;&apos;;
+                this.style.boxShadow = &apos;&apos;;
+            });
+        });
+        
+        // Initialize tooltips
+        const tooltips = document.querySelectorAll(&apos;.tooltip-custom&apos;);
+        tooltips.forEach(tooltip => {
+            const tooltipText = tooltip.querySelector(&apos;.tooltip-text&apos;);
+            if (tooltipText) {
+                tooltip.addEventListener(&apos;mouseenter&apos;, function() {
+                    tooltipText.style.visibility = &apos;visible&apos;;
+                    tooltipText.style.opacity = &apos;1&apos;;
+                });
+                
+                tooltip.addEventListener(&apos;mouseleave&apos;, function() {
+                    tooltipText.style.visibility = &apos;hidden&apos;;
+                    tooltipText.style.opacity = &apos;0&apos;;
+                });
+            }
+        });
+    });
+})();
+</script>
+
+<script>
+      Holder.run({
+        domain: "placehold.co"
+      })
+    </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

@@ -1,0 +1,926 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Dryland Farming Case Study</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 1920
+                const height = 1080
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'homepage': 'Homepage',
+    'irrigation': 'Irrigation Systems',
+    'irrigation_center_pivot': 'Center Pivot Irrigation Detail',
+    'irrigation_linear': 'Linear Irrigation Detail',
+    'irrigation_hose_reel': 'Hose Reel Irrigation Detail',
+    'irrigation_drip': 'Drip Irrigation Detail',
+    'solar': 'Solar Solutions',
+    'solar_agri_irrigation': 'Agricultural Solar Irrigation Detail',
+    'solar_household_storage': 'Household Energy Storage Detail',
+    'solar_commercial_industrial': 'Commercial/Industrial Solar Detail',
+    'solar_water_pumps': 'Solar Water Pumps Detail',
+    'bird_repellent': 'Bird Repellent Systems',
+    'bird_ultrasonic': 'Ultrasonic Repellent Detail',
+    'bird_visual': 'Visual Deterrent Detail',
+    'contact': 'Contact',
+    'submission_confirmation': 'Inquiry Confirmation',
+    'compatibility_check': 'Compatibility Check',
+    'case_studies': 'Case Studies',
+    'case_study_farm_irrigation': 'Farm Irrigation Case Study',
+    'case_study_greenhouse_solar': 'Greenhouse Solar Case Study',
+    'case_study_orchard_repellent': 'Orchard Repellent Case Study',
+    'case_study_dryland_farming': 'Dryland Farming Case Study'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="en" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dryland Farming Case Study - Agricultural Solutions</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+    /* CSS code for common usage*/
+    
+    /* daisyUI Theme Variables Customization
+     * Based on the selected daisyUI theme and UI guidance requirements,
+     * customize only the CSS variables that need to be different from the theme defaults.
+     */
+    
+    :root {
+      /* Brand colors customization */
+      --color-primary: rgba(85, 107, 47, 1); /* Olive Green #556B2F */
+      --color-primary-content: rgba(255, 255, 255, 1); /* White text on primary */
+      --color-secondary: rgba(135, 206, 235, 1); /* Sky Blue #87CEEB */
+      --color-secondary-content: rgba(51, 51, 51, 1); /* Dark gray text on secondary */
+      --color-accent: rgba(139, 69, 19, 1); /* Warm Earth Brown #8B4513 */
+      --color-accent-content: rgba(255, 255, 255, 1); /* White text on accent */
+      
+      /* Background colors */
+      --color-base-100: rgba(255, 255, 255, 1); /* White */
+      --color-base-200: rgba(245, 245, 245, 1); /* Light Gray */
+      --color-base-300: rgba(229, 229, 229, 1); /* Slightly darker gray for borders */
+      --color-base-content: rgba(51, 51, 51, 1); /* Dark Gray text */
+      
+      /* Semantic colors */
+      --color-success: rgba(107, 142, 35, 1); /* Muted green #6B8E23 */
+      --color-success-content: rgba(255, 255, 255, 1);
+      --color-warning: rgba(255, 165, 0, 1); /* Amber #FFA500 */
+      --color-warning-content: rgba(51, 51, 51, 1);
+      --color-error: rgba(205, 92, 92, 1); /* Terra cotta #CD5C5C */
+      --color-error-content: rgba(255, 255, 255, 1);
+      --color-info: rgba(135, 206, 235, 1); /* Soft blue #87CEEB */
+      --color-info-content: rgba(51, 51, 51, 1);
+      
+      /* Border radius - modern but restrained */
+      --radius-box: 0.25rem; /* 4px */
+      --radius-field: 0.25rem; /* 4px */
+      --radius-selector: 0.25rem; /* 4px */
+      
+      /* Border width */
+      --border: 1px;
+    }
+    
+    /* Typography - Times New Roman serif */
+    body {
+      font-family: "Times New Roman", Times, serif;
+    }
+    
+    /* Subtle shadows */
+    .shadow-custom {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Smooth transitions for interactive elements */
+    .nav-link {
+      transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    }
+    
+    .nav-link:hover {
+      border-bottom: 2px solid var(--color-secondary);
+    }
+  </style>
+    <style>
+/* Custom styles for case study page */
+.hero-case-study {
+  background-position: center;
+  background-size: cover;
+  min-height: 400px;
+}
+
+.section-divider {
+  border-bottom: 1px solid var(--color-base-300);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+}
+
+.data-table th {
+  background-color: var(--color-base-200);
+  font-weight: 600;
+}
+
+.data-table td {
+  text-align: right;
+}
+
+.data-table td:first-child {
+  text-align: left;
+}
+
+.case-study-card {
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.case-study-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.download-cta {
+  background: linear-gradient(135deg, var(--color-primary) 0%, rgba(85, 107, 47, 0.9) 100%);
+}
+
+.section-icon {
+  color: var(--color-primary);
+}
+</style>
+<script src="./assets/static/uxbot/25_6/holder.js"></script>
+<script src="./assets/interactive-enhancements.js"></script></head>
+<body class="bg-base-100">
+    <div data-section-id="common_header" data-section-type="common_header" class="navbar bg-base-100 sticky top-0 z-50 shadow-custom h-16">
+    <div class="navbar-start">
+      <button class="btn btn-ghost lg:hidden" data-type="button" onclick="toggleMobileMenu()">
+        <span class="iconify" data-icon="heroicons:bars-3" data-width="24" data-type="icon"></span>
+      </button>
+      <button class="btn btn-ghost normal-case text-xl font-bold text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+        <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="32" data-type="icon"></span>
+        <span data-type="text">AgroTech Solutions</span>
+      </button>
+    </div>
+    
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-2">
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;homepage&apos;)" data-nav="homepage"><span data-type="text">Home</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)" data-nav="irrigation"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;solar&apos;)" data-nav="solar"><span data-type="text">Solar</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)" data-nav="bird_repellent"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)" data-nav="case_studies"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;contact&apos;)" data-nav="contact"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+    
+    <div class="navbar-end">
+      <button class="btn btn-primary" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+        <span data-type="text">Get Quote</span>
+      </button>
+    </div>
+    
+    <!-- Mobile menu dropdown -->
+    <div class="dropdown dropdown-end lg:hidden absolute top-16 right-0 w-full bg-base-100 shadow-lg z-40 hidden" id="mobileMenu" data-type="container">
+      <ul class="menu p-4 gap-2">
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;homepage&apos;)"><span data-type="text">Home</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+  </div>
+  <style>
+    [data-section-id="common_header"] .nav-link.active {
+      border-bottom-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    
+    [data-section-id="common_header"] .navbar {
+      border-bottom: var(--border) solid var(--color-base-300);
+    }
+  </style>
+  <script>
+    (function() {
+      // Toggle mobile menu
+      window.toggleMobileMenu = function() {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        if (mobileMenu) {
+          mobileMenu.classList.toggle(&apos;hidden&apos;);
+        }
+      };
+      
+      // Highlight active navigation item
+      function highlightActiveNav() {
+        const currentPageId = getCurrentPageId();
+        const navLinks = document.querySelectorAll(&apos;[data-section-id="common_header"] [data-nav]&apos;);
+        
+        navLinks.forEach(link => {
+          const navTarget = link.getAttribute(&apos;data-nav&apos;);
+          if (navTarget === currentPageId) {
+            link.classList.add(&apos;active&apos;);
+          } else {
+            link.classList.remove(&apos;active&apos;);
+          }
+        });
+      }
+      
+      // Initialize on page load
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        highlightActiveNav();
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener(&apos;click&apos;, function(e) {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        const menuButton = document.querySelector(&apos;[data-section-id="common_header"] .lg\\:hidden&apos;);
+        
+        if (mobileMenu && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+          mobileMenu.classList.add(&apos;hidden&apos;);
+        }
+      });
+    })();
+  </script>
+    
+    <main class="min-h-screen">
+        <div data-section-id="BreadcrumbSection" data-section-type="section" class="bg-base-200 py-4">
+    <div class="container mx-auto px-6">
+        <div class="text-sm breadcrumbs" data-type="container">
+            <ul>
+                <li>
+                    <button onclick="navigateTo(&apos;homepage&apos;)" class="flex items-center gap-1 text-primary hover:text-secondary" data-type="button">
+                        <span class="iconify" data-icon="heroicons:home-solid" data-width="16" data-type="icon"></span>
+                        <span data-type="text">Home</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="navigateTo(&apos;case_studies&apos;)" class="flex items-center gap-1 text-primary hover:text-secondary" data-type="button">
+                        <span class="iconify" data-icon="heroicons:document-text-solid" data-width="16" data-type="icon"></span>
+                        <span data-type="text">Case Studies</span>
+                    </button>
+                </li>
+                <li>
+                    <span class="flex items-center gap-1 text-base-content" data-type="text">
+                        <span class="iconify" data-icon="heroicons:beaker-solid" data-width="16" data-type="icon"></span>
+                        Dryland Farming Case Study
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><div data-section-id="HeroSection" data-section-type="section" class="hero hero-case-study" style="background-image: url(&apos;https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/038f5c03-8472-4688-aaf0-8c4d65645ffb.png&apos;);">
+    <div class="hero-overlay"></div>
+    <div class="hero-content text-center text-neutral-content py-24">
+        <div class="max-w-4xl" data-type="container">
+            <h1 class="text-5xl font-bold mb-6" data-type="text">Dryland Farming Case Study</h1>
+            <p class="text-xl mb-8 max-w-2xl mx-auto" data-type="text">
+                Energy-efficient irrigation and solar solutions transforming agricultural productivity in water-scarce regions
+            </p>
+            <div class="flex items-center justify-center gap-4 text-lg" data-type="container">
+                <div class="flex items-center gap-2" data-type="container">
+                    <span class="iconify" data-icon="heroicons:map-pin-solid" data-width="20" data-type="icon"></span>
+                    <span data-type="text">Central Valley, California</span>
+                </div>
+                <div class="flex items-center gap-2" data-type="container">
+                    <span class="iconify" data-icon="heroicons:calendar-solid" data-width="20" data-type="icon"></span>
+                    <span data-type="text">2023-2024</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="OverviewSection" data-section-type="section" class="bg-base-100 py-16">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center gap-3 mb-6 section-divider" data-type="container">
+                <span class="iconify section-icon" data-icon="heroicons:document-text-solid" data-width="32" data-type="icon"></span>
+                <h2 class="text-3xl font-bold text-primary" data-type="text">Project Overview</h2>
+            </div>
+            
+            <div class="prose prose-lg max-w-none mb-8" data-type="container">
+                <p data-type="text">
+                    This comprehensive case study examines the implementation of energy-efficient irrigation systems and solar power solutions across 500 acres of dryland farming operations. The project aimed to reduce water consumption by 40% while maintaining crop yields and achieving energy independence through renewable solar technology.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" data-type="container">
+                <div class="card bg-base-200 shadow-custom" data-type="container">
+                    <div class="card-body text-center">
+                        <div class="text-2xl font-bold text-primary" data-type="text">500</div>
+                        <div class="text-sm text-base-content" data-type="text">Acres Covered</div>
+                    </div>
+                </div>
+                <div class="card bg-base-200 shadow-custom" data-type="container">
+                    <div class="card-body text-center">
+                        <div class="text-2xl font-bold text-secondary" data-type="text">18</div>
+                        <div class="text-sm text-base-content" data-type="text">Months Duration</div>
+                    </div>
+                </div>
+                <div class="card bg-base-200 shadow-custom" data-type="container">
+                    <div class="card-body text-center">
+                        <div class="text-2xl font-bold text-accent" data-type="text">3</div>
+                        <div class="text-sm text-base-content" data-type="text">Partner Organizations</div>
+                    </div>
+                </div>
+                <div class="card bg-base-200 shadow-custom" data-type="container">
+                    <div class="card-body text-center">
+                        <div class="text-2xl font-bold text-success" data-type="text">40%</div>
+                        <div class="text-sm text-base-content" data-type="text">Water Savings</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="TechnicalDataSection" data-section-type="section" class="bg-base-200 py-16">
+    <div class="container mx-auto px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center gap-3 mb-8 section-divider" data-type="container">
+                <span class="iconify section-icon" data-icon="heroicons:chart-bar-solid" data-width="32" data-type="icon"></span>
+                <h2 class="text-3xl font-bold text-primary" data-type="text">Technical Performance Data</h2>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="table table-zebra data-table bg-base-100 shadow-custom" data-type="container">
+                    <thead>
+                        <tr>
+                            <th class="cursor-pointer hover:bg-base-300" data-type="text" onclick="sortTable(0)">
+                                <div class="flex items-center gap-2">
+                                    <span>Performance Metric</span>
+                                    <span class="iconify" data-icon="heroicons:arrows-up-down" data-width="16" data-type="icon"></span>
+                                </div>
+                            </th>
+                            <th class="cursor-pointer hover:bg-base-300" data-type="text" onclick="sortTable(1)">
+                                <div class="flex items-center gap-2">
+                                    <span>Baseline</span>
+                                    <span class="iconify" data-icon="heroicons:arrows-up-down" data-width="16" data-type="icon"></span>
+                                </div>
+                            </th>
+                            <th class="cursor-pointer hover:bg-base-300" data-type="text" onclick="sortTable(2)">
+                                <div class="flex items-center gap-2">
+                                    <span>Post-Implementation</span>
+                                    <span class="iconify" data-icon="heroicons:arrows-up-down" data-width="16" data-type="icon"></span>
+                                </div>
+                            </th>
+                            <th class="cursor-pointer hover:bg-base-300" data-type="text" onclick="sortTable(3)">
+                                <div class="flex items-center gap-2">
+                                    <span>Improvement</span>
+                                    <span class="iconify" data-icon="heroicons:arrows-up-down" data-width="16" data-type="icon"></span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-type="text">Water Consumption (m³/acre/year)</td>
+                            <td data-type="text">2,400</td>
+                            <td data-type="text">1,440</td>
+                            <td class="text-success font-semibold" data-type="text">-40%</td>
+                        </tr>
+                        <tr>
+                            <td data-type="text">Energy Consumption (kWh/acre/year)</td>
+                            <td data-type="text">850</td>
+                            <td data-type="text">320</td>
+                            <td class="text-success font-semibold" data-type="text">-62%</td>
+                        </tr>
+                        <tr>
+                            <td data-type="text">Solar Energy Generation (kWh/year)</td>
+                            <td data-type="text">0</td>
+                            <td data-type="text">180,000</td>
+                            <td class="text-primary font-semibold" data-type="text">+100%</td>
+                        </tr>
+                        <tr>
+                            <td data-type="text">Crop Yield (tons/acre)</td>
+                            <td data-type="text">3.2</td>
+                            <td data-type="text">3.4</td>
+                            <td class="text-success font-semibold" data-type="text">+6%</td>
+                        </tr>
+                        <tr>
+                            <td data-type="text">Operating Cost ($/acre/year)</td>
+                            <td data-type="text">1,200</td>
+                            <td data-type="text">720</td>
+                            <td class="text-success font-semibold" data-type="text">-40%</td>
+                        </tr>
+                        <tr>
+                            <td data-type="text">Carbon Footprint (kg CO₂/acre/year)</td>
+                            <td data-type="text">450</td>
+                            <td data-type="text">180</td>
+                            <td class="text-success font-semibold" data-type="text">-60%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="ImplementationSection" data-section-type="section" class="bg-base-100 py-16">
+    <div class="container mx-auto px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center gap-3 mb-8 section-divider" data-type="container">
+                <span class="iconify section-icon" data-icon="heroicons:cog-6-tooth-solid" data-width="32" data-type="icon"></span>
+                <h2 class="text-3xl font-bold text-primary" data-type="text">Implementation Details</h2>
+            </div>
+            
+            <div class="space-y-12" data-type="container">
+                <!-- Energy-Efficient Irrigation -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center" data-type="container">
+                    <div class="lg:col-span-5" data-type="container">
+                        <div class="card bg-base-200 shadow-custom overflow-hidden">
+                            <figure>
+                                <img src="https://images.unsplash.com/photo-1663079402880-97a2e68aafc7?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwzfHxkcmlwJTIwaXJyaWdhdGlvbiUyMGluc3RhbGxhdGlvbnxlbnwwfHx8fDE3NTMxNjM0NDZ8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=500&amp;h=350" alt="Drip irrigation system being installed in dryland farming field" class="w-full h-64 object-cover" data-type="image">
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7" data-type="container">
+                        <h3 class="text-2xl font-bold text-secondary mb-4" data-type="text">Energy-Efficient Irrigation</h3>
+                        <div class="prose prose-lg" data-type="container">
+                            <p data-type="text">
+                                The project implemented a state-of-the-art drip irrigation system with precision sensors and automated controls. Smart moisture sensors monitor soil conditions in real-time, ensuring water is delivered only when and where needed.
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 text-base-content">
+                                <li data-type="text">Variable-rate drip emitters for optimal water distribution</li>
+                                <li data-type="text">Soil moisture sensors with wireless connectivity</li>
+                                <li data-type="text">Automated scheduling based on weather forecasts</li>
+                                <li data-type="text">Pressure-compensating technology for uniform application</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Solar Solutions -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center" data-type="container">
+                    <div class="lg:col-span-7 order-2 lg:order-1" data-type="container">
+                        <h3 class="text-2xl font-bold text-secondary mb-4" data-type="text">Solar Power Integration</h3>
+                        <div class="prose prose-lg" data-type="container">
+                            <p data-type="text">
+                                A 150kW solar array was installed to power the irrigation system and provide excess energy back to the grid. The system includes battery storage for consistent operation during peak irrigation periods.
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 text-base-content">
+                                <li data-type="text">High-efficiency monocrystalline solar panels</li>
+                                <li data-type="text">Grid-tied system with net metering capability</li>
+                                <li data-type="text">50kWh battery storage for irrigation pumps</li>
+                                <li data-type="text">Remote monitoring and performance analytics</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-5 order-1 lg:order-2" data-type="container">
+                        <div class="card bg-base-200 shadow-custom overflow-hidden">
+                            <figure>
+                                <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/82403f03-a0a7-4cc9-94ee-027d4d651b91.png" alt="Solar panel array installed over agricultural field with crops below" class="w-full h-64 object-cover" data-type="image">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="FarmerFeedbackSection" data-section-type="section" class="bg-base-200 py-16">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center gap-3 mb-8 section-divider" data-type="container">
+                <span class="iconify section-icon" data-icon="heroicons:chat-bubble-left-right-solid" data-width="32" data-type="icon"></span>
+                <h2 class="text-3xl font-bold text-primary" data-type="text">Farmer Feedback</h2>
+            </div>
+            
+            <div class="space-y-4" data-type="container">
+                <div class="collapse collapse-arrow bg-base-100 shadow-custom" data-type="container">
+                    <input type="radio" name="feedback-accordion" checked="checked">
+                    <div class="collapse-title font-medium text-lg">
+                        <div class="flex items-center gap-3" data-type="container">
+                            <div class="avatar" data-type="container">
+                                <div class="w-10 h-10 rounded-full">
+                                    <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/78ba0d13-c256-4b16-8ba3-c7eb92c430e6.png" alt="John Martinez avatar" data-type="image">
+                                </div>
+                            </div>
+                            <div data-type="container">
+                                <div class="font-bold" data-type="text">John Martinez</div>
+                                <div class="text-sm text-base-content opacity-70" data-type="text">Farm Owner, 500 acres</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse-content">
+                        <div class="pt-4 border-t border-base-300" data-type="container">
+                            <p class="text-base-content leading-relaxed" data-type="text">
+                                "The transformation has been remarkable. Not only are we saving 40% on water costs, but our energy bills have virtually disappeared. The automated system gives me peace of mind knowing my crops are getting exactly what they need, when they need it. The ROI exceeded our expectations within the first 18 months."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="collapse collapse-arrow bg-base-100 shadow-custom" data-type="container">
+                    <input type="radio" name="feedback-accordion">
+                    <div class="collapse-title font-medium text-lg">
+                        <div class="flex items-center gap-3" data-type="container">
+                            <div class="avatar" data-type="container">
+                                <div class="w-10 h-10 rounded-full">
+                                    <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/cc941fb6-3563-4adb-b1b4-0fa2932a073a.png" alt="Sarah Rodriguez avatar" data-type="image">
+                                </div>
+                            </div>
+                            <div data-type="container">
+                                <div class="font-bold" data-type="text">Sarah Rodriguez</div>
+                                <div class="text-sm text-base-content opacity-70" data-type="text">Agricultural Engineer</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse-content">
+                        <div class="pt-4 border-t border-base-300" data-type="container">
+                            <p class="text-base-content leading-relaxed" data-type="text">
+                                "From a technical standpoint, this project showcases the perfect integration of precision agriculture and renewable energy. The data we&apos;re collecting is invaluable for optimizing future installations. The system&apos;s reliability has been outstanding, with 99.2% uptime over the past year."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="collapse collapse-arrow bg-base-100 shadow-custom" data-type="container">
+                    <input type="radio" name="feedback-accordion">
+                    <div class="collapse-title font-medium text-lg">
+                        <div class="flex items-center gap-3" data-type="container">
+                            <div class="avatar" data-type="container">
+                                <div class="w-10 h-10 rounded-full">
+                                    <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/3da88c5e-6f32-42f8-b172-640d0739b30f.png" alt="Mike Thompson avatar" data-type="image">
+                                </div>
+                            </div>
+                            <div data-type="container">
+                                <div class="font-bold" data-type="text">Mike Thompson</div>
+                                <div class="text-sm text-base-content opacity-70" data-type="text">Neighboring Farmer</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse-content">
+                        <div class="pt-4 border-t border-base-300" data-type="container">
+                            <p class="text-base-content leading-relaxed" data-type="text">
+                                "Seeing John&apos;s success convinced me to implement similar solutions on my farm. The environmental benefits are just as important as the economic ones. We&apos;re reducing our carbon footprint while improving profitability - it&apos;s a win-win situation that every farmer should consider."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="DownloadCTASection" data-section-type="section" class="bg-base-100 py-16">
+    <div class="container mx-auto px-6">
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="card bg-gradient-to-br from-primary to-primary/90 text-primary-content shadow-custom download-cta" data-type="container">
+                <div class="card-body py-12">
+                    <div class="flex items-center justify-center mb-6" data-type="container">
+                        <span class="iconify" data-icon="heroicons:document-arrow-down-solid" data-width="48" data-type="icon"></span>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-4" data-type="text">Download Full Report</h2>
+                    <p class="text-lg mb-8 opacity-90" data-type="text">
+                        Get the complete technical analysis, implementation guide, and financial projections for this dryland farming transformation project.
+                    </p>
+                    <button class="btn btn-secondary btn-lg shadow-custom" onclick="downloadReport()" data-type="button">
+                        <span class="iconify" data-icon="heroicons:arrow-down-tray-solid" data-width="20" data-type="icon"></span>
+                        <span data-type="text">Download PDF Report</span>
+                    </button>
+                    <div class="mt-4 text-sm opacity-75" data-type="text">
+                        PDF • 2.8 MB • 24 pages
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="RelatedCaseStudiesSection" data-section-type="section" class="bg-base-200 py-16">
+    <div class="container mx-auto px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center gap-3 mb-8 section-divider" data-type="container">
+                <span class="iconify section-icon" data-icon="heroicons:squares-2x2-solid" data-width="32" data-type="icon"></span>
+                <h2 class="text-3xl font-bold text-primary" data-type="text">Related Case Studies</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-type="container">
+                <div class="card bg-base-100 shadow-custom case-study-card cursor-pointer" onclick="navigateTo(&apos;case_study_farm_irrigation&apos;)" data-type="container" data-repeatable="true">
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1738598665698-7fd7af4b5e0c?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxjZW50ZXIlMjBwaXZvdCUyMGlycmlnYXRpb258ZW58MHx8fHwxNzUzMTYzNDQ3fDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=400&amp;h=250" alt="Modern farm irrigation system with center pivot technology" class="w-full h-48 object-cover" data-type="image">
+                    </figure>
+                    <div class="card-body">
+                        <h3 class="card-title text-primary" data-type="text">Farm Irrigation Case Study</h3>
+                        <p class="text-base-content" data-type="text">
+                            Comprehensive irrigation upgrade for a 1,200-acre farm operation, featuring center pivot systems and smart water management.
+                        </p>
+                        <div class="card-actions justify-end mt-4">
+                            <div class="badge badge-primary badge-outline" data-type="text">Irrigation</div>
+                            <div class="badge badge-secondary badge-outline" data-type="text">Large Scale</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-base-100 shadow-custom case-study-card cursor-pointer" onclick="navigateTo(&apos;case_study_greenhouse_solar&apos;)" data-type="container" data-repeatable="true">
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1720610784599-18c02b1cc9ee?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwzfHxncmVlbmhvdXNlJTIwc29sYXIlMjBwYW5lbHN8ZW58MHx8fHwxNzUzMTYzMDYyfDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=400&amp;h=250" alt="Greenhouse facility with integrated solar panel roof system" class="w-full h-48 object-cover" data-type="image">
+                    </figure>
+                    <div class="card-body">
+                        <h3 class="card-title text-primary" data-type="text">Greenhouse Solar Case Study</h3>
+                        <p class="text-base-content" data-type="text">
+                            Solar-powered greenhouse operation achieving energy independence while optimizing growing conditions for premium crops.
+                        </p>
+                        <div class="card-actions justify-end mt-4">
+                            <div class="badge badge-accent badge-outline" data-type="text">Solar</div>
+                            <div class="badge badge-success badge-outline" data-type="text">Greenhouse</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-base-100 shadow-custom case-study-card cursor-pointer" onclick="navigateTo(&apos;case_study_orchard_repellent&apos;)" data-type="container" data-repeatable="true">
+                    <figure>
+                        <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/d33ed15f-3a29-4138-8705-6dca66156403.png" alt="Orchard with bird repellent devices protecting fruit trees" class="w-full h-48 object-cover" data-type="image">
+                    </figure>
+                    <div class="card-body">
+                        <h3 class="card-title text-primary" data-type="text">Orchard Repellent Case Study</h3>
+                        <p class="text-base-content" data-type="text">
+                            Advanced bird repellent system protecting 50-acre orchard, reducing crop loss by 85% while maintaining ecological balance.
+                        </p>
+                        <div class="card-actions justify-end mt-4">
+                            <div class="badge badge-warning badge-outline" data-type="text">Bird Control</div>
+                            <div class="badge badge-info badge-outline" data-type="text">Orchard</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12" data-type="container">
+                <button class="btn btn-primary btn-lg" onclick="navigateTo(&apos;case_studies&apos;)" data-type="button">
+                    <span data-type="text">View All Case Studies</span>
+                    <span class="iconify" data-icon="heroicons:arrow-right-solid" data-width="20" data-type="icon"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+    
+    <div data-section-id="common_footer" data-section-type="common_footer" class="bg-base-200 mt-16">
+    <footer class="footer footer-horizontal p-10 text-base-content" data-type="container">
+      <aside data-type="container">
+        <div class="flex items-center gap-3 mb-4" data-type="container">
+          <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="48" data-type="icon"></span>
+          <div data-type="container">
+            <h3 class="font-bold text-lg text-primary" data-type="text">AgroTech Solutions</h3>
+            <p class="text-sm text-base-content opacity-70" data-type="text">Advanced agricultural technology since 2010</p>
+          </div>
+        </div>
+        <p class="text-sm max-w-sm" data-type="text">Providing energy-efficient irrigation, solar solutions, and bird repellent systems for modern farming operations worldwide.</p>
+        <div class="flex gap-3 mt-4" data-type="container">
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:phone" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:email" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:whatsapp" data-width="20" data-type="icon"></span>
+        </div>
+      </aside>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Products</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation Systems</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar Solutions</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Support</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact Us</span></button>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Technical Support</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Installation Guide</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Warranty</span></a>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Language &amp; Legal</header>
+        <div class="form-control" data-type="container">
+          <label class="label cursor-pointer w-max gap-2" data-type="container">
+            <span class="iconify" data-icon="mdi:translate" data-width="16" data-type="icon"></span>
+            <select class="select select-bordered select-sm w-32" data-type="input">
+              <option selected="" data-type="text">English</option>
+              <option data-type="text">Serbian</option>
+            </select>
+          </label>
+        </div>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Privacy Policy</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Terms of Service</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">GDPR Notice</span></a>
+      </nav>
+    </footer>
+    
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content border-t border-base-300" data-type="container">
+      <aside data-type="container">
+        <p class="text-sm" data-type="text">Copyright © 2025 AgroTech Solutions. All rights reserved. | Belgrade, Serbia</p>
+      </aside>
+    </footer>
+  </div>
+  <style>
+    [data-section-id="common_footer"] .link:hover {
+      color: var(--color-secondary);
+      transition: color 0.2s ease-in-out;
+    }
+    
+    [data-section-id="common_footer"] .iconify:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+  </style>
+  <script>
+    (function() {
+      // Language toggle functionality
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        const languageSelect = document.querySelector(&apos;[data-section-id="common_footer"] select&apos;);
+        if (languageSelect) {
+          languageSelect.addEventListener(&apos;change&apos;, function(e) {
+            const selectedLanguage = e.target.value;
+            // Here you would implement actual language switching logic
+            console.log(&apos;Language changed to:&apos;, selectedLanguage);
+            // For demo purposes, just show an alert
+            // In a real application, this would trigger translation updates
+          });
+        }
+      });
+    })();
+  </script>
+    
+    <script>
+    /* JavaScript code for common usage, should be wrapped in a closure */
+    (function() {
+      // Navigation function for page transitions
+      window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        if (isInIframe) {
+          window.parent.postMessage({
+            type: &apos;iframeNavigation&apos;,
+            targetPageId: targetPageId
+          }, &apos;*&apos;);
+        } else {
+          window.location.href = targetFileName;
+        }
+      };
+      
+      // Get current page for navigation highlighting
+      window.getCurrentPageId = function() {
+        const path = window.location.pathname;
+        const filename = path.split(&apos;/&apos;).pop();
+        return filename.replace(&apos;.html&apos;, &apos;&apos;) || &apos;homepage&apos;;
+      };
+    })();
+  </script>
+    <script>
+/* JavaScript for case study page interactions */
+(function() {
+    // Table sorting functionality
+    window.sortTable = function(columnIndex) {
+        const table = document.querySelector(&apos;.data-table tbody&apos;);
+        const rows = Array.from(table.querySelectorAll(&apos;tr&apos;));
+        
+        // Simple sorting implementation for demo purposes
+        rows.sort((a, b) => {
+            const aText = a.cells[columnIndex].textContent.trim();
+            const bText = b.cells[columnIndex].textContent.trim();
+            
+            // Try to parse as numbers for numeric columns
+            const aNum = parseFloat(aText.replace(/[^\d.-]/g, &apos;&apos;));
+            const bNum = parseFloat(bText.replace(/[^\d.-]/g, &apos;&apos;));
+            
+            if (!isNaN(aNum) && !isNaN(bNum)) {
+                return aNum - bNum;
+            }
+            
+            return aText.localeCompare(bText);
+        });
+        
+        // Clear and re-append sorted rows
+        table.innerHTML = &apos;&apos;;
+        rows.forEach(row => table.appendChild(row));
+    };
+    
+    // Download report functionality
+    window.downloadReport = function() {
+        // Simulate download process
+        const button = event.target.closest(&apos;button&apos;);
+        const originalText = button.innerHTML;
+        
+        button.innerHTML = &apos;<span class="iconify" data-icon="heroicons:arrow-path" data-width="20"></span><span>Preparing Download...</span>&apos;;
+        button.disabled = true;
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.disabled = false;
+            
+            // In a real application, this would trigger an actual file download
+            console.log(&apos;Downloading case study report...&apos;);
+            
+            // Show success feedback
+            const toast = document.createElement(&apos;div&apos;);
+            toast.className = &apos;toast toast-end&apos;;
+            toast.innerHTML = `
+                <div class="alert alert-success">
+                    <span class="iconify" data-icon="heroicons:check-circle-solid" data-width="20"></span>
+                    <span>Report download started!</span>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 3000);
+        }, 2000);
+    };
+    
+    // Initialize page interactions
+    document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        // Add hover effects to table rows
+        const tableRows = document.querySelectorAll(&apos;.data-table tbody tr&apos;);
+        tableRows.forEach(row => {
+            row.addEventListener(&apos;mouseenter&apos;, function() {
+                this.classList.add(&apos;bg-base-200&apos;);
+            });
+            row.addEventListener(&apos;mouseleave&apos;, function() {
+                this.classList.remove(&apos;bg-base-200&apos;);
+            });
+        });
+    });
+})();
+</script>
+
+<script>
+      Holder.run({
+        domain: "placehold.co"
+      })
+    </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

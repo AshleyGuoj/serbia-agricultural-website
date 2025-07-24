@@ -1,0 +1,849 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Drip Irrigation Detail</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 1920
+                const height = 1080
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'homepage': 'Homepage',
+    'irrigation': 'Irrigation Systems',
+    'irrigation_center_pivot': 'Center Pivot Irrigation Detail',
+    'irrigation_linear': 'Linear Irrigation Detail',
+    'irrigation_hose_reel': 'Hose Reel Irrigation Detail',
+    'irrigation_drip': 'Drip Irrigation Detail',
+    'solar': 'Solar Solutions',
+    'solar_agri_irrigation': 'Agricultural Solar Irrigation Detail',
+    'solar_household_storage': 'Household Energy Storage Detail',
+    'solar_commercial_industrial': 'Commercial/Industrial Solar Detail',
+    'solar_water_pumps': 'Solar Water Pumps Detail',
+    'bird_repellent': 'Bird Repellent Systems',
+    'bird_ultrasonic': 'Ultrasonic Repellent Detail',
+    'bird_visual': 'Visual Deterrent Detail',
+    'contact': 'Contact',
+    'submission_confirmation': 'Inquiry Confirmation',
+    'compatibility_check': 'Compatibility Check',
+    'case_studies': 'Case Studies',
+    'case_study_farm_irrigation': 'Farm Irrigation Case Study',
+    'case_study_greenhouse_solar': 'Greenhouse Solar Case Study',
+    'case_study_orchard_repellent': 'Orchard Repellent Case Study',
+    'case_study_dryland_farming': 'Dryland Farming Case Study'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="en" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drip Irrigation Detail - Agricultural Solutions</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+    /* CSS code for common usage*/
+    
+    /* daisyUI Theme Variables Customization
+     * Based on the selected daisyUI theme and UI guidance requirements,
+     * customize only the CSS variables that need to be different from the theme defaults.
+     */
+    
+    :root {
+      /* Brand colors customization */
+      --color-primary: rgba(85, 107, 47, 1); /* Olive Green #556B2F */
+      --color-primary-content: rgba(255, 255, 255, 1); /* White text on primary */
+      --color-secondary: rgba(135, 206, 235, 1); /* Sky Blue #87CEEB */
+      --color-secondary-content: rgba(51, 51, 51, 1); /* Dark gray text on secondary */
+      --color-accent: rgba(139, 69, 19, 1); /* Warm Earth Brown #8B4513 */
+      --color-accent-content: rgba(255, 255, 255, 1); /* White text on accent */
+      
+      /* Background colors */
+      --color-base-100: rgba(255, 255, 255, 1); /* White */
+      --color-base-200: rgba(245, 245, 245, 1); /* Light Gray */
+      --color-base-300: rgba(229, 229, 229, 1); /* Slightly darker gray for borders */
+      --color-base-content: rgba(51, 51, 51, 1); /* Dark Gray text */
+      
+      /* Semantic colors */
+      --color-success: rgba(107, 142, 35, 1); /* Muted green #6B8E23 */
+      --color-success-content: rgba(255, 255, 255, 1);
+      --color-warning: rgba(255, 165, 0, 1); /* Amber #FFA500 */
+      --color-warning-content: rgba(51, 51, 51, 1);
+      --color-error: rgba(205, 92, 92, 1); /* Terra cotta #CD5C5C */
+      --color-error-content: rgba(255, 255, 255, 1);
+      --color-info: rgba(135, 206, 235, 1); /* Soft blue #87CEEB */
+      --color-info-content: rgba(51, 51, 51, 1);
+      
+      /* Border radius - modern but restrained */
+      --radius-box: 0.25rem; /* 4px */
+      --radius-field: 0.25rem; /* 4px */
+      --radius-selector: 0.25rem; /* 4px */
+      
+      /* Border width */
+      --border: 1px;
+    }
+    
+    /* Typography - Times New Roman serif */
+    body {
+      font-family: "Times New Roman", Times, serif;
+    }
+    
+    /* Subtle shadows */
+    .shadow-custom {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Smooth transitions for interactive elements */
+    .nav-link {
+      transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    }
+    
+    .nav-link:hover {
+      border-bottom: 2px solid var(--color-secondary);
+    }
+  </style>
+    <style>
+/* Page-specific styles for drip irrigation detail page */
+
+/* Tab styling */
+.tab-active {
+  border-bottom: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Carousel styling */
+.carousel-container {
+  position: relative;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--color-base-300);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.carousel-arrow:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-arrow.prev {
+  left: 16px;
+}
+
+.carousel-arrow.next {
+  right: 16px;
+}
+
+/* Specifications table hover effect */
+.specs-table tbody tr:hover {
+  background-color: var(--color-base-200);
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Related products card hover effect */
+.related-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.related-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Breadcrumb styling */
+.breadcrumb-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: text-decoration 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+/* Focus outline for accessibility */
+.btn:focus,
+.tab:focus,
+.carousel-arrow:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+</style>
+<script src="./assets/static/uxbot/25_6/holder.js"></script>
+<script src="./assets/interactive-enhancements.js"></script></head>
+<body class="bg-base-100">
+    <div data-section-id="common_header" data-section-type="common_header" class="navbar bg-base-100 sticky top-0 z-50 shadow-custom h-16">
+    <div class="navbar-start">
+      <button class="btn btn-ghost lg:hidden" data-type="button" onclick="toggleMobileMenu()">
+        <span class="iconify" data-icon="heroicons:bars-3" data-width="24" data-type="icon"></span>
+      </button>
+      <button class="btn btn-ghost normal-case text-xl font-bold text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+        <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="32" data-type="icon"></span>
+        <span data-type="text">AgroTech Solutions</span>
+      </button>
+    </div>
+    
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-2">
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;homepage&apos;)" data-nav="homepage"><span data-type="text">Home</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)" data-nav="irrigation"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;solar&apos;)" data-nav="solar"><span data-type="text">Solar</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)" data-nav="bird_repellent"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)" data-nav="case_studies"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;contact&apos;)" data-nav="contact"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+    
+    <div class="navbar-end">
+      <button class="btn btn-primary" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+        <span data-type="text">Get Quote</span>
+      </button>
+    </div>
+    
+    <!-- Mobile menu dropdown -->
+    <div class="dropdown dropdown-end lg:hidden absolute top-16 right-0 w-full bg-base-100 shadow-lg z-40 hidden" id="mobileMenu" data-type="container">
+      <ul class="menu p-4 gap-2">
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;homepage&apos;)"><span data-type="text">Home</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+  </div>
+  <style>
+    [data-section-id="common_header"] .nav-link.active {
+      border-bottom-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    
+    [data-section-id="common_header"] .navbar {
+      border-bottom: var(--border) solid var(--color-base-300);
+    }
+  </style>
+  <script>
+    (function() {
+      // Toggle mobile menu
+      window.toggleMobileMenu = function() {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        if (mobileMenu) {
+          mobileMenu.classList.toggle(&apos;hidden&apos;);
+        }
+      };
+      
+      // Highlight active navigation item
+      function highlightActiveNav() {
+        const currentPageId = getCurrentPageId();
+        const navLinks = document.querySelectorAll(&apos;[data-section-id="common_header"] [data-nav]&apos;);
+        
+        navLinks.forEach(link => {
+          const navTarget = link.getAttribute(&apos;data-nav&apos;);
+          if (navTarget === currentPageId) {
+            link.classList.add(&apos;active&apos;);
+          } else {
+            link.classList.remove(&apos;active&apos;);
+          }
+        });
+      }
+      
+      // Initialize on page load
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        highlightActiveNav();
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener(&apos;click&apos;, function(e) {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        const menuButton = document.querySelector(&apos;[data-section-id="common_header"] .lg\\:hidden&apos;);
+        
+        if (mobileMenu && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+          mobileMenu.classList.add(&apos;hidden&apos;);
+        }
+      });
+    })();
+  </script>
+    
+    <main class="min-h-screen">
+        <div data-section-id="BreadcrumbsSection" data-section-type="section" class="bg-base-100 py-4">
+    <div class="container mx-auto px-6">
+        <div class="text-sm breadcrumbs" data-type="container">
+            <ul>
+                <li>
+                    <a class="breadcrumb-link" onclick="navigateTo(&apos;homepage&apos;)" data-type="text">
+                        <span class="iconify" data-icon="heroicons:home" data-width="16" data-type="icon"></span>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a class="breadcrumb-link" onclick="navigateTo(&apos;irrigation&apos;)" data-type="text">
+                        <span class="iconify" data-icon="mdi:water" data-width="16" data-type="icon"></span>
+                        Irrigation Systems
+                    </a>
+                </li>
+                <li>
+                    <span class="text-base-content" data-type="text">
+                        <span class="iconify" data-icon="mdi:water-pump" data-width="16" data-type="icon"></span>
+                        Drip Irrigation
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><div data-section-id="DripDetailSection" data-section-type="section" class="bg-base-100 py-12">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left Column: Image Carousel -->
+            <div class="lg:col-span-5" data-type="container">
+                <div class="carousel-container shadow-custom rounded-lg overflow-hidden" data-type="container">
+                    <div class="carousel w-full" data-type="container">
+                        <div id="slide1" class="carousel-item relative w-full">
+                            <img src="https://images.unsplash.com/photo-1738598665698-7fd7af4b5e0c?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwxfHxkcmlwJTIwaXJyaWdhdGlvbiUyMGZpZWxkfGVufDB8fHx8MTc1MzE2MzQ0NHww&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=800&amp;h=600" alt="Drip irrigation system showing main components and layout" class="w-full object-cover" data-type="image">
+                        </div>
+                        <div id="slide2" class="carousel-item relative w-full">
+                            <img src="https://images.unsplash.com/photo-1558504576-291eb192b0ef?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwzfHxkcmlwJTIwZW1pdHRlciUyMGNsb3NlJTIwdXB8ZW58MHx8fHwxNzUzMTYzNDQ1fDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=800&amp;h=600" alt="Close-up view of drip emitters and water distribution" class="w-full object-cover" data-type="image">
+                        </div>
+                        <div id="slide3" class="carousel-item relative w-full">
+                            <img src="https://images.unsplash.com/photo-1738598665698-7fd7af4b5e0c?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwxfHxkcmlwJTIwaXJyaWdhdGlvbiUyMGluc3RhbGxhdGlvbnxlbnwwfHx8fDE3NTMxNjM0NDZ8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=800&amp;h=600" alt="Field installation example showing drip lines in crop rows" class="w-full object-cover" data-type="image">
+                        </div>
+                    </div>
+                    <button class="carousel-arrow prev" onclick="previousSlide()" data-type="button">
+                        <span class="iconify" data-icon="heroicons:chevron-left" data-width="20" data-type="icon"></span>
+                    </button>
+                    <button class="carousel-arrow next" onclick="nextSlide()" data-type="button">
+                        <span class="iconify" data-icon="heroicons:chevron-right" data-width="20" data-type="icon"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column: Product Information -->
+            <div class="lg:col-span-7" data-type="container">
+                <h1 class="text-4xl font-bold text-primary mb-4" data-type="text">Drip Irrigation System</h1>
+                <p class="text-lg text-base-content mb-8" data-type="text">
+                    Precision water delivery system designed for maximum efficiency and crop yield. 
+                    Our drip irrigation solutions provide targeted watering directly to plant roots, 
+                    reducing water waste by up to 50% while improving crop quality and harvest yields.
+                </p>
+
+                <!-- Tab Navigation -->
+                <div class="tabs tabs-bordered mb-6" data-type="container">
+                    <button class="tab tab-active" onclick="showTab(&apos;specs&apos;)" id="specs-tab" data-type="button">
+                        <span data-type="text">Specifications</span>
+                    </button>
+                    <button class="tab" onclick="showTab(&apos;tips&apos;)" id="tips-tab" data-type="button">
+                        <span data-type="text">Application Tips</span>
+                    </button>
+                </div>
+
+                <!-- Specifications Tab Content -->
+                <div id="specs-content" class="tab-content" data-type="container">
+                    <div class="overflow-x-auto">
+                        <table class="table table-zebra specs-table" data-type="container">
+                            <tbody>
+                                <tr>
+                                    <td class="font-semibold" data-type="text">Flow Rate</td>
+                                    <td data-type="text">0.5 - 8.0 L/h per emitter</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-semibold" data-type="text">Operating Pressure</td>
+                                    <td data-type="text">10 - 40 PSI (0.7 - 2.8 bar)</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-semibold" data-type="text">Pipe Diameter</td>
+                                    <td data-type="text">16mm, 20mm, 25mm options</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-semibold" data-type="text">Emitter Spacing</td>
+                                    <td data-type="text">20cm, 30cm, 40cm, 50cm</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-semibold" data-type="text">Coverage Area</td>
+                                    <td data-type="text">Up to 10 hectares per zone</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-semibold" data-type="text">Material</td>
+                                    <td data-type="text">UV-resistant polyethylene</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-semibold" data-type="text">Warranty</td>
+                                    <td data-type="text">5 years manufacturer warranty</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Application Tips Tab Content -->
+                <div id="tips-content" class="tab-content hidden" data-type="container">
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4" data-type="container">
+                            <span class="iconify text-success flex-shrink-0 mt-1" data-icon="mdi:sprout" data-width="24" data-type="icon"></span>
+                            <div data-type="container">
+                                <h3 class="font-semibold text-lg mb-2" data-type="text">Vegetable Crops</h3>
+                                <p class="text-base-content" data-type="text">
+                                    Install drip lines 15-20cm from plant stems. Use 2-4 L/h emitters spaced 30cm apart. 
+                                    Schedule irrigation for early morning to reduce evaporation losses.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4" data-type="container">
+                            <span class="iconify text-success flex-shrink-0 mt-1" data-icon="mdi:tree" data-width="24" data-type="icon"></span>
+                            <div data-type="container">
+                                <h3 class="font-semibold text-lg mb-2" data-type="text">Fruit Trees</h3>
+                                <p class="text-base-content" data-type="text">
+                                    Create irrigation rings around tree canopy drip line. Use 4-8 L/h emitters 
+                                    depending on tree size. Adjust watering frequency based on soil moisture sensors.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4" data-type="container">
+                            <span class="iconify text-success flex-shrink-0 mt-1" data-icon="mdi:flower" data-width="24" data-type="icon"></span>
+                            <div data-type="container">
+                                <h3 class="font-semibold text-lg mb-2" data-type="text">Greenhouse Applications</h3>
+                                <p class="text-base-content" data-type="text">
+                                    Install pressure-compensating emitters for uniform water distribution. 
+                                    Use 1-2 L/h emitters for potted plants, 2-4 L/h for ground cultivation.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4" data-type="container">
+                            <span class="iconify text-warning flex-shrink-0 mt-1" data-icon="mdi:tools" data-width="24" data-type="icon"></span>
+                            <div data-type="container">
+                                <h3 class="font-semibold text-lg mb-2" data-type="text">Maintenance Tips</h3>
+                                <p class="text-base-content" data-type="text">
+                                    Flush system monthly to prevent clogging. Check emitters weekly during growing season. 
+                                    Install filtration system to protect against sediment and organic matter.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="CTASection" data-section-type="section" class="bg-base-200 py-12">
+    <div class="container mx-auto px-6">
+        <div class="text-center" data-type="container">
+            <h2 class="text-2xl font-bold text-primary mb-8" data-type="text">Ready to Optimize Your Irrigation?</h2>
+            <div class="flex flex-wrap justify-center gap-4" data-type="container">
+                <button class="btn btn-primary btn-lg" onclick="navigateTo(&apos;contact&apos;)" data-type="button">
+                    <span class="iconify" data-icon="mdi:calendar-check" data-width="20" data-type="icon"></span>
+                    <span data-type="text">Request Field Visit</span>
+                </button>
+                <button class="btn btn-secondary btn-lg" onclick="openBrochureModal()" data-type="button">
+                    <span class="iconify" data-icon="mdi:download" data-width="20" data-type="icon"></span>
+                    <span data-type="text">Download Brochure</span>
+                </button>
+                <button class="btn btn-outline btn-lg" onclick="navigateTo(&apos;irrigation&apos;)" data-type="button">
+                    <span class="iconify" data-icon="mdi:arrow-left" data-width="20" data-type="icon"></span>
+                    <span data-type="text">Back to Irrigation</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="BrochureModalSection" data-section-type="section">
+    <dialog id="brochure_modal" class="modal">
+        <div class="modal-box" data-type="container">
+            <div class="flex justify-between items-center mb-4" data-type="container">
+                <h3 class="font-bold text-lg text-primary" data-type="text">Download Brochure</h3>
+                <button class="btn btn-sm btn-circle btn-ghost" onclick="closeBrochureModal()" data-type="button">
+                    <span class="iconify" data-icon="heroicons:x-mark" data-width="20" data-type="icon"></span>
+                </button>
+            </div>
+            <p class="py-4 text-base-content" data-type="text">
+                Get detailed technical specifications, installation guides, and pricing information 
+                for our drip irrigation systems. The brochure includes case studies and ROI calculations.
+            </p>
+            <div class="modal-action" data-type="container">
+                <button class="btn btn-secondary" onclick="downloadBrochure()" data-type="button">
+                    <span class="iconify" data-icon="mdi:file-pdf-box" data-width="20" data-type="icon"></span>
+                    <span data-type="text">Download PDF</span>
+                </button>
+                <button class="btn btn-ghost" onclick="closeBrochureModal()" data-type="button">
+                    <span data-type="text">Cancel</span>
+                </button>
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button onclick="closeBrochureModal()">close</button>
+        </form>
+    </dialog>
+</div><div data-section-id="RelatedProductsSection" data-section-type="section" class="bg-base-100 py-12">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center text-primary mb-8" data-type="text">Related Irrigation Systems</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-type="container">
+            <!-- Center Pivot Card -->
+            <div class="card bg-base-100 shadow-custom related-card" data-type="container" data-repeatable="true">
+                <figure>
+                    <img src="https://images.unsplash.com/photo-1738598665698-7fd7af4b5e0c?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxjZW50ZXIlMjBwaXZvdCUyMGlycmlnYXRpb258ZW58MHx8fHwxNzUzMTYzNDQ3fDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=400&amp;h=250" alt="Center pivot irrigation system covering large circular field area" class="w-full h-64 object-cover" data-type="image">
+                </figure>
+                <div class="card-body" data-type="container">
+                    <h3 class="card-title text-lg" data-type="text">Center Pivot Irrigation</h3>
+                    <p class="text-base-content" data-type="text">
+                        Automated circular irrigation for large-scale farming operations. 
+                        Covers up to 160 hectares with uniform water distribution.
+                    </p>
+                    <div class="card-actions justify-end mt-4" data-type="container">
+                        <button class="btn btn-secondary" onclick="navigateTo(&apos;irrigation_center_pivot&apos;)" data-type="button">
+                            <span data-type="text">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linear Irrigation Card -->
+            <div class="card bg-base-100 shadow-custom related-card" data-type="container" data-repeatable="true">
+                <figure>
+                    <img src="https://images.unsplash.com/photo-1738598665698-7fd7af4b5e0c?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxsaW5lYXIlMjBpcnJpZ2F0aW9uJTIwc3lzdGVtfGVufDB8fHx8MTc1MzE2MzQ0OHww&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=400&amp;h=250" alt="Linear irrigation system moving across rectangular field in straight lines" class="w-full h-64 object-cover" data-type="image">
+                </figure>
+                <div class="card-body" data-type="container">
+                    <h3 class="card-title text-lg" data-type="text">Linear Irrigation</h3>
+                    <p class="text-base-content" data-type="text">
+                        Straight-line irrigation system perfect for rectangular fields. 
+                        Efficient water application with precise control and monitoring.
+                    </p>
+                    <div class="card-actions justify-end mt-4" data-type="container">
+                        <button class="btn btn-secondary" onclick="navigateTo(&apos;irrigation_linear&apos;)" data-type="button">
+                            <span data-type="text">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hose Reel Card -->
+            <div class="card bg-base-100 shadow-custom related-card" data-type="container" data-repeatable="true">
+                <figure>
+                    <img src="https://images.unsplash.com/photo-1643654573215-cd9845cd1379?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwzfHxob3NlJTIwcmVlbCUyMGlycmlnYXRpb258ZW58MHx8fHwxNzUzMTYzNDQ5fDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=400&amp;h=250" alt="Hose reel irrigation system with traveling sprinkler gun on wheeled cart" class="w-full h-64 object-cover" data-type="image">
+                </figure>
+                <div class="card-body" data-type="container">
+                    <h3 class="card-title text-lg" data-type="text">Hose Reel Irrigation</h3>
+                    <p class="text-base-content" data-type="text">
+                        Mobile irrigation solution for flexible field coverage. 
+                        Ideal for irregular shaped fields and multiple crop types.
+                    </p>
+                    <div class="card-actions justify-end mt-4" data-type="container">
+                        <button class="btn btn-secondary" onclick="navigateTo(&apos;irrigation_hose_reel&apos;)" data-type="button">
+                            <span data-type="text">Learn More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+    
+    <div data-section-id="common_footer" data-section-type="common_footer" class="bg-base-200 mt-16">
+    <footer class="footer footer-horizontal p-10 text-base-content" data-type="container">
+      <aside data-type="container">
+        <div class="flex items-center gap-3 mb-4" data-type="container">
+          <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="48" data-type="icon"></span>
+          <div data-type="container">
+            <h3 class="font-bold text-lg text-primary" data-type="text">AgroTech Solutions</h3>
+            <p class="text-sm text-base-content opacity-70" data-type="text">Advanced agricultural technology since 2010</p>
+          </div>
+        </div>
+        <p class="text-sm max-w-sm" data-type="text">Providing energy-efficient irrigation, solar solutions, and bird repellent systems for modern farming operations worldwide.</p>
+        <div class="flex gap-3 mt-4" data-type="container">
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:phone" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:email" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:whatsapp" data-width="20" data-type="icon"></span>
+        </div>
+      </aside>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Products</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation Systems</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar Solutions</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Support</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact Us</span></button>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Technical Support</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Installation Guide</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Warranty</span></a>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Language &amp; Legal</header>
+        <div class="form-control" data-type="container">
+          <label class="label cursor-pointer w-max gap-2" data-type="container">
+            <span class="iconify" data-icon="mdi:translate" data-width="16" data-type="icon"></span>
+            <select class="select select-bordered select-sm w-32" data-type="input">
+              <option selected="" data-type="text">English</option>
+              <option data-type="text">Serbian</option>
+            </select>
+          </label>
+        </div>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Privacy Policy</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Terms of Service</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">GDPR Notice</span></a>
+      </nav>
+    </footer>
+    
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content border-t border-base-300" data-type="container">
+      <aside data-type="container">
+        <p class="text-sm" data-type="text">Copyright © 2025 AgroTech Solutions. All rights reserved. | Belgrade, Serbia</p>
+      </aside>
+    </footer>
+  </div>
+  <style>
+    [data-section-id="common_footer"] .link:hover {
+      color: var(--color-secondary);
+      transition: color 0.2s ease-in-out;
+    }
+    
+    [data-section-id="common_footer"] .iconify:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+  </style>
+  <script>
+    (function() {
+      // Language toggle functionality
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        const languageSelect = document.querySelector(&apos;[data-section-id="common_footer"] select&apos;);
+        if (languageSelect) {
+          languageSelect.addEventListener(&apos;change&apos;, function(e) {
+            const selectedLanguage = e.target.value;
+            // Here you would implement actual language switching logic
+            console.log(&apos;Language changed to:&apos;, selectedLanguage);
+            // For demo purposes, just show an alert
+            // In a real application, this would trigger translation updates
+          });
+        }
+      });
+    })();
+  </script>
+    
+    <script>
+    /* JavaScript code for common usage, should be wrapped in a closure */
+    (function() {
+      // Navigation function for page transitions
+      window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        if (isInIframe) {
+          window.parent.postMessage({
+            type: &apos;iframeNavigation&apos;,
+            targetPageId: targetPageId
+          }, &apos;*&apos;);
+        } else {
+          window.location.href = targetFileName;
+        }
+      };
+      
+      // Get current page for navigation highlighting
+      window.getCurrentPageId = function() {
+        const path = window.location.pathname;
+        const filename = path.split(&apos;/&apos;).pop();
+        return filename.replace(&apos;.html&apos;, &apos;&apos;) || &apos;homepage&apos;;
+      };
+    })();
+  </script>
+    <script>
+/* JavaScript for drip irrigation detail page functionality */
+
+(function() {
+    let currentSlide = 1;
+    const totalSlides = 3;
+
+    // Carousel navigation functions
+    window.nextSlide = function() {
+        currentSlide = currentSlide >= totalSlides ? 1 : currentSlide + 1;
+        showSlide(currentSlide);
+    };
+
+    window.previousSlide = function() {
+        currentSlide = currentSlide <= 1 ? totalSlides : currentSlide - 1;
+        showSlide(currentSlide);
+    };
+
+    function showSlide(slideNumber) {
+        const slides = document.querySelectorAll(&apos;.carousel-item&apos;);
+        slides.forEach((slide, index) => {
+            slide.style.display = index + 1 === slideNumber ? &apos;block&apos; : &apos;none&apos;;
+        });
+    }
+
+    // Tab switching functionality
+    window.showTab = function(tabName) {
+        // Hide all tab contents
+        const contents = document.querySelectorAll(&apos;.tab-content&apos;);
+        contents.forEach(content => content.classList.add(&apos;hidden&apos;));
+        
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll(&apos;.tab&apos;);
+        tabs.forEach(tab => tab.classList.remove(&apos;tab-active&apos;));
+        
+        // Show selected tab content
+        const selectedContent = document.getElementById(tabName + &apos;-content&apos;);
+        if (selectedContent) {
+            selectedContent.classList.remove(&apos;hidden&apos;);
+        }
+        
+        // Add active class to selected tab
+        const selectedTab = document.getElementById(tabName + &apos;-tab&apos;);
+        if (selectedTab) {
+            selectedTab.classList.add(&apos;tab-active&apos;);
+        }
+    };
+
+    // Brochure modal functions
+    window.openBrochureModal = function() {
+        const modal = document.getElementById(&apos;brochure_modal&apos;);
+        if (modal) {
+            modal.showModal();
+        }
+    };
+
+    window.closeBrochureModal = function() {
+        const modal = document.getElementById(&apos;brochure_modal&apos;);
+        if (modal) {
+            modal.close();
+        }
+    };
+
+    window.downloadBrochure = function() {
+        // Simulate PDF download
+        console.log(&apos;Downloading drip irrigation brochure...&apos;);
+        
+        // In a real application, this would trigger an actual file download
+        // For demo purposes, we&apos;ll just show a success message and close modal
+        alert(&apos;Brochure download started! Check your downloads folder.&apos;);
+        closeBrochureModal();
+    };
+
+    // Initialize page
+    document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        // Show first slide
+        showSlide(1);
+        
+        // Show specs tab by default
+        showTab(&apos;specs&apos;);
+        
+        // Add keyboard navigation for carousel
+        document.addEventListener(&apos;keydown&apos;, function(e) {
+            if (e.key === &apos;ArrowLeft&apos;) {
+                previousSlide();
+            } else if (e.key === &apos;ArrowRight&apos;) {
+                nextSlide();
+            }
+        });
+    });
+})();
+</script>
+
+<script>
+      Holder.run({
+        domain: "placehold.co"
+      })
+    </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

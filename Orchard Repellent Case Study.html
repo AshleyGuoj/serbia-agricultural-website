@@ -1,0 +1,831 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Orchard Repellent Case Study</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 1920
+                const height = 1080
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'homepage': 'Homepage',
+    'irrigation': 'Irrigation Systems',
+    'irrigation_center_pivot': 'Center Pivot Irrigation Detail',
+    'irrigation_linear': 'Linear Irrigation Detail',
+    'irrigation_hose_reel': 'Hose Reel Irrigation Detail',
+    'irrigation_drip': 'Drip Irrigation Detail',
+    'solar': 'Solar Solutions',
+    'solar_agri_irrigation': 'Agricultural Solar Irrigation Detail',
+    'solar_household_storage': 'Household Energy Storage Detail',
+    'solar_commercial_industrial': 'Commercial/Industrial Solar Detail',
+    'solar_water_pumps': 'Solar Water Pumps Detail',
+    'bird_repellent': 'Bird Repellent Systems',
+    'bird_ultrasonic': 'Ultrasonic Repellent Detail',
+    'bird_visual': 'Visual Deterrent Detail',
+    'contact': 'Contact',
+    'submission_confirmation': 'Inquiry Confirmation',
+    'compatibility_check': 'Compatibility Check',
+    'case_studies': 'Case Studies',
+    'case_study_farm_irrigation': 'Farm Irrigation Case Study',
+    'case_study_greenhouse_solar': 'Greenhouse Solar Case Study',
+    'case_study_orchard_repellent': 'Orchard Repellent Case Study',
+    'case_study_dryland_farming': 'Dryland Farming Case Study'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="en" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orchard Repellent Case Study - Agricultural Solutions</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+    /* CSS code for common usage*/
+    
+    /* daisyUI Theme Variables Customization
+     * Based on the selected daisyUI theme and UI guidance requirements,
+     * customize only the CSS variables that need to be different from the theme defaults.
+     */
+    
+    :root {
+      /* Brand colors customization */
+      --color-primary: rgba(85, 107, 47, 1); /* Olive Green #556B2F */
+      --color-primary-content: rgba(255, 255, 255, 1); /* White text on primary */
+      --color-secondary: rgba(135, 206, 235, 1); /* Sky Blue #87CEEB */
+      --color-secondary-content: rgba(51, 51, 51, 1); /* Dark gray text on secondary */
+      --color-accent: rgba(139, 69, 19, 1); /* Warm Earth Brown #8B4513 */
+      --color-accent-content: rgba(255, 255, 255, 1); /* White text on accent */
+      
+      /* Background colors */
+      --color-base-100: rgba(255, 255, 255, 1); /* White */
+      --color-base-200: rgba(245, 245, 245, 1); /* Light Gray */
+      --color-base-300: rgba(229, 229, 229, 1); /* Slightly darker gray for borders */
+      --color-base-content: rgba(51, 51, 51, 1); /* Dark Gray text */
+      
+      /* Semantic colors */
+      --color-success: rgba(107, 142, 35, 1); /* Muted green #6B8E23 */
+      --color-success-content: rgba(255, 255, 255, 1);
+      --color-warning: rgba(255, 165, 0, 1); /* Amber #FFA500 */
+      --color-warning-content: rgba(51, 51, 51, 1);
+      --color-error: rgba(205, 92, 92, 1); /* Terra cotta #CD5C5C */
+      --color-error-content: rgba(255, 255, 255, 1);
+      --color-info: rgba(135, 206, 235, 1); /* Soft blue #87CEEB */
+      --color-info-content: rgba(51, 51, 51, 1);
+      
+      /* Border radius - modern but restrained */
+      --radius-box: 0.25rem; /* 4px */
+      --radius-field: 0.25rem; /* 4px */
+      --radius-selector: 0.25rem; /* 4px */
+      
+      /* Border width */
+      --border: 1px;
+    }
+    
+    /* Typography - Times New Roman serif */
+    body {
+      font-family: "Times New Roman", Times, serif;
+    }
+    
+    /* Subtle shadows */
+    .shadow-custom {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Smooth transitions for interactive elements */
+    .nav-link {
+      transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    }
+    
+    .nav-link:hover {
+      border-bottom: 2px solid var(--color-secondary);
+    }
+  </style>
+    <style>
+/* Page-specific styles for case study detail page */
+
+/* Breadcrumb hover effects */
+.breadcrumb-link {
+  transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+}
+
+.breadcrumb-link:hover {
+  color: var(--color-primary);
+  border-bottom: 1px solid var(--color-primary);
+}
+
+/* Stat card hover effects */
+.stat-card {
+  transition: box-shadow 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.stat-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Collapse panel styling */
+.collapse-panel {
+  border: 1px solid var(--color-base-300);
+  margin-bottom: 8px;
+}
+
+.collapse-panel:last-child {
+  margin-bottom: 0;
+}
+
+/* Image hover effects */
+.case-study-image {
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.case-study-image:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Focus outlines for accessibility */
+.collapse input[type="radio"]:focus + .collapse-title {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Testimonial card styling */
+.testimonial-card {
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.testimonial-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon bullet points */
+.icon-bullet {
+  color: var(--color-primary);
+  margin-right: 8px;
+}
+
+/* Section separators */
+.section-separator {
+  border-bottom: 1px solid var(--color-base-300);
+  margin: 32px 0;
+}
+</style>
+<script src="./assets/static/uxbot/25_6/holder.js"></script>
+<script src="./assets/interactive-enhancements.js"></script></head>
+<body class="bg-base-100">
+    <div data-section-id="common_header" data-section-type="common_header" class="navbar bg-base-100 sticky top-0 z-50 shadow-custom h-16">
+    <div class="navbar-start">
+      <button class="btn btn-ghost lg:hidden" data-type="button" onclick="toggleMobileMenu()">
+        <span class="iconify" data-icon="heroicons:bars-3" data-width="24" data-type="icon"></span>
+      </button>
+      <button class="btn btn-ghost normal-case text-xl font-bold text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+        <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="32" data-type="icon"></span>
+        <span data-type="text">AgroTech Solutions</span>
+      </button>
+    </div>
+    
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-2">
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;homepage&apos;)" data-nav="homepage"><span data-type="text">Home</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)" data-nav="irrigation"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;solar&apos;)" data-nav="solar"><span data-type="text">Solar</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)" data-nav="bird_repellent"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)" data-nav="case_studies"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;contact&apos;)" data-nav="contact"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+    
+    <div class="navbar-end">
+      <button class="btn btn-primary" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+        <span data-type="text">Get Quote</span>
+      </button>
+    </div>
+    
+    <!-- Mobile menu dropdown -->
+    <div class="dropdown dropdown-end lg:hidden absolute top-16 right-0 w-full bg-base-100 shadow-lg z-40 hidden" id="mobileMenu" data-type="container">
+      <ul class="menu p-4 gap-2">
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;homepage&apos;)"><span data-type="text">Home</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+  </div>
+  <style>
+    [data-section-id="common_header"] .nav-link.active {
+      border-bottom-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    
+    [data-section-id="common_header"] .navbar {
+      border-bottom: var(--border) solid var(--color-base-300);
+    }
+  </style>
+  <script>
+    (function() {
+      // Toggle mobile menu
+      window.toggleMobileMenu = function() {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        if (mobileMenu) {
+          mobileMenu.classList.toggle(&apos;hidden&apos;);
+        }
+      };
+      
+      // Highlight active navigation item
+      function highlightActiveNav() {
+        const currentPageId = getCurrentPageId();
+        const navLinks = document.querySelectorAll(&apos;[data-section-id="common_header"] [data-nav]&apos;);
+        
+        navLinks.forEach(link => {
+          const navTarget = link.getAttribute(&apos;data-nav&apos;);
+          if (navTarget === currentPageId) {
+            link.classList.add(&apos;active&apos;);
+          } else {
+            link.classList.remove(&apos;active&apos;);
+          }
+        });
+      }
+      
+      // Initialize on page load
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        highlightActiveNav();
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener(&apos;click&apos;, function(e) {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        const menuButton = document.querySelector(&apos;[data-section-id="common_header"] .lg\\:hidden&apos;);
+        
+        if (mobileMenu && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+          mobileMenu.classList.add(&apos;hidden&apos;);
+        }
+      });
+    })();
+  </script>
+    
+    <main class="min-h-screen">
+        <div data-section-id="BreadcrumbNav" data-section-type="section" class="bg-base-200 py-4">
+    <div class="container mx-auto px-6">
+        <div class="text-sm breadcrumbs" data-type="container">
+            <ul>
+                <li>
+                    <button class="breadcrumb-link text-base-content hover:text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+                        <span class="iconify" data-icon="heroicons:home" data-width="16" data-type="icon"></span>
+                        <span data-type="text">Home</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="breadcrumb-link text-base-content hover:text-primary" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)">
+                        <span class="iconify" data-icon="heroicons:document-text" data-width="16" data-type="icon"></span>
+                        <span data-type="text">Case Studies</span>
+                    </button>
+                </li>
+                <li>
+                    <span class="text-primary font-medium" data-type="text">Orchard Repellent Case Study</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div><div data-section-id="CaseStudyDetail" data-section-type="section" class="py-16">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start" data-type="container">
+            <!-- Left Column: Image -->
+            <div class="w-full" data-type="container">
+                <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/f56e0842-df88-436b-81b9-7fe6d8659af8.png" alt="Orchard with bird repellent devices installed among fruit trees, showing ultrasonic and visual deterrent systems protecting the crop" class="w-full h-auto rounded shadow-custom case-study-image" data-type="image">
+            </div>
+            
+            <!-- Right Column: Content -->
+            <div class="w-full" data-type="container">
+                <h1 class="text-4xl font-bold text-primary mb-4" data-type="text">
+                    Orchard Repellent Case Study
+                </h1>
+                
+                <div class="mb-6" data-type="container">
+                    <p class="text-lg text-accent font-medium mb-2" data-type="text">
+                        Sunny Valley Orchards, California
+                    </p>
+                    <p class="text-base-content/70" data-type="text">
+                        Implementation Date: March 2024
+                    </p>
+                </div>
+                
+                <p class="text-lg text-base-content mb-8 leading-relaxed" data-type="text">
+                    Sunny Valley Orchards faced significant crop losses due to bird damage, particularly during peak harvest season. Our comprehensive bird repellent system was deployed across 50 acres of premium apple and cherry orchards, combining ultrasonic technology with visual deterrents to create an effective, humane bird management solution.
+                </p>
+                
+                <div class="bg-base-200 rounded p-6" data-type="container">
+                    <h3 class="text-xl font-semibold text-primary mb-4" data-type="text">
+                        Key Application Points
+                    </h3>
+                    <ul class="space-y-3" data-type="container">
+                        <li class="flex items-start" data-type="container">
+                            <span class="iconify icon-bullet" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Strategic placement of 24 ultrasonic repellent units across orchard perimeter</span>
+                        </li>
+                        <li class="flex items-start" data-type="container">
+                            <span class="iconify icon-bullet" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Integration with existing irrigation system for automated operation</span>
+                        </li>
+                        <li class="flex items-start" data-type="container">
+                            <span class="iconify icon-bullet" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Solar-powered operation ensuring 24/7 protection without grid dependency</span>
+                        </li>
+                        <li class="flex items-start" data-type="container">
+                            <span class="iconify icon-bullet" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+                            <span data-type="text">Environmentally safe solution protecting both crops and local wildlife</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="Implementation" data-section-type="section" class="py-16 bg-base-200">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-primary text-center mb-12" data-type="text">
+            Implementation Process
+        </h2>
+        
+        <div class="max-w-4xl mx-auto" data-type="container">
+            <!-- Step 1 -->
+            <div class="collapse collapse-arrow bg-base-100 collapse-panel" data-type="container">
+                <input type="radio" name="implementation-steps" checked="checked">
+                <div class="collapse-title text-xl font-medium flex items-center gap-3">
+                    <span class="iconify text-primary" data-icon="heroicons:map" data-width="24" data-type="icon"></span>
+                    <span data-type="text">Step 1: Site Assessment and Planning</span>
+                </div>
+                <div class="collapse-content">
+                    <div class="pt-4" data-type="container">
+                        <p class="text-base-content mb-4" data-type="text">
+                            Our technical team conducted a comprehensive 3-day site assessment to analyze bird migration patterns, crop vulnerability zones, and optimal device placement locations.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-base-content/80" data-type="container">
+                            <li data-type="text">Mapped bird flight paths using drone surveillance</li>
+                            <li data-type="text">Identified high-risk crop areas based on historical damage data</li>
+                            <li data-type="text">Evaluated power infrastructure and solar exposure for device placement</li>
+                            <li data-type="text">Created detailed installation blueprint with coverage zones</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="collapse collapse-arrow bg-base-100 collapse-panel" data-type="container">
+                <input type="radio" name="implementation-steps">
+                <div class="collapse-title text-xl font-medium flex items-center gap-3">
+                    <span class="iconify text-primary" data-icon="heroicons:wrench-screwdriver" data-width="24" data-type="icon"></span>
+                    <span data-type="text">Step 2: Device Installation and Setup</span>
+                </div>
+                <div class="collapse-content">
+                    <div class="pt-4" data-type="container">
+                        <p class="text-base-content mb-4" data-type="text">
+                            Professional installation team deployed all repellent systems over a 5-day period, ensuring minimal disruption to orchard operations.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-base-content/80" data-type="container">
+                            <li data-type="text">Installed 24 ultrasonic repellent units on 12-foot mounting poles</li>
+                            <li data-type="text">Connected solar panels and battery backup systems</li>
+                            <li data-type="text">Integrated visual deterrent reflectors at strategic locations</li>
+                            <li data-type="text">Established wireless communication network for centralized control</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="collapse collapse-arrow bg-base-100 collapse-panel" data-type="container">
+                <input type="radio" name="implementation-steps">
+                <div class="collapse-title text-xl font-medium flex items-center gap-3">
+                    <span class="iconify text-primary" data-icon="heroicons:cog-6-tooth" data-width="24" data-type="icon"></span>
+                    <span data-type="text">Step 3: Calibration and Testing</span>
+                </div>
+                <div class="collapse-content">
+                    <div class="pt-4" data-type="container">
+                        <p class="text-base-content mb-4" data-type="text">
+                            Comprehensive system calibration and testing phase ensured optimal performance and coverage across the entire orchard area.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-base-content/80" data-type="container">
+                            <li data-type="text">Fine-tuned ultrasonic frequency patterns for target bird species</li>
+                            <li data-type="text">Tested coverage overlap and eliminated dead zones</li>
+                            <li data-type="text">Programmed automated scheduling based on bird activity patterns</li>
+                            <li data-type="text">Conducted 48-hour monitoring period to verify system effectiveness</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="ResultStatistics" data-section-type="section" class="py-16">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-primary text-center mb-12" data-type="text">
+            Measurable Results
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" data-type="container">
+            <!-- Stat Card 1 -->
+            <div class="stat bg-base-200 rounded shadow-custom stat-card p-6 text-center" data-type="container">
+                <div class="stat-figure text-primary mb-4">
+                    <span class="iconify" data-icon="heroicons:shield-check" data-width="48" data-type="icon"></span>
+                </div>
+                <div class="stat-value text-4xl font-bold text-primary mb-2" data-type="text">2,400+</div>
+                <div class="stat-title text-base-content font-medium" data-type="text">Birds Repelled</div>
+                <div class="stat-desc text-base-content/70 text-sm mt-2" data-type="text">Daily average during peak season</div>
+            </div>
+            
+            <!-- Stat Card 2 -->
+            <div class="stat bg-base-200 rounded shadow-custom stat-card p-6 text-center" data-type="container">
+                <div class="stat-figure text-success mb-4">
+                    <span class="iconify" data-icon="heroicons:arrow-trending-up" data-width="48" data-type="icon"></span>
+                </div>
+                <div class="stat-value text-4xl font-bold text-primary mb-2" data-type="text">34%</div>
+                <div class="stat-title text-base-content font-medium" data-type="text">Crop Yield Increase</div>
+                <div class="stat-desc text-base-content/70 text-sm mt-2" data-type="text">Compared to previous season</div>
+            </div>
+            
+            <!-- Stat Card 3 -->
+            <div class="stat bg-base-200 rounded shadow-custom stat-card p-6 text-center" data-type="container">
+                <div class="stat-figure text-warning mb-4">
+                    <span class="iconify" data-icon="heroicons:shield-exclamation" data-width="48" data-type="icon"></span>
+                </div>
+                <div class="stat-value text-4xl font-bold text-primary mb-2" data-type="text">87%</div>
+                <div class="stat-title text-base-content font-medium" data-type="text">Damage Reduction</div>
+                <div class="stat-desc text-base-content/70 text-sm mt-2" data-type="text">Significant crop protection improvement</div>
+            </div>
+            
+            <!-- Stat Card 4 -->
+            <div class="stat bg-base-200 rounded shadow-custom stat-card p-6 text-center" data-type="container">
+                <div class="stat-figure text-accent mb-4">
+                    <span class="iconify" data-icon="heroicons:currency-dollar" data-width="48" data-type="icon"></span>
+                </div>
+                <div class="stat-value text-4xl font-bold text-primary mb-2" data-type="text">285%</div>
+                <div class="stat-title text-base-content font-medium" data-type="text">ROI Improvement</div>
+                <div class="stat-desc text-base-content/70 text-sm mt-2" data-type="text">Return on investment within first year</div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-12" data-type="container">
+            <p class="text-lg text-base-content/80 max-w-3xl mx-auto" data-type="text">
+                These results demonstrate the effectiveness of our integrated bird repellent system in protecting valuable orchard crops while maintaining environmental sustainability and animal welfare standards.
+            </p>
+        </div>
+    </div>
+</div><div data-section-id="TestimonialSection" data-section-type="section" class="py-16 bg-base-200">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-primary text-center mb-12" data-type="text">
+            Client Testimonials
+        </h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto" data-type="container">
+            <!-- Testimonial 1 -->
+            <div class="card bg-base-100 shadow-custom testimonial-card" data-type="container">
+                <div class="card-body p-8">
+                    <div class="flex items-start gap-4 mb-6" data-type="container">
+                        <div class="avatar">
+                            <div class="w-16 rounded-full">
+                                <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/13a8712e-7417-4189-82f6-d1b4884fe85d.png" alt="Michael Wilson, Orchard Manager" data-type="image">
+                            </div>
+                        </div>
+                        <div data-type="container">
+                            <h4 class="font-semibold text-lg text-accent" data-type="text">Michael Wilson</h4>
+                            <p class="text-base-content/70" data-type="text">Orchard Manager, Sunny Valley Orchards</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-lg italic text-base-content leading-relaxed" data-type="text">
+                        "The bird repellent system has been a game-changer for our orchard. We&apos;ve seen an immediate reduction in crop damage and our harvest quality has improved dramatically. The system is completely automated and requires minimal maintenance, which is perfect for our operation."
+                    </blockquote>
+                </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="card bg-base-100 shadow-custom testimonial-card" data-type="container">
+                <div class="card-body p-8">
+                    <div class="flex items-start gap-4 mb-6" data-type="container">
+                        <div class="avatar">
+                            <div class="w-16 rounded-full">
+                                <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/dfc2d7ea-7abd-44e6-ba72-3d0ed2355e3f.png" alt="Sarah Johnson, Farm Owner" data-type="image">
+                            </div>
+                        </div>
+                        <div data-type="container">
+                            <h4 class="font-semibold text-lg text-accent" data-type="text">Sarah Johnson</h4>
+                            <p class="text-base-content/70" data-type="text">Farm Owner, Sunny Valley Orchards</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-lg italic text-base-content leading-relaxed" data-type="text">
+                        "What impressed me most was the humane approach to bird control. The system effectively protects our crops without harming the local wildlife. The ROI exceeded our expectations, and we&apos;re planning to expand the system to our other orchards."
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-12" data-type="container">
+            <div class="bg-base-100 rounded-lg p-8 max-w-4xl mx-auto shadow-custom" data-type="container">
+                <h3 class="text-xl font-semibold text-primary mb-4" data-type="text">
+                    Ready to Protect Your Orchard?
+                </h3>
+                <p class="text-base-content mb-6" data-type="text">
+                    Join hundreds of satisfied farmers who have transformed their crop protection with our advanced bird repellent systems.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center" data-type="container">
+                    <button class="btn btn-primary btn-lg" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+                        <span class="iconify" data-icon="heroicons:phone" data-width="20" data-type="icon"></span>
+                        <span data-type="text">Request Consultation</span>
+                    </button>
+                    <button class="btn btn-outline btn-lg" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)">
+                        <span class="iconify" data-icon="heroicons:document-text" data-width="20" data-type="icon"></span>
+                        <span data-type="text">View More Case Studies</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+    
+    <div data-section-id="common_footer" data-section-type="common_footer" class="bg-base-200 mt-16">
+    <footer class="footer footer-horizontal p-10 text-base-content" data-type="container">
+      <aside data-type="container">
+        <div class="flex items-center gap-3 mb-4" data-type="container">
+          <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="48" data-type="icon"></span>
+          <div data-type="container">
+            <h3 class="font-bold text-lg text-primary" data-type="text">AgroTech Solutions</h3>
+            <p class="text-sm text-base-content opacity-70" data-type="text">Advanced agricultural technology since 2010</p>
+          </div>
+        </div>
+        <p class="text-sm max-w-sm" data-type="text">Providing energy-efficient irrigation, solar solutions, and bird repellent systems for modern farming operations worldwide.</p>
+        <div class="flex gap-3 mt-4" data-type="container">
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:phone" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:email" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:whatsapp" data-width="20" data-type="icon"></span>
+        </div>
+      </aside>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Products</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation Systems</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar Solutions</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Support</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact Us</span></button>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Technical Support</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Installation Guide</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Warranty</span></a>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Language &amp; Legal</header>
+        <div class="form-control" data-type="container">
+          <label class="label cursor-pointer w-max gap-2" data-type="container">
+            <span class="iconify" data-icon="mdi:translate" data-width="16" data-type="icon"></span>
+            <select class="select select-bordered select-sm w-32" data-type="input">
+              <option selected="" data-type="text">English</option>
+              <option data-type="text">Serbian</option>
+            </select>
+          </label>
+        </div>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Privacy Policy</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Terms of Service</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">GDPR Notice</span></a>
+      </nav>
+    </footer>
+    
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content border-t border-base-300" data-type="container">
+      <aside data-type="container">
+        <p class="text-sm" data-type="text">Copyright © 2025 AgroTech Solutions. All rights reserved. | Belgrade, Serbia</p>
+      </aside>
+    </footer>
+  </div>
+  <style>
+    [data-section-id="common_footer"] .link:hover {
+      color: var(--color-secondary);
+      transition: color 0.2s ease-in-out;
+    }
+    
+    [data-section-id="common_footer"] .iconify:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+  </style>
+  <script>
+    (function() {
+      // Language toggle functionality
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        const languageSelect = document.querySelector(&apos;[data-section-id="common_footer"] select&apos;);
+        if (languageSelect) {
+          languageSelect.addEventListener(&apos;change&apos;, function(e) {
+            const selectedLanguage = e.target.value;
+            // Here you would implement actual language switching logic
+            console.log(&apos;Language changed to:&apos;, selectedLanguage);
+            // For demo purposes, just show an alert
+            // In a real application, this would trigger translation updates
+          });
+        }
+      });
+    })();
+  </script>
+    
+    <script>
+    /* JavaScript code for common usage, should be wrapped in a closure */
+    (function() {
+      // Navigation function for page transitions
+      window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        if (isInIframe) {
+          window.parent.postMessage({
+            type: &apos;iframeNavigation&apos;,
+            targetPageId: targetPageId
+          }, &apos;*&apos;);
+        } else {
+          window.location.href = targetFileName;
+        }
+      };
+      
+      // Get current page for navigation highlighting
+      window.getCurrentPageId = function() {
+        const path = window.location.pathname;
+        const filename = path.split(&apos;/&apos;).pop();
+        return filename.replace(&apos;.html&apos;, &apos;&apos;) || &apos;homepage&apos;;
+      };
+    })();
+  </script>
+    <script>
+/* JavaScript for case study page interactions */
+(function() {
+    // Initialize page functionality
+    document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        // Add tooltip functionality for stat cards
+        initStatCardTooltips();
+        
+        // Initialize collapse panels
+        initCollapsePanels();
+        
+        // Add keyboard navigation support
+        initKeyboardNavigation();
+    });
+    
+    // Stat card tooltip functionality
+    function initStatCardTooltips() {
+        const statCards = document.querySelectorAll(&apos;.stat-card&apos;);
+        
+        statCards.forEach(card => {
+            card.addEventListener(&apos;mouseenter&apos;, function() {
+                // Add subtle highlight effect
+                this.style.borderLeft = &apos;4px solid var(--color-primary)&apos;;
+            });
+            
+            card.addEventListener(&apos;mouseleave&apos;, function() {
+                // Remove highlight effect
+                this.style.borderLeft = &apos;&apos;;
+            });
+        });
+    }
+    
+    // Collapse panel functionality
+    function initCollapsePanels() {
+        const collapseInputs = document.querySelectorAll(&apos;.collapse input[type="radio"]&apos;);
+        
+        collapseInputs.forEach(input => {
+            input.addEventListener(&apos;change&apos;, function() {
+                if (this.checked) {
+                    // Smooth scroll to the opened panel
+                    setTimeout(() => {
+                        this.closest(&apos;.collapse&apos;).scrollIntoView({
+                            behavior: &apos;smooth&apos;,
+                            block: &apos;nearest&apos;
+                        });
+                    }, 100);
+                }
+            });
+        });
+    }
+    
+    // Keyboard navigation support
+    function initKeyboardNavigation() {
+        document.addEventListener(&apos;keydown&apos;, function(e) {
+            // Add keyboard shortcuts for common actions
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case &apos;h&apos;:
+                        e.preventDefault();
+                        navigateTo(&apos;homepage&apos;);
+                        break;
+                    case &apos;b&apos;:
+                        e.preventDefault();
+                        navigateTo(&apos;case_studies&apos;);
+                        break;
+                }
+            }
+        });
+    }
+    
+    // Stub functions for business logic referenced in HTML
+    window.requestConsultation = function() {
+        // Stub function for consultation request
+        console.log(&apos;Consultation request initiated&apos;);
+        navigateTo(&apos;contact&apos;);
+    };
+    
+    window.viewMoreCaseStudies = function() {
+        // Stub function for viewing more case studies
+        console.log(&apos;Navigating to case studies&apos;);
+        navigateTo(&apos;case_studies&apos;);
+    };
+})();
+</script>
+
+<script>
+      Holder.run({
+        domain: "placehold.co"
+      })
+    </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

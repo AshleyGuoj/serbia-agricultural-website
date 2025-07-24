@@ -1,0 +1,835 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Ultrasonic Repellent Detail</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 1920
+                const height = 1080
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'homepage': 'Homepage',
+    'irrigation': 'Irrigation Systems',
+    'irrigation_center_pivot': 'Center Pivot Irrigation Detail',
+    'irrigation_linear': 'Linear Irrigation Detail',
+    'irrigation_hose_reel': 'Hose Reel Irrigation Detail',
+    'irrigation_drip': 'Drip Irrigation Detail',
+    'solar': 'Solar Solutions',
+    'solar_agri_irrigation': 'Agricultural Solar Irrigation Detail',
+    'solar_household_storage': 'Household Energy Storage Detail',
+    'solar_commercial_industrial': 'Commercial/Industrial Solar Detail',
+    'solar_water_pumps': 'Solar Water Pumps Detail',
+    'bird_repellent': 'Bird Repellent Systems',
+    'bird_ultrasonic': 'Ultrasonic Repellent Detail',
+    'bird_visual': 'Visual Deterrent Detail',
+    'contact': 'Contact',
+    'submission_confirmation': 'Inquiry Confirmation',
+    'compatibility_check': 'Compatibility Check',
+    'case_studies': 'Case Studies',
+    'case_study_farm_irrigation': 'Farm Irrigation Case Study',
+    'case_study_greenhouse_solar': 'Greenhouse Solar Case Study',
+    'case_study_orchard_repellent': 'Orchard Repellent Case Study',
+    'case_study_dryland_farming': 'Dryland Farming Case Study'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="en" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultrasonic Bird Repellent - Agricultural Solutions</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+    /* CSS code for common usage*/
+    
+    /* daisyUI Theme Variables Customization
+     * Based on the selected daisyUI theme and UI guidance requirements,
+     * customize only the CSS variables that need to be different from the theme defaults.
+     */
+    
+    :root {
+      /* Brand colors customization */
+      --color-primary: rgba(85, 107, 47, 1); /* Olive Green #556B2F */
+      --color-primary-content: rgba(255, 255, 255, 1); /* White text on primary */
+      --color-secondary: rgba(135, 206, 235, 1); /* Sky Blue #87CEEB */
+      --color-secondary-content: rgba(51, 51, 51, 1); /* Dark gray text on secondary */
+      --color-accent: rgba(139, 69, 19, 1); /* Warm Earth Brown #8B4513 */
+      --color-accent-content: rgba(255, 255, 255, 1); /* White text on accent */
+      
+      /* Background colors */
+      --color-base-100: rgba(255, 255, 255, 1); /* White */
+      --color-base-200: rgba(245, 245, 245, 1); /* Light Gray */
+      --color-base-300: rgba(229, 229, 229, 1); /* Slightly darker gray for borders */
+      --color-base-content: rgba(51, 51, 51, 1); /* Dark Gray text */
+      
+      /* Semantic colors */
+      --color-success: rgba(107, 142, 35, 1); /* Muted green #6B8E23 */
+      --color-success-content: rgba(255, 255, 255, 1);
+      --color-warning: rgba(255, 165, 0, 1); /* Amber #FFA500 */
+      --color-warning-content: rgba(51, 51, 51, 1);
+      --color-error: rgba(205, 92, 92, 1); /* Terra cotta #CD5C5C */
+      --color-error-content: rgba(255, 255, 255, 1);
+      --color-info: rgba(135, 206, 235, 1); /* Soft blue #87CEEB */
+      --color-info-content: rgba(51, 51, 51, 1);
+      
+      /* Border radius - modern but restrained */
+      --radius-box: 0.25rem; /* 4px */
+      --radius-field: 0.25rem; /* 4px */
+      --radius-selector: 0.25rem; /* 4px */
+      
+      /* Border width */
+      --border: 1px;
+    }
+    
+    /* Typography - Times New Roman serif */
+    body {
+      font-family: "Times New Roman", Times, serif;
+    }
+    
+    /* Subtle shadows */
+    .shadow-custom {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Smooth transitions for interactive elements */
+    .nav-link {
+      transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    }
+    
+    .nav-link:hover {
+      border-bottom: 2px solid var(--color-secondary);
+    }
+  </style>
+    <style>
+/* Page-specific styles for ultrasonic repellent detail page */
+
+/* Breadcrumb styling */
+.breadcrumb-item {
+  color: var(--color-base-content);
+  opacity: 0.7;
+}
+
+.breadcrumb-item:hover {
+  opacity: 1;
+  color: var(--color-primary);
+}
+
+.breadcrumb-separator {
+  margin: 0 0.5rem;
+  opacity: 0.5;
+}
+
+/* Product detail section styling */
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.product-image {
+  border-radius: var(--radius-box);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.product-image:hover {
+  transform: scale(1.02);
+}
+
+/* Specifications table styling */
+.specs-table {
+  border-collapse: collapse;
+  width: 100%;
+  background: var(--color-base-100);
+  border-radius: var(--radius-box);
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.specs-table th {
+  background: var(--color-base-200);
+  color: var(--color-base-content);
+  font-weight: 600;
+  padding: 1rem;
+  text-align: left;
+  border-bottom: var(--border) solid var(--color-base-300);
+}
+
+.specs-table td {
+  padding: 1rem;
+  border-bottom: var(--border) solid var(--color-base-300);
+}
+
+.specs-table tr:nth-child(even) {
+  background: var(--color-base-200);
+}
+
+.specs-table tr:hover {
+  background: rgba(85, 107, 47, 0.05);
+}
+
+/* Application guidance section styling */
+.guidance-section {
+  background: var(--color-base-200);
+  border-radius: var(--radius-box);
+  padding: 2rem;
+}
+
+.guidance-list {
+  list-style: none;
+  padding: 0;
+}
+
+.guidance-list li {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.guidance-list li::before {
+  content: "•";
+  color: var(--color-primary);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+/* Related products card styling */
+.related-card {
+  background: var(--color-base-100);
+  border-radius: var(--radius-box);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.related-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Button hover effects */
+.btn-primary:hover {
+  background-color: rgba(85, 107, 47, 0.9);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(135, 206, 235, 0.9);
+}
+
+.btn-accent:hover {
+  background-color: rgba(139, 69, 19, 0.9);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .product-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+</style>
+<script src="./assets/static/uxbot/25_6/holder.js"></script>
+<script src="./assets/interactive-enhancements.js"></script></head>
+<body class="bg-base-100">
+    <div data-section-id="common_header" data-section-type="common_header" class="navbar bg-base-100 sticky top-0 z-50 shadow-custom h-16">
+    <div class="navbar-start">
+      <button class="btn btn-ghost lg:hidden" data-type="button" onclick="toggleMobileMenu()">
+        <span class="iconify" data-icon="heroicons:bars-3" data-width="24" data-type="icon"></span>
+      </button>
+      <button class="btn btn-ghost normal-case text-xl font-bold text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+        <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="32" data-type="icon"></span>
+        <span data-type="text">AgroTech Solutions</span>
+      </button>
+    </div>
+    
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-2">
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;homepage&apos;)" data-nav="homepage"><span data-type="text">Home</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)" data-nav="irrigation"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;solar&apos;)" data-nav="solar"><span data-type="text">Solar</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)" data-nav="bird_repellent"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)" data-nav="case_studies"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;contact&apos;)" data-nav="contact"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+    
+    <div class="navbar-end">
+      <button class="btn btn-primary" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+        <span data-type="text">Get Quote</span>
+      </button>
+    </div>
+    
+    <!-- Mobile menu dropdown -->
+    <div class="dropdown dropdown-end lg:hidden absolute top-16 right-0 w-full bg-base-100 shadow-lg z-40 hidden" id="mobileMenu" data-type="container">
+      <ul class="menu p-4 gap-2">
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;homepage&apos;)"><span data-type="text">Home</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+  </div>
+  <style>
+    [data-section-id="common_header"] .nav-link.active {
+      border-bottom-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    
+    [data-section-id="common_header"] .navbar {
+      border-bottom: var(--border) solid var(--color-base-300);
+    }
+  </style>
+  <script>
+    (function() {
+      // Toggle mobile menu
+      window.toggleMobileMenu = function() {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        if (mobileMenu) {
+          mobileMenu.classList.toggle(&apos;hidden&apos;);
+        }
+      };
+      
+      // Highlight active navigation item
+      function highlightActiveNav() {
+        const currentPageId = getCurrentPageId();
+        const navLinks = document.querySelectorAll(&apos;[data-section-id="common_header"] [data-nav]&apos;);
+        
+        navLinks.forEach(link => {
+          const navTarget = link.getAttribute(&apos;data-nav&apos;);
+          if (navTarget === currentPageId) {
+            link.classList.add(&apos;active&apos;);
+          } else {
+            link.classList.remove(&apos;active&apos;);
+          }
+        });
+      }
+      
+      // Initialize on page load
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        highlightActiveNav();
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener(&apos;click&apos;, function(e) {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        const menuButton = document.querySelector(&apos;[data-section-id="common_header"] .lg\\:hidden&apos;);
+        
+        if (mobileMenu && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+          mobileMenu.classList.add(&apos;hidden&apos;);
+        }
+      });
+    })();
+  </script>
+    
+    <main class="min-h-screen">
+        <div data-section-id="BreadcrumbSection" data-section-type="section" class="bg-base-100 py-4">
+  <div class="container mx-auto px-6">
+    <div class="text-sm breadcrumbs" data-type="container">
+      <ul>
+        <li>
+          <button class="breadcrumb-item link link-hover" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+            <span class="iconify" data-icon="heroicons:home-solid" data-width="16" data-type="icon"></span>
+            <span data-type="text">Home</span>
+          </button>
+        </li>
+        <li>
+          <button class="breadcrumb-item link link-hover" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)">
+            <span data-type="text">Bird Repellent Systems</span>
+          </button>
+        </li>
+        <li>
+          <span class="breadcrumb-item" data-type="text">Ultrasonic Repellent Detail</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div><div data-section-id="UltrasonicDetailSection" data-section-type="section" class="bg-base-100 py-16">
+  <div class="container mx-auto px-6">
+    <div class="product-detail-grid" data-type="container">
+      <!-- Left Column: Product Image -->
+      <div class="flex justify-center" data-type="container">
+        <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/41543b51-61db-4a78-804b-f1bbca2e1e21.png" alt="Ultrasonic Bird Repellent Device - Modern electronic device for humane bird control" class="product-image w-full max-w-lg" data-type="image">
+      </div>
+      
+      <!-- Right Column: Product Details -->
+      <div class="space-y-6" data-type="container">
+        <h1 class="text-4xl font-bold text-primary" data-type="text">
+          Ultrasonic Bird Repellent System
+        </h1>
+        
+        <p class="text-lg text-base-content leading-relaxed" data-type="text">
+          Advanced ultrasonic technology provides humane and effective bird control for agricultural areas, orchards, and commercial properties. This weather-resistant device emits high-frequency sound waves that deter birds without harming them or affecting other wildlife.
+        </p>
+        
+        <div class="space-y-4" data-type="container">
+          <h3 class="text-xl font-semibold text-base-content" data-type="text">Key Features:</h3>
+          <ul class="space-y-3 text-base-content" data-type="container">
+            <li class="flex items-start gap-3" data-type="container">
+              <span class="iconify text-primary mt-1" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+              <span data-type="text">360-degree coverage up to 5,000 square meters</span>
+            </li>
+            <li class="flex items-start gap-3" data-type="container">
+              <span class="iconify text-primary mt-1" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+              <span data-type="text">Multiple frequency settings for different bird species</span>
+            </li>
+            <li class="flex items-start gap-3" data-type="container">
+              <span class="iconify text-primary mt-1" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+              <span data-type="text">Solar-powered with battery backup for 24/7 operation</span>
+            </li>
+            <li class="flex items-start gap-3" data-type="container">
+              <span class="iconify text-primary mt-1" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+              <span data-type="text">Weatherproof IP65 rating for outdoor durability</span>
+            </li>
+            <li class="flex items-start gap-3" data-type="container">
+              <span class="iconify text-primary mt-1" data-icon="heroicons:check-circle" data-width="20" data-type="icon"></span>
+              <span data-type="text">Motion sensor activation for energy efficiency</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="flex flex-wrap gap-4 pt-6" data-type="container">
+          <button class="btn btn-primary btn-lg" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+            <span class="iconify" data-icon="heroicons:phone" data-width="20" data-type="icon"></span>
+            <span data-type="text">Talk to Specialist</span>
+          </button>
+          <button class="btn btn-secondary btn-lg" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)">
+            <span class="iconify" data-icon="heroicons:arrow-left" data-width="20" data-type="icon"></span>
+            <span data-type="text">Back to Bird Repellent</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><div data-section-id="SpecificationsSection" data-section-type="section" class="bg-base-100 py-16">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-base-content mb-8 text-center" data-type="text">
+      Technical Specifications
+    </h2>
+    
+    <div class="max-w-4xl mx-auto" data-type="container">
+      <div class="overflow-x-auto">
+        <table class="specs-table" data-type="container">
+          <thead>
+            <tr>
+              <th data-type="text">Parameter</th>
+              <th data-type="text">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-type="text">Power Input</td>
+              <td data-type="text">Solar panel + rechargeable battery</td>
+            </tr>
+            <tr>
+              <td data-type="text">Coverage Area</td>
+              <td data-type="text">Up to 5,000 m² (360° coverage)</td>
+            </tr>
+            <tr>
+              <td data-type="text">Operating Frequency</td>
+              <td data-type="text">15-25 kHz (adjustable)</td>
+            </tr>
+            <tr>
+              <td data-type="text">Dimensions</td>
+              <td data-type="text">32 cm × 28 cm × 15 cm</td>
+            </tr>
+            <tr>
+              <td data-type="text">Weight</td>
+              <td data-type="text">2.8 kg</td>
+            </tr>
+            <tr>
+              <td data-type="text">Material</td>
+              <td data-type="text">UV-resistant ABS plastic housing</td>
+            </tr>
+            <tr>
+              <td data-type="text">Voltage</td>
+              <td data-type="text">12V DC (solar charged)</td>
+            </tr>
+            <tr>
+              <td data-type="text">Weather Rating</td>
+              <td data-type="text">IP65 (waterproof and dustproof)</td>
+            </tr>
+            <tr>
+              <td data-type="text">Operating Temperature</td>
+              <td data-type="text">-20°C to +60°C</td>
+            </tr>
+            <tr>
+              <td data-type="text">Warranty</td>
+              <td data-type="text">2 years manufacturer warranty</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div><div data-section-id="ApplicationGuidanceSection" data-section-type="section" class="py-16">
+  <div class="container mx-auto px-6">
+    <div class="guidance-section max-w-4xl mx-auto" data-type="container">
+      <h2 class="text-3xl font-bold text-base-content mb-6" data-type="text">
+        Application Guidance
+      </h2>
+      
+      <p class="text-lg text-base-content mb-8 leading-relaxed" data-type="text">
+        For optimal effectiveness, proper installation and positioning of your ultrasonic bird repellent system is crucial. Follow these guidelines to maximize bird deterrent coverage and ensure long-term performance.
+      </p>
+      
+      <ul class="guidance-list text-base-content space-y-4" data-type="container">
+        <li data-type="text">
+          <strong>Installation Height:</strong> Mount the device 3-4 meters above ground level on a stable pole or structure for maximum sound distribution and coverage area.
+        </li>
+        <li data-type="text">
+          <strong>Positioning:</strong> Ensure the device faces the primary bird activity areas with minimal obstructions. Avoid placing near large buildings or dense vegetation that may block sound waves.
+        </li>
+        <li data-type="text">
+          <strong>Solar Panel Orientation:</strong> Position the integrated solar panel facing south (in Northern Hemisphere) with at least 6 hours of direct sunlight daily for optimal battery charging.
+        </li>
+        <li data-type="text">
+          <strong>Frequency Settings:</strong> Start with the default frequency range and adjust based on local bird species. Different frequencies are more effective for specific bird types.
+        </li>
+        <li data-type="text">
+          <strong>Motion Sensor Range:</strong> The PIR motion sensor has a 110° detection angle and 12-meter range. Position to cover main bird entry points to your protected area.
+        </li>
+        <li data-type="text">
+          <strong>Multiple Unit Placement:</strong> For areas larger than 5,000 m², install additional units with 20% coverage overlap to eliminate gaps in protection.
+        </li>
+        <li data-type="text">
+          <strong>Maintenance Schedule:</strong> Clean the solar panel monthly and check battery performance quarterly. Replace battery every 3-4 years for continued reliability.
+        </li>
+        <li data-type="text">
+          <strong>Seasonal Adjustments:</strong> Increase activation frequency during peak migration seasons and breeding periods when bird activity is highest.
+        </li>
+      </ul>
+    </div>
+  </div>
+</div><div data-section-id="RelatedProductsSection" data-section-type="section" class="bg-base-100 py-16">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-base-content mb-12 text-center" data-type="text">
+      Related Bird Repellent Solutions
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto" data-type="container">
+      <!-- Visual Deterrent Card -->
+      <div class="related-card p-6" data-type="container" data-repeatable="true">
+        <div class="mb-4" data-type="container">
+          <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/3a53b507-4acc-4b27-b5b8-cccda2d67de4.png" alt="Visual Bird Deterrent System with reflective tape and predator decoys" class="w-full h-48 object-cover rounded" data-type="image">
+        </div>
+        <h3 class="text-xl font-semibold text-base-content mb-3" data-type="text">
+          Visual Deterrent System
+        </h3>
+        <p class="text-base-content mb-6 leading-relaxed" data-type="text">
+          Combine reflective tape, predator decoys, and holographic elements for comprehensive visual bird deterrence. Effective for large agricultural areas and orchards.
+        </p>
+        <button class="btn btn-accent w-full" data-type="button" onclick="navigateTo(&apos;visual_deterrent_detail&apos;)">
+          <span data-type="text">View Details</span>
+          <span class="iconify" data-icon="heroicons:arrow-right" data-width="16" data-type="icon"></span>
+        </button>
+      </div>
+      
+      <!-- Combination System Card -->
+      <div class="related-card p-6" data-type="container" data-repeatable="true">
+        <div class="mb-4" data-type="container">
+          <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/15e760b7-b245-4e84-b6de-356e73759f0d.png" alt="Hybrid bird control system combining ultrasonic and visual deterrents" class="w-full h-48 object-cover rounded" data-type="image">
+        </div>
+        <h3 class="text-xl font-semibold text-base-content mb-3" data-type="text">
+          Hybrid Control System
+        </h3>
+        <p class="text-base-content mb-6 leading-relaxed" data-type="text">
+          Advanced combination of ultrasonic technology and visual deterrents for maximum effectiveness. Ideal for high-value crops and sensitive agricultural areas.
+        </p>
+        <button class="btn btn-accent w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+          <span data-type="text">Learn More</span>
+          <span class="iconify" data-icon="heroicons:arrow-right" data-width="16" data-type="icon"></span>
+        </button>
+      </div>
+      
+      <!-- Professional Installation Card -->
+      <div class="related-card p-6" data-type="container" data-repeatable="true">
+        <div class="mb-4" data-type="container">
+          <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/21fad547-2b02-4f15-abc7-6397721f1593.png" alt="Professional technician installing bird repellent system in agricultural field" class="w-full h-48 object-cover rounded" data-type="image">
+        </div>
+        <h3 class="text-xl font-semibold text-base-content mb-3" data-type="text">
+          Professional Installation
+        </h3>
+        <p class="text-base-content mb-6 leading-relaxed" data-type="text">
+          Expert installation and setup service ensures optimal placement and configuration for your specific agricultural needs and local bird species.
+        </p>
+        <button class="btn btn-accent w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+          <span data-type="text">Request Service</span>
+          <span class="iconify" data-icon="heroicons:arrow-right" data-width="16" data-type="icon"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+    </main>
+    
+    <div data-section-id="common_footer" data-section-type="common_footer" class="bg-base-200 mt-16">
+    <footer class="footer footer-horizontal p-10 text-base-content" data-type="container">
+      <aside data-type="container">
+        <div class="flex items-center gap-3 mb-4" data-type="container">
+          <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="48" data-type="icon"></span>
+          <div data-type="container">
+            <h3 class="font-bold text-lg text-primary" data-type="text">AgroTech Solutions</h3>
+            <p class="text-sm text-base-content opacity-70" data-type="text">Advanced agricultural technology since 2010</p>
+          </div>
+        </div>
+        <p class="text-sm max-w-sm" data-type="text">Providing energy-efficient irrigation, solar solutions, and bird repellent systems for modern farming operations worldwide.</p>
+        <div class="flex gap-3 mt-4" data-type="container">
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:phone" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:email" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:whatsapp" data-width="20" data-type="icon"></span>
+        </div>
+      </aside>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Products</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation Systems</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar Solutions</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Support</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact Us</span></button>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Technical Support</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Installation Guide</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Warranty</span></a>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Language &amp; Legal</header>
+        <div class="form-control" data-type="container">
+          <label class="label cursor-pointer w-max gap-2" data-type="container">
+            <span class="iconify" data-icon="mdi:translate" data-width="16" data-type="icon"></span>
+            <select class="select select-bordered select-sm w-32" data-type="input">
+              <option selected="" data-type="text">English</option>
+              <option data-type="text">Serbian</option>
+            </select>
+          </label>
+        </div>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Privacy Policy</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Terms of Service</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">GDPR Notice</span></a>
+      </nav>
+    </footer>
+    
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content border-t border-base-300" data-type="container">
+      <aside data-type="container">
+        <p class="text-sm" data-type="text">Copyright © 2025 AgroTech Solutions. All rights reserved. | Belgrade, Serbia</p>
+      </aside>
+    </footer>
+  </div>
+  <style>
+    [data-section-id="common_footer"] .link:hover {
+      color: var(--color-secondary);
+      transition: color 0.2s ease-in-out;
+    }
+    
+    [data-section-id="common_footer"] .iconify:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+  </style>
+  <script>
+    (function() {
+      // Language toggle functionality
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        const languageSelect = document.querySelector(&apos;[data-section-id="common_footer"] select&apos;);
+        if (languageSelect) {
+          languageSelect.addEventListener(&apos;change&apos;, function(e) {
+            const selectedLanguage = e.target.value;
+            // Here you would implement actual language switching logic
+            console.log(&apos;Language changed to:&apos;, selectedLanguage);
+            // For demo purposes, just show an alert
+            // In a real application, this would trigger translation updates
+          });
+        }
+      });
+    })();
+  </script>
+    
+    <script>
+    /* JavaScript code for common usage, should be wrapped in a closure */
+    (function() {
+      // Navigation function for page transitions
+      window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        if (isInIframe) {
+          window.parent.postMessage({
+            type: &apos;iframeNavigation&apos;,
+            targetPageId: targetPageId
+          }, &apos;*&apos;);
+        } else {
+          window.location.href = targetFileName;
+        }
+      };
+      
+      // Get current page for navigation highlighting
+      window.getCurrentPageId = function() {
+        const path = window.location.pathname;
+        const filename = path.split(&apos;/&apos;).pop();
+        return filename.replace(&apos;.html&apos;, &apos;&apos;) || &apos;homepage&apos;;
+      };
+    })();
+  </script>
+    <script>
+/* JavaScript for ultrasonic repellent detail page */
+(function() {
+  // Initialize page functionality
+  document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+    // Add hover effects to specification table rows
+    const tableRows = document.querySelectorAll(&apos;.specs-table tbody tr&apos;);
+    tableRows.forEach(row => {
+      row.addEventListener(&apos;mouseenter&apos;, function() {
+        this.style.backgroundColor = &apos;rgba(85, 107, 47, 0.1)&apos;;
+      });
+      
+      row.addEventListener(&apos;mouseleave&apos;, function() {
+        this.classList.contains(&apos;bg-base-200&apos;) ? 
+          this.style.backgroundColor = &apos;var(--color-base-200)&apos; :
+          this.style.backgroundColor = &apos;transparent&apos;;
+      });
+    });
+    
+    // Add smooth scroll behavior for internal navigation
+    const breadcrumbLinks = document.querySelectorAll(&apos;.breadcrumb-item&apos;);
+    breadcrumbLinks.forEach(link => {
+      link.addEventListener(&apos;click&apos;, function(e) {
+        // Navigation is handled by onclick attributes
+        // This is just for visual feedback
+        this.style.opacity = &apos;0.5&apos;;
+        setTimeout(() => {
+          this.style.opacity = &apos;1&apos;;
+        }, 150);
+      });
+    });
+    
+    // Enhanced button interaction feedback
+    const ctaButtons = document.querySelectorAll(&apos;.btn&apos;);
+    ctaButtons.forEach(button => {
+      button.addEventListener(&apos;mousedown&apos;, function() {
+        this.style.transform = &apos;scale(0.98)&apos;;
+      });
+      
+      button.addEventListener(&apos;mouseup&apos;, function() {
+        this.style.transform = &apos;scale(1)&apos;;
+      });
+      
+      button.addEventListener(&apos;mouseleave&apos;, function() {
+        this.style.transform = &apos;scale(1)&apos;;
+      });
+    });
+  });
+  
+  // Stub functions for business logic (required to prevent errors)
+  window.requestQuote = function() {
+    console.log(&apos;Quote request functionality would be implemented here&apos;);
+  };
+  
+  window.downloadBrochure = function() {
+    console.log(&apos;Brochure download functionality would be implemented here&apos;);
+  };
+  
+  window.contactSpecialist = function() {
+    console.log(&apos;Specialist contact functionality would be implemented here&apos;);
+  };
+})();
+</script>
+
+<script>
+      Holder.run({
+        domain: "placehold.co"
+      })
+    </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

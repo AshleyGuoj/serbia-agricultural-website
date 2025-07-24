@@ -1,0 +1,928 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Greenhouse Solar Case Study</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 1920
+                const height = 1080
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'homepage': 'Homepage',
+    'irrigation': 'Irrigation Systems',
+    'irrigation_center_pivot': 'Center Pivot Irrigation Detail',
+    'irrigation_linear': 'Linear Irrigation Detail',
+    'irrigation_hose_reel': 'Hose Reel Irrigation Detail',
+    'irrigation_drip': 'Drip Irrigation Detail',
+    'solar': 'Solar Solutions',
+    'solar_agri_irrigation': 'Agricultural Solar Irrigation Detail',
+    'solar_household_storage': 'Household Energy Storage Detail',
+    'solar_commercial_industrial': 'Commercial/Industrial Solar Detail',
+    'solar_water_pumps': 'Solar Water Pumps Detail',
+    'bird_repellent': 'Bird Repellent Systems',
+    'bird_ultrasonic': 'Ultrasonic Repellent Detail',
+    'bird_visual': 'Visual Deterrent Detail',
+    'contact': 'Contact',
+    'submission_confirmation': 'Inquiry Confirmation',
+    'compatibility_check': 'Compatibility Check',
+    'case_studies': 'Case Studies',
+    'case_study_farm_irrigation': 'Farm Irrigation Case Study',
+    'case_study_greenhouse_solar': 'Greenhouse Solar Case Study',
+    'case_study_orchard_repellent': 'Orchard Repellent Case Study',
+    'case_study_dryland_farming': 'Dryland Farming Case Study'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="en" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenhouse Solar Case Study - Agricultural Solutions</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+    /* CSS code for common usage*/
+    
+    /* daisyUI Theme Variables Customization
+     * Based on the selected daisyUI theme and UI guidance requirements,
+     * customize only the CSS variables that need to be different from the theme defaults.
+     */
+    
+    :root {
+      /* Brand colors customization */
+      --color-primary: rgba(85, 107, 47, 1); /* Olive Green #556B2F */
+      --color-primary-content: rgba(255, 255, 255, 1); /* White text on primary */
+      --color-secondary: rgba(135, 206, 235, 1); /* Sky Blue #87CEEB */
+      --color-secondary-content: rgba(51, 51, 51, 1); /* Dark gray text on secondary */
+      --color-accent: rgba(139, 69, 19, 1); /* Warm Earth Brown #8B4513 */
+      --color-accent-content: rgba(255, 255, 255, 1); /* White text on accent */
+      
+      /* Background colors */
+      --color-base-100: rgba(255, 255, 255, 1); /* White */
+      --color-base-200: rgba(245, 245, 245, 1); /* Light Gray */
+      --color-base-300: rgba(229, 229, 229, 1); /* Slightly darker gray for borders */
+      --color-base-content: rgba(51, 51, 51, 1); /* Dark Gray text */
+      
+      /* Semantic colors */
+      --color-success: rgba(107, 142, 35, 1); /* Muted green #6B8E23 */
+      --color-success-content: rgba(255, 255, 255, 1);
+      --color-warning: rgba(255, 165, 0, 1); /* Amber #FFA500 */
+      --color-warning-content: rgba(51, 51, 51, 1);
+      --color-error: rgba(205, 92, 92, 1); /* Terra cotta #CD5C5C */
+      --color-error-content: rgba(255, 255, 255, 1);
+      --color-info: rgba(135, 206, 235, 1); /* Soft blue #87CEEB */
+      --color-info-content: rgba(51, 51, 51, 1);
+      
+      /* Border radius - modern but restrained */
+      --radius-box: 0.25rem; /* 4px */
+      --radius-field: 0.25rem; /* 4px */
+      --radius-selector: 0.25rem; /* 4px */
+      
+      /* Border width */
+      --border: 1px;
+    }
+    
+    /* Typography - Times New Roman serif */
+    body {
+      font-family: "Times New Roman", Times, serif;
+    }
+    
+    /* Subtle shadows */
+    .shadow-custom {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Smooth transitions for interactive elements */
+    .nav-link {
+      transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    }
+    
+    .nav-link:hover {
+      border-bottom: 2px solid var(--color-secondary);
+    }
+  </style>
+    <style>
+/* Custom styles for greenhouse solar case study page */
+
+/* Hero section background overlay */
+.hero-greenhouse {
+    background-position: center;
+    background-size: cover;
+    min-height: 500px;
+}
+
+/* Accordion hover effects */
+.collapse:hover .collapse-title {
+    background-color: var(--color-base-200);
+}
+
+/* Gallery thumbnail hover effects */
+.gallery-thumbnail {
+    transition: transform 0.2s ease-in-out;
+}
+
+.gallery-thumbnail:hover {
+    transform: scale(1.03);
+}
+
+/* Stat card hover effects */
+.stat-card:hover {
+    transform: scale(1.03);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Table row hover highlighting */
+.table tbody tr:hover {
+    background-color: var(--color-base-200);
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Lightbox modal styling */
+.lightbox-modal .modal-box {
+    max-width: 90vw;
+    max-height: 90vh;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Filter button active state */
+.filter-btn.active {
+    background-color: var(--color-primary);
+    color: var(--color-primary-content);
+}
+
+/* Tooltip styling */
+.tooltip-custom {
+    position: relative;
+}
+
+.tooltip-custom:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-base-300);
+    color: var(--color-base-content);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 8px;
+}
+</style>
+<script src="./assets/static/uxbot/25_6/holder.js"></script>
+<script src="./assets/interactive-enhancements.js"></script></head>
+<body class="bg-base-100">
+    <div data-section-id="common_header" data-section-type="common_header" class="navbar bg-base-100 sticky top-0 z-50 shadow-custom h-16">
+    <div class="navbar-start">
+      <button class="btn btn-ghost lg:hidden" data-type="button" onclick="toggleMobileMenu()">
+        <span class="iconify" data-icon="heroicons:bars-3" data-width="24" data-type="icon"></span>
+      </button>
+      <button class="btn btn-ghost normal-case text-xl font-bold text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+        <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="32" data-type="icon"></span>
+        <span data-type="text">AgroTech Solutions</span>
+      </button>
+    </div>
+    
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-2">
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;homepage&apos;)" data-nav="homepage"><span data-type="text">Home</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)" data-nav="irrigation"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;solar&apos;)" data-nav="solar"><span data-type="text">Solar</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)" data-nav="bird_repellent"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)" data-nav="case_studies"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;contact&apos;)" data-nav="contact"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+    
+    <div class="navbar-end">
+      <button class="btn btn-primary" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+        <span data-type="text">Get Quote</span>
+      </button>
+    </div>
+    
+    <!-- Mobile menu dropdown -->
+    <div class="dropdown dropdown-end lg:hidden absolute top-16 right-0 w-full bg-base-100 shadow-lg z-40 hidden" id="mobileMenu" data-type="container">
+      <ul class="menu p-4 gap-2">
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;homepage&apos;)"><span data-type="text">Home</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+  </div>
+  <style>
+    [data-section-id="common_header"] .nav-link.active {
+      border-bottom-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    
+    [data-section-id="common_header"] .navbar {
+      border-bottom: var(--border) solid var(--color-base-300);
+    }
+  </style>
+  <script>
+    (function() {
+      // Toggle mobile menu
+      window.toggleMobileMenu = function() {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        if (mobileMenu) {
+          mobileMenu.classList.toggle(&apos;hidden&apos;);
+        }
+      };
+      
+      // Highlight active navigation item
+      function highlightActiveNav() {
+        const currentPageId = getCurrentPageId();
+        const navLinks = document.querySelectorAll(&apos;[data-section-id="common_header"] [data-nav]&apos;);
+        
+        navLinks.forEach(link => {
+          const navTarget = link.getAttribute(&apos;data-nav&apos;);
+          if (navTarget === currentPageId) {
+            link.classList.add(&apos;active&apos;);
+          } else {
+            link.classList.remove(&apos;active&apos;);
+          }
+        });
+      }
+      
+      // Initialize on page load
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        highlightActiveNav();
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener(&apos;click&apos;, function(e) {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        const menuButton = document.querySelector(&apos;[data-section-id="common_header"] .lg\\:hidden&apos;);
+        
+        if (mobileMenu && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+          mobileMenu.classList.add(&apos;hidden&apos;);
+        }
+      });
+    })();
+  </script>
+    
+    <main class="min-h-screen">
+        <div data-section-id="HeroSection" data-section-type="section" class="hero hero-greenhouse" style="background-image: url(&apos;https://images.unsplash.com/photo-1720610784599-18c02b1cc9ee?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwzfHxncmVlbmhvdXNlJTIwc29sYXIlMjBwYW5lbHN8ZW58MHx8fHwxNzUzMTYzMDYyfDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=1920&amp;h=600&apos;);">
+    <div class="hero-overlay bg-primary bg-opacity-60"></div>
+    <div class="hero-content text-center text-primary-content">
+        <div class="max-w-4xl">
+            <h1 class="mb-6 text-5xl font-bold" data-type="text">Greenhouse Solar Energy System Case Study</h1>
+            <p class="mb-8 text-xl" data-type="text">Sustainable Energy Solution for Modern Agriculture</p>
+            <div class="text-lg mb-8" data-type="container">
+                <p data-type="text">Location: Green Valley Farms, California</p>
+                <p data-type="text">Completion Date: March 2024</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="btn btn-secondary btn-lg" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)">
+                    <span class="iconify" data-icon="heroicons:arrow-left" data-width="20" data-type="icon"></span>
+                    <span data-type="text">Back to Case Studies</span>
+                </button>
+                <button class="btn btn-accent btn-lg" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+                    <span class="iconify" data-icon="heroicons:home" data-width="20" data-type="icon"></span>
+                    <span data-type="text">Home</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="IntroductionSection" data-section-type="section" class="py-16 bg-base-100">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold text-primary mb-8 text-center" data-type="text">Project Overview</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="card bg-base-200 shadow-custom p-6" data-type="container">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="iconify text-primary" data-icon="heroicons:map-pin" data-width="32" data-type="icon"></span>
+                        <h3 class="text-xl font-bold" data-type="text">Location</h3>
+                    </div>
+                    <p class="text-base-content" data-type="text">Green Valley Farms<br>California, USA</p>
+                </div>
+                
+                <div class="card bg-base-200 shadow-custom p-6" data-type="container">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="iconify text-primary" data-icon="heroicons:bolt" data-width="32" data-type="icon"></span>
+                        <h3 class="text-xl font-bold" data-type="text">System Capacity</h3>
+                    </div>
+                    <p class="text-base-content" data-type="text">250 kW Solar Array<br>400 Panels Installed</p>
+                </div>
+                
+                <div class="card bg-base-200 shadow-custom p-6" data-type="container">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="iconify text-primary" data-icon="heroicons:calendar-days" data-width="32" data-type="icon"></span>
+                        <h3 class="text-xl font-bold" data-type="text">Installation Period</h3>
+                    </div>
+                    <p class="text-base-content" data-type="text">6 Weeks<br>January - March 2024</p>
+                </div>
+            </div>
+            
+            <div class="prose prose-lg max-w-none" data-type="container">
+                <p data-type="text">This comprehensive solar energy project was designed to provide sustainable power for a 50,000 square foot greenhouse facility specializing in organic vegetable production. The installation combines cutting-edge photovoltaic technology with agricultural best practices to create an energy-efficient growing environment.</p>
+                
+                <p data-type="text">The project aimed to reduce operational costs by 70% while maintaining optimal growing conditions year-round. Through careful planning and expert installation, we achieved a system that not only meets current energy demands but also provides capacity for future expansion.</p>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="InstallationStepsSection" data-section-type="section" class="py-16 bg-base-200">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold text-primary mb-8 text-center" data-type="text">Installation Process</h2>
+            
+            <div class="space-y-4">
+                <div class="collapse collapse-arrow bg-base-100 shadow-custom">
+                    <input type="radio" name="installation-accordion" checked="checked">
+                    <div class="collapse-title text-xl font-medium flex items-center gap-4" data-type="container">
+                        <span class="badge badge-primary badge-lg" data-type="text">1</span>
+                        <span data-type="text">Site Assessment &amp; Planning</span>
+                    </div>
+                    <div class="collapse-content">
+                        <div class="flex flex-col md:flex-row gap-6 pt-4">
+                            <div class="flex-1" data-type="container">
+                                <p class="mb-4" data-type="text">Comprehensive evaluation of the greenhouse structure, electrical systems, and solar exposure patterns. Our team conducted detailed measurements and structural analysis to ensure optimal panel placement.</p>
+                                <ul class="list-disc list-inside space-y-2" data-type="container">
+                                    <li data-type="text">Structural integrity assessment</li>
+                                    <li data-type="text">Electrical load analysis</li>
+                                    <li data-type="text">Solar irradiance mapping</li>
+                                    <li data-type="text">Permit acquisition</li>
+                                </ul>
+                            </div>
+                            <div class="md:w-64">
+                                <img src="https://images.unsplash.com/photo-1730646040860-1cce44c4f277?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxncmVlbmhvdXNlJTIwc2l0ZSUyMGFzc2Vzc21lbnR8ZW58MHx8fHwxNzUzMTYzNTQ1fDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=256&amp;h=192" alt="Site assessment showing engineers measuring greenhouse roof structure" class="w-full rounded shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="collapse collapse-arrow bg-base-100 shadow-custom">
+                    <input type="radio" name="installation-accordion">
+                    <div class="collapse-title text-xl font-medium flex items-center gap-4" data-type="container">
+                        <span class="badge badge-primary badge-lg" data-type="text">2</span>
+                        <span data-type="text">Frame Assembly &amp; Mounting</span>
+                    </div>
+                    <div class="collapse-content">
+                        <div class="flex flex-col md:flex-row gap-6 pt-4">
+                            <div class="flex-1" data-type="container">
+                                <p class="mb-4" data-type="text">Installation of the aluminum mounting framework designed to withstand agricultural environment conditions while maintaining greenhouse functionality.</p>
+                                <ul class="list-disc list-inside space-y-2" data-type="container">
+                                    <li data-type="text">Aluminum rail installation</li>
+                                    <li data-type="text">Structural reinforcement</li>
+                                    <li data-type="text">Weatherproofing measures</li>
+                                    <li data-type="text">Quality control inspections</li>
+                                </ul>
+                            </div>
+                            <div class="md:w-64">
+                                <img src="https://images.unsplash.com/photo-1580122246632-5858ec40d651?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwxfHxzb2xhciUyMGZyYW1lJTIwYXNzZW1ibHl8ZW58MHx8fHwxNzUzMTYzNTQ0fDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=256&amp;h=192" alt="Workers installing aluminum mounting rails on greenhouse roof" class="w-full rounded shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="collapse collapse-arrow bg-base-100 shadow-custom">
+                    <input type="radio" name="installation-accordion">
+                    <div class="collapse-title text-xl font-medium flex items-center gap-4" data-type="container">
+                        <span class="badge badge-primary badge-lg" data-type="text">3</span>
+                        <span data-type="text">Solar Panel Installation</span>
+                    </div>
+                    <div class="collapse-content">
+                        <div class="flex flex-col md:flex-row gap-6 pt-4">
+                            <div class="flex-1" data-type="container">
+                                <p class="mb-4" data-type="text">Precise placement and securing of 400 high-efficiency solar panels, each rated at 625W, ensuring optimal energy capture while maintaining greenhouse light transmission.</p>
+                                <ul class="list-disc list-inside space-y-2" data-type="container">
+                                    <li data-type="text">Panel positioning and alignment</li>
+                                    <li data-type="text">Secure mounting and clamping</li>
+                                    <li data-type="text">Gap optimization for light penetration</li>
+                                    <li data-type="text">Safety protocol implementation</li>
+                                </ul>
+                            </div>
+                            <div class="md:w-64">
+                                <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/7c3c2e66-b38f-44d4-abbb-df5e7caa0d9e.png" alt="Solar panels being mounted on greenhouse roof structure" class="w-full rounded shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="collapse collapse-arrow bg-base-100 shadow-custom">
+                    <input type="radio" name="installation-accordion">
+                    <div class="collapse-title text-xl font-medium flex items-center gap-4" data-type="container">
+                        <span class="badge badge-primary badge-lg" data-type="text">4</span>
+                        <span data-type="text">Electrical Wiring &amp; Connections</span>
+                    </div>
+                    <div class="collapse-content">
+                        <div class="flex flex-col md:flex-row gap-6 pt-4">
+                            <div class="flex-1" data-type="container">
+                                <p class="mb-4" data-type="text">Professional electrical installation connecting the solar array to the greenhouse power systems and grid connection point.</p>
+                                <ul class="list-disc list-inside space-y-2" data-type="container">
+                                    <li data-type="text">DC wiring and combiner boxes</li>
+                                    <li data-type="text">Inverter installation and configuration</li>
+                                    <li data-type="text">AC distribution and metering</li>
+                                    <li data-type="text">Grounding and safety systems</li>
+                                </ul>
+                            </div>
+                            <div class="md:w-64">
+                                <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/8549f565-1e25-4ea0-9b5b-46258e5fb623.png" alt="Electrician connecting solar panel wiring and inverter systems" class="w-full rounded shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="collapse collapse-arrow bg-base-100 shadow-custom">
+                    <input type="radio" name="installation-accordion">
+                    <div class="collapse-title text-xl font-medium flex items-center gap-4" data-type="container">
+                        <span class="badge badge-primary badge-lg" data-type="text">5</span>
+                        <span data-type="text">System Commissioning &amp; Testing</span>
+                    </div>
+                    <div class="collapse-content">
+                        <div class="flex flex-col md:flex-row gap-6 pt-4">
+                            <div class="flex-1" data-type="container">
+                                <p class="mb-4" data-type="text">Comprehensive testing and optimization of the complete solar energy system to ensure peak performance and integration with existing greenhouse operations.</p>
+                                <ul class="list-disc list-inside space-y-2" data-type="container">
+                                    <li data-type="text">System performance verification</li>
+                                    <li data-type="text">Monitoring system setup</li>
+                                    <li data-type="text">Grid interconnection testing</li>
+                                    <li data-type="text">Staff training and documentation</li>
+                                </ul>
+                            </div>
+                            <div class="md:w-64">
+                                <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/031f4393-e8ae-47d8-810a-00e89e503346.png" alt="Technician testing solar system performance with monitoring equipment" class="w-full rounded shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="PerformanceMetricsSection" data-section-type="section" class="py-16 bg-base-100">
+    <div class="container mx-auto px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold text-primary mb-8 text-center" data-type="text">Performance Metrics</h2>
+            
+            <!-- Key Statistics -->
+            <div class="stats stats-vertical lg:stats-horizontal shadow-custom w-full mb-12">
+                <div class="stat stat-card">
+                    <div class="stat-figure text-primary">
+                        <span class="iconify" data-icon="heroicons:bolt" data-width="48" data-type="icon"></span>
+                    </div>
+                    <div class="stat-title" data-type="text">Total Energy Generated</div>
+                    <div class="stat-value text-primary tooltip-custom" data-tooltip="Total kWh generated since system activation" data-type="text">425,000</div>
+                    <div class="stat-desc" data-type="text">kWh since March 2024</div>
+                </div>
+                
+                <div class="stat stat-card">
+                    <div class="stat-figure text-secondary">
+                        <span class="iconify" data-icon="heroicons:sun" data-width="48" data-type="icon"></span>
+                    </div>
+                    <div class="stat-title" data-type="text">Average Daily Output</div>
+                    <div class="stat-value text-secondary tooltip-custom" data-tooltip="Average daily energy production" data-type="text">1,250</div>
+                    <div class="stat-desc" data-type="text">kWh per day</div>
+                </div>
+                
+                <div class="stat stat-card">
+                    <div class="stat-figure text-accent">
+                        <span class="iconify" data-icon="heroicons:currency-dollar" data-width="48" data-type="icon"></span>
+                    </div>
+                    <div class="stat-title" data-type="text">Return on Investment</div>
+                    <div class="stat-value text-accent tooltip-custom" data-tooltip="Projected ROI based on energy savings" data-type="text">18%</div>
+                    <div class="stat-desc" data-type="text">Annual ROI</div>
+                </div>
+            </div>
+            
+            <!-- Monthly Performance Table -->
+            <div class="card bg-base-200 shadow-custom p-6 mb-8" data-type="container">
+                <h3 class="text-2xl font-bold mb-6" data-type="text">Monthly Energy Production</h3>
+                <div class="overflow-x-auto">
+                    <table class="table table-zebra w-full">
+                        <thead>
+                            <tr>
+                                <th class="cursor-pointer hover:bg-base-300" data-type="text">Month</th>
+                                <th class="cursor-pointer hover:bg-base-300" data-type="text">Energy Generated (kWh)</th>
+                                <th class="cursor-pointer hover:bg-base-300" data-type="text">Peak Daily Output</th>
+                                <th class="cursor-pointer hover:bg-base-300" data-type="text">Efficiency (%)</th>
+                                <th class="cursor-pointer hover:bg-base-300" data-type="text">Cost Savings ($)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-type="text">March 2024</td>
+                                <td data-type="text">32,500</td>
+                                <td data-type="text">1,450</td>
+                                <td data-type="text">94.2</td>
+                                <td data-type="text">$4,875</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">April 2024</td>
+                                <td data-type="text">38,200</td>
+                                <td data-type="text">1,520</td>
+                                <td data-type="text">95.8</td>
+                                <td data-type="text">$5,730</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">May 2024</td>
+                                <td data-type="text">42,100</td>
+                                <td data-type="text">1,680</td>
+                                <td data-type="text">96.5</td>
+                                <td data-type="text">$6,315</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">June 2024</td>
+                                <td data-type="text">45,800</td>
+                                <td data-type="text">1,750</td>
+                                <td data-type="text">97.1</td>
+                                <td data-type="text">$6,870</td>
+                            </tr>
+                            <tr>
+                                <td data-type="text">July 2024</td>
+                                <td data-type="text">47,200</td>
+                                <td data-type="text">1,820</td>
+                                <td data-type="text">97.8</td>
+                                <td data-type="text">$7,080</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Chart Placeholder -->
+            <div class="card bg-base-200 shadow-custom p-6" data-type="container">
+                <h3 class="text-2xl font-bold mb-6" data-type="text">Energy Production Trends</h3>
+                <div class="bg-base-100 rounded-lg p-8 text-center" data-type="container">
+                    <span class="iconify text-base-content opacity-50" data-icon="heroicons:chart-bar" data-width="64" data-type="icon"></span>
+                    <p class="text-base-content opacity-70 mt-4" data-type="text">Interactive chart showing monthly energy production trends would be displayed here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="PhotoGallerySection" data-section-type="section" class="py-16 bg-base-200">
+    <div class="container mx-auto px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold text-primary mb-8 text-center" data-type="text">Project Gallery</h2>
+            
+            <!-- Filter Controls -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8" data-type="container">
+                <button class="btn btn-sm filter-btn active" data-type="button" onclick="filterGallery(&apos;all&apos;)">
+                    <span data-type="text">All Photos</span>
+                </button>
+                <button class="btn btn-sm btn-outline filter-btn" data-type="button" onclick="filterGallery(&apos;planning&apos;)">
+                    <span data-type="text">Planning</span>
+                </button>
+                <button class="btn btn-sm btn-outline filter-btn" data-type="button" onclick="filterGallery(&apos;installation&apos;)">
+                    <span data-type="text">Installation</span>
+                </button>
+                <button class="btn btn-sm btn-outline filter-btn" data-type="button" onclick="filterGallery(&apos;completion&apos;)">
+                    <span data-type="text">Completion</span>
+                </button>
+            </div>
+            
+            <!-- Photo Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" data-type="container">
+                <div class="gallery-item" data-category="planning" data-type="container">
+                    <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/7270bd13-e9cb-4392-992f-07d1c59a033d.png" alt="Engineers conducting initial site survey of greenhouse facility" class="w-full h-48 object-cover rounded-lg shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                    <p class="text-sm text-center mt-2" data-type="text">Initial Site Survey</p>
+                </div>
+                
+                <div class="gallery-item" data-category="planning" data-type="container">
+                    <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/8f65f9dc-0305-45d7-a370-594f3fb0a9da.png" alt="Detailed structural analysis of greenhouse roof for solar panel mounting" class="w-full h-48 object-cover rounded-lg shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                    <p class="text-sm text-center mt-2" data-type="text">Structural Analysis</p>
+                </div>
+                
+                <div class="gallery-item" data-category="installation" data-type="container">
+                    <img src="https://images.unsplash.com/photo-1642328103813-94afc8502035?crop=entropy&amp;cs=tinysrgb&amp;fit=crop&amp;fm=jpg&amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwxfHxncmVlbmhvdXNlJTIwZnJhbWUlMjBpbnN0YWxsYXRpb258ZW58MHx8fHwxNzUzMTYzNTQzfDA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=300&amp;h=225" alt="Workers installing aluminum mounting frames on greenhouse roof" class="w-full h-48 object-cover rounded-lg shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                    <p class="text-sm text-center mt-2" data-type="text">Frame Installation</p>
+                </div>
+                
+                <div class="gallery-item" data-category="installation" data-type="container">
+                    <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/2e70e13a-4577-4229-87ec-eadb84047e67.png" alt="Solar panels being carefully positioned and mounted on greenhouse structure" class="w-full h-48 object-cover rounded-lg shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                    <p class="text-sm text-center mt-2" data-type="text">Panel Mounting</p>
+                </div>
+                
+                <div class="gallery-item" data-category="installation" data-type="container">
+                    <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/bd351ae1-8c7e-4fee-8abd-60a9df0c1491.png" alt="Electricians connecting solar panel wiring and electrical systems" class="w-full h-48 object-cover rounded-lg shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                    <p class="text-sm text-center mt-2" data-type="text">Electrical Connections</p>
+                </div>
+                
+                <div class="gallery-item" data-category="installation" data-type="container">
+                    <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/e463fef0-114f-4cbb-b654-efa6895f8faa.png" alt="Installation and configuration of solar inverter systems" class="w-full h-48 object-cover rounded-lg shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                    <p class="text-sm text-center mt-2" data-type="text">Inverter Installation</p>
+                </div>
+                
+                <div class="gallery-item" data-category="completion" data-type="container">
+                    <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/83b7004a-94ad-4b2a-a9ce-edf1b36545d5.png" alt="Completed solar panel installation on greenhouse with plants growing below" class="w-full h-48 object-cover rounded-lg shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                    <p class="text-sm text-center mt-2" data-type="text">Completed Installation</p>
+                </div>
+                
+                <div class="gallery-item" data-category="completion" data-type="container">
+                    <img src="https://spark-builder.s3.cn-north-1.amazonaws.com.cn/image/5e936670-3a06-47d1-bf1b-e524d0a43c83.png" alt="Digital monitoring system displaying real-time solar energy production data" class="w-full h-48 object-cover rounded-lg shadow-custom cursor-pointer gallery-thumbnail" data-type="image" onclick="openLightbox(this)">
+                    <p class="text-sm text-center mt-2" data-type="text">Monitoring System</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lightbox Modal -->
+    <dialog id="lightboxModal" class="modal lightbox-modal">
+        <div class="modal-box">
+            <img id="lightboxImage" src="" alt="" class="w-full h-auto rounded-lg" data-type="image">
+            <div class="modal-action">
+                <form method="dialog">
+                    <button class="btn btn-circle btn-ghost absolute right-2 top-2" data-type="button">
+                        <span class="iconify" data-icon="heroicons:x-mark" data-width="24" data-type="icon"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button data-type="button">close</button>
+        </form>
+    </dialog>
+</div><div data-section-id="CaseNavigationSection" data-section-type="section" class="py-16 bg-base-100">
+    <div class="container mx-auto px-6">
+        <div class="max-w-2xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-primary mb-8" data-type="text">Explore More Case Studies</h2>
+            <p class="text-lg mb-8" data-type="text">Discover how our agricultural solutions are transforming farms and greenhouses worldwide.</p>
+            
+            <div class="join">
+                <button class="btn btn-secondary btn-lg join-item" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)">
+                    <span class="iconify" data-icon="heroicons:arrow-left" data-width="20" data-type="icon"></span>
+                    <span data-type="text">Back to Case Studies</span>
+                </button>
+                <button class="btn btn-accent btn-lg join-item" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+                    <span class="iconify" data-icon="heroicons:home" data-width="20" data-type="icon"></span>
+                    <span data-type="text">Home</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+    
+    <div data-section-id="common_footer" data-section-type="common_footer" class="bg-base-200 mt-16">
+    <footer class="footer footer-horizontal p-10 text-base-content" data-type="container">
+      <aside data-type="container">
+        <div class="flex items-center gap-3 mb-4" data-type="container">
+          <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="48" data-type="icon"></span>
+          <div data-type="container">
+            <h3 class="font-bold text-lg text-primary" data-type="text">AgroTech Solutions</h3>
+            <p class="text-sm text-base-content opacity-70" data-type="text">Advanced agricultural technology since 2010</p>
+          </div>
+        </div>
+        <p class="text-sm max-w-sm" data-type="text">Providing energy-efficient irrigation, solar solutions, and bird repellent systems for modern farming operations worldwide.</p>
+        <div class="flex gap-3 mt-4" data-type="container">
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:phone" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:email" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:whatsapp" data-width="20" data-type="icon"></span>
+        </div>
+      </aside>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Products</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation Systems</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar Solutions</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Support</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact Us</span></button>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Technical Support</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Installation Guide</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Warranty</span></a>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Language &amp; Legal</header>
+        <div class="form-control" data-type="container">
+          <label class="label cursor-pointer w-max gap-2" data-type="container">
+            <span class="iconify" data-icon="mdi:translate" data-width="16" data-type="icon"></span>
+            <select class="select select-bordered select-sm w-32" data-type="input">
+              <option selected="" data-type="text">English</option>
+              <option data-type="text">Serbian</option>
+            </select>
+          </label>
+        </div>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Privacy Policy</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Terms of Service</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">GDPR Notice</span></a>
+      </nav>
+    </footer>
+    
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content border-t border-base-300" data-type="container">
+      <aside data-type="container">
+        <p class="text-sm" data-type="text">Copyright © 2025 AgroTech Solutions. All rights reserved. | Belgrade, Serbia</p>
+      </aside>
+    </footer>
+  </div>
+  <style>
+    [data-section-id="common_footer"] .link:hover {
+      color: var(--color-secondary);
+      transition: color 0.2s ease-in-out;
+    }
+    
+    [data-section-id="common_footer"] .iconify:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+  </style>
+  <script>
+    (function() {
+      // Language toggle functionality
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        const languageSelect = document.querySelector(&apos;[data-section-id="common_footer"] select&apos;);
+        if (languageSelect) {
+          languageSelect.addEventListener(&apos;change&apos;, function(e) {
+            const selectedLanguage = e.target.value;
+            // Here you would implement actual language switching logic
+            console.log(&apos;Language changed to:&apos;, selectedLanguage);
+            // For demo purposes, just show an alert
+            // In a real application, this would trigger translation updates
+          });
+        }
+      });
+    })();
+  </script>
+    
+    <script>
+    /* JavaScript code for common usage, should be wrapped in a closure */
+    (function() {
+      // Navigation function for page transitions
+      window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        if (isInIframe) {
+          window.parent.postMessage({
+            type: &apos;iframeNavigation&apos;,
+            targetPageId: targetPageId
+          }, &apos;*&apos;);
+        } else {
+          window.location.href = targetFileName;
+        }
+      };
+      
+      // Get current page for navigation highlighting
+      window.getCurrentPageId = function() {
+        const path = window.location.pathname;
+        const filename = path.split(&apos;/&apos;).pop();
+        return filename.replace(&apos;.html&apos;, &apos;&apos;) || &apos;homepage&apos;;
+      };
+    })();
+  </script>
+    <script>
+/* JavaScript for greenhouse solar case study page */
+(function() {
+    // Lightbox functionality
+    window.openLightbox = function(imageElement) {
+        const modal = document.getElementById(&apos;lightboxModal&apos;);
+        const lightboxImage = document.getElementById(&apos;lightboxImage&apos;);
+        
+        if (modal && lightboxImage && imageElement) {
+            lightboxImage.src = imageElement.src;
+            lightboxImage.alt = imageElement.alt;
+            modal.showModal();
+        }
+    };
+    
+    // Gallery filter functionality
+    window.filterGallery = function(category) {
+        const galleryItems = document.querySelectorAll(&apos;.gallery-item&apos;);
+        const filterButtons = document.querySelectorAll(&apos;.filter-btn&apos;);
+        
+        // Update button states
+        filterButtons.forEach(btn => {
+            btn.classList.remove(&apos;active&apos;);
+            btn.classList.add(&apos;btn-outline&apos;);
+        });
+        
+        const activeButton = event.target.closest(&apos;.filter-btn&apos;);
+        if (activeButton) {
+            activeButton.classList.add(&apos;active&apos;);
+            activeButton.classList.remove(&apos;btn-outline&apos;);
+        }
+        
+        // Filter gallery items
+        galleryItems.forEach(item => {
+            if (category === &apos;all&apos; || item.dataset.category === category) {
+                item.style.display = &apos;block&apos;;
+            } else {
+                item.style.display = &apos;none&apos;;
+            }
+        });
+    };
+    
+    // Close lightbox when clicking outside image
+    document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        const modal = document.getElementById(&apos;lightboxModal&apos;);
+        if (modal) {
+            modal.addEventListener(&apos;click&apos;, function(e) {
+                if (e.target === modal) {
+                    modal.close();
+                }
+            });
+        }
+        
+        // Initialize gallery filter
+        filterGallery(&apos;all&apos;);
+    });
+})();
+</script>
+
+<script>
+      Holder.run({
+        domain: "placehold.co"
+      })
+    </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

@@ -1,0 +1,1082 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Center Pivot Irrigation Detail</title>
+                  <link rel="preconnect" href="https://fonts.googleapis.com">
+                  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                    
+                    /* Interactive Gradient Text Effects */
+                    .interactive-gradient-text {
+                      position: relative;
+                      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+                    
+                    .interactive-gradient-text:hover {
+                      transform: scale(1.02);
+                      box-shadow: 0 8px 25px rgba(79, 107, 58, 0.3);
+                      background: linear-gradient(45deg, #4F6B3A 0%, #2E5A1C 25%, #1A4D0A 50%, #2E5A1C 75%, #4F6B3A 100%) !important;
+                    }
+                    
+                    .interactive-gradient-text::before {
+                      content: '';
+                      position: absolute;
+                      top: 0;
+                      left: -100%;
+                      width: 100%;
+                      height: 100%;
+                      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                      transition: left 0.6s ease;
+                    }
+                    
+                    .interactive-gradient-text:hover::before {
+                      left: 100%;
+                    }
+                    
+                    .gradient-text-content {
+                      position: relative;
+                      z-index: 1;
+                      display: block;
+                      animation: textGlow 2s ease-in-out infinite alternate;
+                    }
+                    
+                    @keyframes textGlow {
+                      0% {
+                        filter: drop-shadow(0 0 2px rgba(79, 107, 58, 0.3));
+                      }
+                      100% {
+                        filter: drop-shadow(0 0 8px rgba(79, 107, 58, 0.6));
+                      }
+                    }
+                    
+                    .interactive-gradient-text:hover .gradient-text-content {
+                      animation: textGlow 0.8s ease-in-out infinite alternate;
+                    }
+                  </style>
+                  <script>
+                const width = 1920
+                const height = 1080
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'homepage': 'Homepage',
+    'irrigation': 'Irrigation Systems',
+    'irrigation_center_pivot': 'Center Pivot Irrigation Detail',
+    'irrigation_linear': 'Linear Irrigation Detail',
+    'irrigation_hose_reel': 'Hose Reel Irrigation Detail',
+    'irrigation_drip': 'Drip Irrigation Detail',
+    'solar': 'Solar Solutions',
+    'solar_agri_irrigation': 'Agricultural Solar Irrigation Detail',
+    'solar_household_storage': 'Household Energy Storage Detail',
+    'solar_commercial_industrial': 'Commercial/Industrial Solar Detail',
+    'solar_water_pumps': 'Solar Water Pumps Detail',
+    'bird_repellent': 'Bird Repellent Systems',
+    'bird_ultrasonic': 'Ultrasonic Repellent Detail',
+    'bird_visual': 'Visual Deterrent Detail',
+    'contact': 'Contact',
+    'submission_confirmation': 'Inquiry Confirmation',
+    'compatibility_check': 'Compatibility Check',
+    'case_studies': 'Case Studies',
+    'case_study_farm_irrigation': 'Farm Irrigation Case Study',
+    'case_study_greenhouse_solar': 'Greenhouse Solar Case Study',
+    'case_study_orchard_repellent': 'Orchard Repellent Case Study',
+    'case_study_dryland_farming': 'Dryland Farming Case Study'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="en" data-theme="emerald"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Center Pivot Irrigation Detail - Agricultural Solutions</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+    /* CSS code for common usage*/
+    
+    /* daisyUI Theme Variables Customization
+     * Based on the selected daisyUI theme and UI guidance requirements,
+     * customize only the CSS variables that need to be different from the theme defaults.
+     */
+    
+    :root {
+      /* Brand colors customization */
+      --color-primary: rgba(85, 107, 47, 1); /* Olive Green #556B2F */
+      --color-primary-content: rgba(255, 255, 255, 1); /* White text on primary */
+      --color-secondary: rgba(135, 206, 235, 1); /* Sky Blue #87CEEB */
+      --color-secondary-content: rgba(51, 51, 51, 1); /* Dark gray text on secondary */
+      --color-accent: rgba(139, 69, 19, 1); /* Warm Earth Brown #8B4513 */
+      --color-accent-content: rgba(255, 255, 255, 1); /* White text on accent */
+      
+      /* Background colors */
+      --color-base-100: rgba(255, 255, 255, 1); /* White */
+      --color-base-200: rgba(245, 245, 245, 1); /* Light Gray */
+      --color-base-300: rgba(229, 229, 229, 1); /* Slightly darker gray for borders */
+      --color-base-content: rgba(51, 51, 51, 1); /* Dark Gray text */
+      
+      /* Semantic colors */
+      --color-success: rgba(107, 142, 35, 1); /* Muted green #6B8E23 */
+      --color-success-content: rgba(255, 255, 255, 1);
+      --color-warning: rgba(255, 165, 0, 1); /* Amber #FFA500 */
+      --color-warning-content: rgba(51, 51, 51, 1);
+      --color-error: rgba(205, 92, 92, 1); /* Terra cotta #CD5C5C */
+      --color-error-content: rgba(255, 255, 255, 1);
+      --color-info: rgba(135, 206, 235, 1); /* Soft blue #87CEEB */
+      --color-info-content: rgba(51, 51, 51, 1);
+      
+      /* Border radius - modern but restrained */
+      --radius-box: 0.25rem; /* 4px */
+      --radius-field: 0.25rem; /* 4px */
+      --radius-selector: 0.25rem; /* 4px */
+      
+      /* Border width */
+      --border: 1px;
+    }
+    
+    /* Typography - Times New Roman serif */
+    body {
+      font-family: "Times New Roman", Times, serif;
+    }
+    
+    /* Subtle shadows */
+    .shadow-custom {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Smooth transitions for interactive elements */
+    .nav-link {
+      transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    }
+    
+    .nav-link:hover {
+      border-bottom: 2px solid var(--color-secondary);
+    }
+  </style>
+    <style>
+/* Page-specific styles for Center Pivot Irrigation Detail */
+
+/* Typography - Times New Roman serif */
+body, .prose {
+    font-family: "Times New Roman", Times, serif;
+}
+
+/* Section backgrounds - alternating white and light gray */
+.section-white {
+    background-color: var(--color-base-100);
+}
+
+.section-gray {
+    background-color: var(--color-base-200);
+}
+
+/* Section separators */
+.section-separator {
+    border-bottom: var(--border) solid var(--color-base-300);
+}
+
+/* Breadcrumb styling */
+.breadcrumb-nav {
+    background-color: rgba(245, 245, 245, 0.7);
+    border-bottom: var(--border) solid var(--color-base-300);
+}
+
+/* Table hover effects */
+.spec-table tbody tr:hover {
+    background-color: var(--color-base-200);
+}
+
+/* Card styling */
+.feature-card {
+    border: var(--border) solid var(--color-base-300);
+    border-radius: var(--radius-box);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.example-card {
+    border: var(--border) solid var(--color-base-300);
+    border-radius: var(--radius-box);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+/* Technical description styling */
+.tech-description h3 {
+    color: var(--color-primary);
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+}
+
+/* Stat styling */
+.terrain-stat {
+    background-color: var(--color-base-100);
+    border: var(--border) solid var(--color-base-300);
+    border-radius: var(--radius-box);
+    padding: 1rem;
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-primary-content);
+    border: none;
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary);
+    color: var(--color-secondary-content);
+    border: none;
+}
+
+/* Remove animations and transitions */
+* {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Override any hover effects */
+.btn:hover,
+.card:hover,
+tr:hover {
+    transform: none !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Case study card styling */
+.case-study-stat {
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    padding: 4px 8px;
+    background-color: rgba(245, 245, 245, 0.7);
+    border-radius: var(--radius-box);
+    font-size: 0.875rem;
+}
+
+.case-study-title {
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--color-primary);
+}
+
+.case-study-icon {
+    margin-right: 4px;
+    vertical-align: middle;
+}
+</style>
+<script src="./assets/static/uxbot/25_6/holder.js"></script>
+<script src="./assets/interactive-enhancements.js"></script></head>
+<body class="bg-base-100">
+    <div data-section-id="common_header" data-section-type="common_header" class="navbar bg-base-100 sticky top-0 z-50 shadow-custom h-16">
+    <div class="navbar-start">
+      <button class="btn btn-ghost lg:hidden" data-type="button" onclick="toggleMobileMenu()">
+        <span class="iconify" data-icon="heroicons:bars-3" data-width="24" data-type="icon"></span>
+      </button>
+      <button class="btn btn-ghost normal-case text-xl font-bold text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+        <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="32" data-type="icon"></span>
+        <span data-type="text">AgroTech Solutions</span>
+      </button>
+    </div>
+    
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-2">
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;homepage&apos;)" data-nav="homepage"><span data-type="text">Home</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)" data-nav="irrigation"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;solar&apos;)" data-nav="solar"><span data-type="text">Solar</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)" data-nav="bird_repellent"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)" data-nav="case_studies"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;contact&apos;)" data-nav="contact"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+    
+    <div class="navbar-end">
+      <!-- Language Switcher -->
+      <div class="dropdown dropdown-end mr-2" data-type="container">
+        <button class="btn btn-ghost btn-sm px-3 py-1" data-type="button" tabindex="0">
+          <span class="iconify mr-1" data-icon="heroicons:globe-alt" data-width="20" data-type="icon" style="color: #556B2F;"></span>
+          <span data-type="text">Language</span>
+        </button>
+        <ul tabindex="0" class="dropdown-content menu shadow-md bg-base-100 rounded-box p-2 w-48 mt-2" data-type="container">
+          <li>
+            <button class="flex items-center font-bold" data-type="button" onclick="switchLanguage(&apos;en&apos;)">
+              <span data-type="text">English (EN)</span>
+              <span class="iconify ml-auto" data-icon="heroicons:check" data-width="16" data-type="icon" style="color: #556B2F;"></span>
+            </button>
+          </li>
+          <li>
+            <button class="flex items-center" data-type="button" onclick="switchLanguage(&apos;sr&apos;)">
+              <span data-type="text">Српски (SR)</span>
+            </button>
+          </li>
+          <li>
+            <button class="flex items-center" data-type="button" onclick="switchLanguage(&apos;zh&apos;)">
+              <span data-type="text">中文 (ZH)</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      
+      <button class="btn btn-primary" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+        <span data-type="text">Get Quote</span>
+      </button>
+    </div>
+    
+    <!-- Mobile menu dropdown -->
+    <div class="dropdown dropdown-end lg:hidden absolute top-16 right-0 w-full bg-base-100 shadow-lg z-40 hidden" id="mobileMenu" data-type="container">
+      <ul class="menu p-4 gap-2">
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;homepage&apos;)"><span data-type="text">Home</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact</span></button></li>
+        
+        <!-- Language options in mobile menu -->
+        <li class="divider my-2">Language</li>
+        <li><button class="btn btn-ghost justify-start w-full font-bold" data-type="button" onclick="switchLanguage(&apos;en&apos;)"><span data-type="text">English (EN)</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="switchLanguage(&apos;sr&apos;)"><span data-type="text">Српски (SR)</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="switchLanguage(&apos;zh&apos;)"><span data-type="text">中文 (ZH)</span></button></li>
+      </ul>
+    </div>
+  </div>
+  <style>
+    [data-section-id="common_header"] .nav-link.active {
+      border-bottom-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    
+    [data-section-id="common_header"] .navbar {
+      border-bottom: var(--border) solid var(--color-base-300);
+    }
+    
+    [data-section-id="common_header"] .dropdown-content {
+      border: var(--border) solid var(--color-base-300);
+    }
+  </style>
+  <script>
+    (function() {
+      // Toggle mobile menu
+      window.toggleMobileMenu = function() {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        if (mobileMenu) {
+          mobileMenu.classList.toggle(&apos;hidden&apos;);
+        }
+      };
+      
+      // Highlight active navigation item
+      function highlightActiveNav() {
+        const currentPageId = getCurrentPageId();
+        const navLinks = document.querySelectorAll(&apos;[data-section-id="common_header"] [data-nav]&apos;);
+        
+        navLinks.forEach(link => {
+          const navTarget = link.getAttribute(&apos;data-nav&apos;);
+          if (navTarget === currentPageId) {
+            link.classList.add(&apos;active&apos;);
+          } else {
+            link.classList.remove(&apos;active&apos;);
+          }
+        });
+      }
+
+      // Switch language function
+      window.switchLanguage = function(languageCode) {
+        console.log(&apos;Switching language to:&apos;, languageCode);
+        
+        // Here you would implement the actual language switching logic
+        // For now, we&apos;ll just update the UI to show which language is selected
+        
+        // Update desktop dropdown
+        const languageItems = document.querySelectorAll(&apos;[data-section-id="common_header"] .dropdown-content button&apos;);
+        languageItems.forEach(item => {
+          if (item.onclick.toString().includes(languageCode)) {
+            item.classList.add(&apos;font-bold&apos;);
+            // Add check icon if it doesn&apos;t exist
+            if (!item.querySelector(&apos;[data-icon="heroicons:check"]&apos;)) {
+              const checkIcon = document.createElement(&apos;span&apos;);
+              checkIcon.className = &apos;iconify ml-auto&apos;;
+              checkIcon.setAttribute(&apos;data-icon&apos;, &apos;heroicons:check&apos;);
+              checkIcon.setAttribute(&apos;data-width&apos;, &apos;16&apos;);
+              checkIcon.setAttribute(&apos;data-type&apos;, &apos;icon&apos;);
+              checkIcon.style.color = &apos;#556B2F&apos;;
+              item.appendChild(checkIcon);
+            }
+          } else {
+            item.classList.remove(&apos;font-bold&apos;);
+            // Remove check icon if it exists
+            const checkIcon = item.querySelector(&apos;[data-icon="heroicons:check"]&apos;);
+            if (checkIcon) {
+              item.removeChild(checkIcon);
+            }
+          }
+        });
+        
+        // Update mobile menu
+        const mobileLanguageItems = document.querySelectorAll(&apos;#mobileMenu button&apos;);
+        mobileLanguageItems.forEach(item => {
+          if (item.onclick && item.onclick.toString().includes(languageCode)) {
+            item.classList.add(&apos;font-bold&apos;);
+          } else if (item.onclick && item.onclick.toString().includes(&apos;switchLanguage&apos;)) {
+            item.classList.remove(&apos;font-bold&apos;);
+          }
+        });
+      };
+      
+      // Initialize on page load
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        highlightActiveNav();
+      });
+      
+      // Close mobile menu and dropdowns when clicking outside
+      document.addEventListener(&apos;click&apos;, function(e) {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        const menuButton = document.querySelector(&apos;[data-section-id="common_header"] .lg\\:hidden&apos;);
+        
+        if (mobileMenu && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+          mobileMenu.classList.add(&apos;hidden&apos;);
+        }
+      });
+    })();
+  </script>
+    
+    <main class="min-h-screen">
+        <div data-section-id="BreadcrumbSection" data-section-type="section" class="breadcrumb-nav py-4">
+    <div class="container mx-auto px-8">
+        <div class="flex items-center justify-between">
+            <div class="text-sm breadcrumbs" data-type="container">
+                <ul>
+                    <li><span data-type="text" class="text-base-content">Irrigation Systems</span></li>
+                    <li><span data-type="text" class="text-base-content font-medium">Center Pivot Irrigation</span></li>
+                </ul>
+            </div>
+            <button class="btn btn-ghost btn-sm text-primary" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)">
+                <span class="iconify text-primary" data-icon="heroicons:arrow-left" data-width="16" data-type="icon"></span>
+                <span data-type="text">Back to Irrigation Systems</span>
+            </button>
+        </div>
+    </div>
+</div><div data-section-id="ProductDetailSection" data-section-type="section" class="section-white py-16" style="position: relative;">
+    <div class="container mx-auto px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <!-- Product Image - Left Column -->
+            <div data-type="container" style="position: relative;">
+                <div class="relative" data-type="container">
+                    <img src="./images/pivot irrigation.png" alt="Center Pivot Irrigation System showing large rotating sprinkler arm over agricultural field" class="w-full h-auto rounded shadow-custom" data-type="image" style="position: relative;">
+                </div>
+            </div>
+            
+            <!-- Product Info - Right Column -->
+            <div data-type="container" style="position: relative;">
+                <h1 class="text-6xl font-bold text-primary mb-8" data-type="text" style="position: relative;">Pivot Irrigation System</h1>
+                <p class="text-2xl text-base-content mb-10 leading-relaxed font-medium" data-type="text" style="position: relative;">
+                    Advanced automated irrigation solution designed for large-scale agricultural operations. 
+                    Our center pivot systems provide uniform water distribution across circular fields, 
+                    maximizing crop yield while minimizing water waste and labor requirements.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-6" data-type="container" style="position: relative;">
+                    <button class="btn btn-primary text-xl font-bold px-8 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300" data-type="button" onclick="downloadBrochure()" style="position: relative;">
+                        <span class="iconify text-primary-content" data-icon="heroicons:document-arrow-down" data-width="24" data-type="icon"></span>
+                        <span data-type="text" style="position: relative;">Download Brochure</span>
+                    </button>
+                    <button class="btn btn-secondary text-xl font-bold px-8 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300" data-type="button" onclick="navigateTo(&apos;contact&apos;)" style="position: relative;">
+                        <span class="iconify text-secondary-content" data-icon="heroicons:calendar-days" data-width="24" data-type="icon"></span>
+                        <span data-type="text" style="position: relative;">Request Field Visit</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="SpecificationSection" data-section-type="section" class="section-gray py-16 section-separator">
+    <div class="container mx-auto px-8">
+        <h2 class="text-3xl font-bold text-base-content mb-8" data-type="text">Technical Specifications</h2>
+        
+        <div class="overflow-x-auto" data-type="container">
+                            <table class="table table-zebra w-full spec-table bg-base-100" data-type="container" style="table-layout: fixed;">
+                <thead>
+                    <tr class="bg-base-200">
+                        <th class="text-2xl font-bold text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Parameter</th>
+                        <th class="text-2xl font-bold text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Specification</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-medium text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Span Length</td>
+                        <td class="text-base-content" data-type="text" style="font-size: 24px; width: 50%;">40–60m per span</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Total Length</td>
+                        <td class="text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Up to 740m</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Tower Height</td>
+                        <td class="text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Customizable</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Pipe Diameter</td>
+                        <td class="text-base-content" data-type="text" style="font-size: 24px; width: 50%;">219mm, 203mm, 168mm, 133mm</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Number of Spans</td>
+                        <td class="text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Max. 20 (typically ≤12)</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Flow Rate</td>
+                        <td class="text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Max. 450 m³/h</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Water Pressure</td>
+                        <td class="text-base-content" data-type="text" style="font-size: 24px; width: 50%;">0.25 MPa (≈ 2.5 bar)</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Slope Tolerance</td>
+                        <td class="text-base-content" data-type="text" style="font-size: 24px; width: 50%;">17° uphill, 31° downhill</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Irrigation Area</td>
+                        <td class="text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Max. 170 hectares</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Power Source</td>
+                        <td class="text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Electric motor, solar PV compatible</td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Material</td>
+                        <td class="text-base-content" data-type="text" style="font-size: 24px; width: 50%;">Galvanized steel (PE100 HDPE lining optional)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div><div data-section-id="FeatureHighlightsSection" data-section-type="section" class="section-white py-16 section-separator" style="position: relative;">
+    <div class="container mx-auto px-8">
+        <h2 class="text-3xl font-bold text-base-content mb-8" data-type="text" style="position: relative;">Smart Control &amp; Fertigation Features</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-type="container" style="position: relative;">
+            <!-- Remote Monitoring -->
+            <div class="feature-card bg-base-100 p-6 text-center" data-type="container" style="position: relative;">
+                <div class="flex justify-center mb-4" data-type="container" style="position: relative;">
+                    <span class="iconify text-primary" data-icon="heroicons:device-phone-mobile" data-width="48" data-type="icon"></span>
+                </div>
+                                        <h3 class="text-xl font-bold text-base-content mb-3" data-type="text" style="position: relative; font-size: 24px;">Remote Monitoring</h3>
+                <p class="text-2xl text-base-content" data-type="text" style="position: relative; font-size: 24px; line-height: 1.6;">7-inch LCD and mobile app with real-time control, GPS positioning, weather data sync, and intelligent fault alerts.</p>
+            </div>
+            
+            <!-- Solar Integration -->
+            <div class="feature-card bg-base-100 p-6 text-center" data-type="container" style="position: relative;">
+                <div class="flex justify-center mb-4" data-type="container" style="position: relative;">
+                    <span class="iconify text-primary" data-icon="heroicons:sun" data-width="48" data-type="icon"></span>
+                </div>
+                                        <h3 class="text-xl font-bold text-base-content mb-3" data-type="text" style="position: relative; font-size: 24px;">Solar Integration</h3>
+                <p class="text-2xl text-base-content" data-type="text" style="position: relative; font-size: 24px; line-height: 1.6;">Works seamlessly with solar PV systems, enabling reliable off-grid irrigation with 25-year ROI and ultra-low operating cost.</p>
+            </div>
+            
+            <!-- Smart Fertigation -->
+            <div class="feature-card bg-base-100 p-6 text-center" data-type="container" style="position: relative;">
+                <div class="flex justify-center mb-4" data-type="container" style="position: relative;">
+                    <span class="iconify text-primary" data-icon="heroicons:beaker" data-width="48" data-type="icon"></span>
+                </div>
+                                        <h3 class="text-xl font-bold text-base-content mb-3" data-type="text" style="position: relative; font-size: 24px;">Smart Fertigation</h3>
+                <p class="text-2xl text-base-content" data-type="text" style="position: relative; font-size: 24px; line-height: 1.6;">Dual 1500L tanks with 650L/h diaphragm pump and automatic mixing system—precise, uninterrupted nutrient delivery optimized by trial-calculation linkage.</p>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="TerrainAdaptabilitySection" data-section-type="section" class="section-gray py-16 section-separator" style="position: relative;">
+    <div class="container mx-auto px-8">
+        <h2 class="text-3xl font-bold text-base-content mb-8" data-type="text" style="position: relative;">Terrain Adaptability</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center" data-type="container" style="position: relative;">
+            <!-- Slope Statistics -->
+            <div data-type="container" style="position: relative;">
+                <div class="stats shadow bg-base-100 w-full" data-type="container">
+                    <div class="stat terrain-stat">
+                        <div class="stat-figure text-accent" data-type="container" style="position: relative;">
+                            <span class="iconify text-accent" data-icon="heroicons:arrow-trending-up" data-width="32" data-type="icon"></span>
+                        </div>
+                        <div class="stat-title text-base-content" data-type="text" style="position: relative; font-size: 24px;">Uphill Slope</div>
+                        <div class="stat-value text-primary" data-type="text" style="position: relative;">17°</div>
+                        <div class="stat-desc text-base-content" data-type="text" style="position: relative; font-size: 24px;">Maximum tolerance</div>
+                    </div>
+                    
+                    <div class="stat terrain-stat">
+                        <div class="stat-figure text-accent" data-type="container" style="position: relative;">
+                            <span class="iconify text-accent" data-icon="heroicons:arrow-trending-down" data-width="32" data-type="icon"></span>
+                        </div>
+                        <div class="stat-title text-base-content" data-type="text" style="position: relative; font-size: 24px;">Downhill Slope</div>
+                        <div class="stat-value text-primary" data-type="text" style="position: relative;">31°</div>
+                        <div class="stat-desc text-base-content" data-type="text" style="position: relative; font-size: 24px;">No frame distortion</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Description -->
+            <div data-type="container" style="position: relative;">
+                <p class="text-2xl text-base-content leading-relaxed mb-4" data-type="text" style="position: relative; font-size: 24px; line-height: 1.6;">Designed for rugged conditions, the system withstands up to 17° uphill and 31° downhill slopes without frame distortion. Galvanized steel structure and wheeled towers maintain stability and water distribution across uneven or hilly terrain—even in extreme climates like –10°C operation in Inner Mongolia.</p>
+                
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="TechnicalDescriptionSection" data-section-type="section" class="section-white py-16 section-separator">
+    <div class="container mx-auto px-8">
+        <h2 class="text-3xl font-bold text-base-content mb-8" data-type="text">Technical Description</h2>
+        
+        <div class="prose prose-lg max-w-none tech-description" data-type="container">
+            <!-- Technical Description Card -->
+            <div class="bg-gray-50 rounded-lg shadow-md p-6 mb-8 border-l-4 border-primary" data-type="container">
+                <p class="text-2xl text-base-content leading-relaxed text-center" data-type="text" style="font-size: 24px; line-height: 1.6; font-weight: 400; color: #000000; transition: all 0.4s ease; cursor: pointer; margin: 0;" id="gradient-text">
+                    Our center pivot irrigation systems are engineered for high-efficiency water and fertilizer distribution in large-scale agricultural fields.<br><br>
+                    Designed for challenging terrains and harsh environments, the system rotates around a central pivot, maximizing crop yield while reducing labor, water waste, and energy costs.
+                </p>
+            </div>
+            
+            <!-- Visual Separator -->
+            <div class="border-b-2 border-gray-200 mb-8" data-type="container"></div>
+            
+            <h3 class="text-3xl font-bold text-primary mb-6" data-type="text" style="font-size: 30px; font-weight: 700; color: #4F6B3A; margin-bottom: 24px;">Structural Components</h3>
+            <p class="text-2xl text-base-content leading-relaxed mb-6 font-medium" data-type="text" style="font-size: 24px; line-height: 1.6; margin-bottom: 24px; font-weight: 500;">
+                The frame is constructed from <strong>galvanized steel</strong> with internal <strong>PE100 HDPE lining</strong> for corrosion 
+                resistance and fertilizer compatibility. Each span is supported by <strong>wheeled towers</strong> that maintain 
+                alignment while traversing slopes up to <strong>17° uphill</strong> and <strong>31° downhill</strong> without deformation. 
+                The system has been tested under extreme cold conditions (<strong>–10 °C, Inner Mongolia</strong>).
+            </p>
+            <!-- Frame Component Card -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border-l-4 border-primary" data-type="container">
+                <h4 class="text-2xl font-bold text-primary mb-4 text-center" style="font-size: 24px; color: #4F6B3A;">Galvanized Steel Frame</h4>
+                <div class="flex justify-center mb-4" data-type="container">
+                    <img src="./images/frame.png" alt="Galvanized steel frame structure of center pivot irrigation system" class="max-w-3xl w-full h-auto rounded-lg" data-type="image">
+                </div>
+                <p class="text-lg text-base-content text-center" style="font-size: 20px; line-height: 1.6;">High-strength galvanized steel construction ensures durability and corrosion resistance in harsh agricultural environments.</p>
+            </div>
+            
+            <!-- HDPE Pipe Component Card -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border-l-4 border-primary" data-type="container">
+                <h4 class="text-2xl font-bold text-primary mb-4 text-center" style="font-size: 24px; color: #4F6B3A;">PE100 HDPE Lining</h4>
+                <div class="flex justify-center mb-4" data-type="container">
+                    <img src="./images/HDPE_pipe.png" alt="PE100 HDPE pipe lining for corrosion resistance and fertilizer compatibility" class="max-w-3xl w-full h-auto rounded-lg" data-type="image">
+                </div>
+                <p class="text-lg text-base-content text-center" style="font-size: 20px; line-height: 1.6;">Internal PE100 HDPE lining provides superior corrosion resistance and fertilizer compatibility for long-term reliability.</p>
+            </div>
+            
+            <!-- Complete System Overview Card -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border-l-4 border-primary" data-type="container">
+                <h4 class="text-2xl font-bold text-primary mb-4 text-center" style="font-size: 24px; color: #4F6B3A;">Complete Structural System</h4>
+                <div class="flex justify-center mb-4" data-type="container">
+                    <img src="./images/structural components.png" alt="Structural components of center pivot irrigation system showing galvanized steel frame and wheeled towers" class="max-w-3xl w-full h-auto rounded-lg" data-type="image">
+                </div>
+                <p class="text-lg text-base-content text-center" style="font-size: 20px; line-height: 1.6;">Integrated system showing wheeled towers, frame structure, and complete assembly ready for field deployment.</p>
+            </div>
+            
+            <h3 class="text-3xl font-bold text-primary mb-6" data-type="text" style="font-size: 30px; font-weight: 700; color: #4F6B3A; margin-bottom: 24px;">Control System</h3>
+            <p class="text-2xl text-base-content leading-relaxed mb-6 font-medium" data-type="text" style="font-size: 24px; line-height: 1.6; margin-bottom: 24px; font-weight: 500;">
+                A smart control system enables both <strong>manual and automated operation modes</strong>, supported by a 
+                <strong>7-inch LCD interface</strong> or <strong>remote mobile app</strong>. Features include <strong>position/angle detection</strong>, <strong>fault 
+                alarms</strong>, <strong>voltage/current monitoring</strong>, <strong>GPS integration</strong>, and <strong>weather/soil moisture feedback</strong> for 
+                <strong>zonal irrigation and fertigation scheduling</strong>.
+            </p>
+            <!-- Smart Control System Card -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border-l-4 border-primary" data-type="container">
+                <h4 class="text-2xl font-bold text-primary mb-4 text-center" style="font-size: 24px; color: #4F6B3A;">Smart Control System</h4>
+                <div class="flex justify-center mb-4" data-type="container">
+                    <img src="./images/control system 2.png" alt="Advanced control system interface showing LCD screen, mobile app integration, and smart monitoring features for center pivot irrigation" class="max-w-3xl w-full h-auto rounded-lg" data-type="image">
+                </div>
+                <p class="text-lg text-base-content text-center" style="font-size: 20px; line-height: 1.6;">Advanced control system featuring 7-inch LCD interface, mobile app integration, GPS positioning, and intelligent monitoring for precise irrigation management.</p>
+            </div>
+            
+            <h3 class="text-3xl font-bold text-primary mb-6" data-type="text" style="font-size: 30px; font-weight: 700; color: #4F6B3A; margin-bottom: 24px;">Water Distribution</h3>
+            <p class="text-2xl text-base-content leading-relaxed mb-6 font-medium" data-type="text" style="font-size: 24px; line-height: 1.6; margin-bottom: 24px; font-weight: 500;">
+                Uniform irrigation is achieved using <strong>precision-engineered sprinklers</strong> and a <strong>four-corner control 
+                system</strong> that extends coverage by <strong>10%</strong>. A <strong>dual-tank fertigation system (2×1500L, 0.75KW mixers)</strong> 
+                with <strong>650L/h metering pump</strong> ensures efficient nutrient delivery without halting irrigation. 
+                <strong>Low-pressure nozzles</strong> reduce drift and evaporation, protecting sensitive crops.
+            </p>
+            <!-- Control System Integration Card -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border-l-4 border-primary" data-type="container">
+                <h4 class="text-2xl font-bold text-primary mb-4 text-center" style="font-size: 24px; color: #4F6B3A;">Control System Integration</h4>
+                <div class="flex justify-center mb-4" data-type="container">
+                    <img src="./images/control system.png" alt="Control system interface showing LCD screen and mobile app features for center pivot irrigation" class="max-w-3xl w-full h-auto rounded-lg" data-type="image">
+                </div>
+                <p class="text-lg text-base-content text-center" style="font-size: 20px; line-height: 1.6;">Integrated control system with LCD interface and mobile app for precise water distribution management and fertigation scheduling.</p>
+            </div>
+            
+            <!-- Water Distribution System Card -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border-l-4 border-primary" data-type="container">
+                <h4 class="text-2xl font-bold text-primary mb-4 text-center" style="font-size: 24px; color: #4F6B3A;">Water Distribution System</h4>
+                <div class="flex justify-center mb-4" data-type="container">
+                    <img src="./images/water distribution.png" alt="Water distribution system showing precision sprinklers and fertigation tanks" class="max-w-3xl w-full h-auto rounded-lg" data-type="image">
+                </div>
+                <p class="text-lg text-base-content text-center" style="font-size: 20px; line-height: 1.6;">Precision-engineered sprinklers with dual-tank fertigation system ensuring uniform water and nutrient distribution across the field.</p>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="ApplicationExamplesSection" data-section-type="section" class="section-gray py-16 section-separator" style="position: relative;">
+    <div class="container mx-auto px-8">
+        <h2 class="text-3xl font-bold text-base-content mb-8" data-type="text" style="position: relative;">Real-World Applications</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" data-type="container" style="position: relative;">
+            <!-- Example 1 -->
+            <div class="example-card bg-base-100 flex flex-col" data-type="container" data-repeatable="true" style="position: relative;">
+                <figure class="mb-2">
+                    <img alt="Center pivot system irrigating wheat field in winter conditions with snow visible on the ground" class="w-full h-48 object-cover" data-type="image" src="./images/Real-World Applications 1.png">
+                </figure>
+                <div class="p-4 flex-grow flex flex-col">
+                    <div class="flex items-center mb-2">
+                        
+                        <h3 class="case-study-title text-base" data-type="text" style="position: relative; font-size: 24px;">Cold-Climate Wheat Irrigation – Inner Mongolia, China</h3>
+                    </div>
+                    <div class="mt-2 mb-3">
+                        <span class="case-study-stat" data-type="text" style="position: relative; font-size: 18px;">110-hectare field</span>
+                        <span class="case-study-stat" data-type="text" style="position: relative; font-size: 18px;">Tested at –10°C</span>
+                    </div>
+                    <p class="text-2xl text-base-content mt-auto" data-type="text" style="position: relative; font-size: 24px; line-height: 1.6;">Fully operational in winter, proving structural durability in extreme cold.</p>
+                </div>
+            </div>
+            
+            <!-- Example 2 -->
+            <div class="example-card bg-base-100 flex flex-col" data-type="container" data-repeatable="true" style="position: relative;">
+                <figure class="mb-2">
+                    <img alt="Center pivot irrigation system with solar panels mounted nearby in a cotton field" class="w-full h-48 object-cover" data-type="image" src="./images/Real-World Applications 2.png">
+                </figure>
+                <div class="p-4 flex-grow flex flex-col">
+                    <div class="flex items-center mb-2">
+                        
+                        <h3 class="case-study-title text-base" data-type="text" style="position: relative; font-size: 24px;">Off-Grid Solar Pivot – Xinjiang, China</h3>
+                    </div>
+                    <div class="mt-2 mb-3">
+                        <span class="case-study-stat" data-type="text" style="position: relative; font-size: 18px;">130-hectare cotton farm</span>
+                        <span class="case-study-stat" data-type="text" style="position: relative; font-size: 18px;">Solar PV + fertigation</span>
+                    </div>
+                    <p class="text-2xl text-base-content mt-auto" data-type="text" style="position: relative; font-size: 24px; line-height: 1.6;">25-year ROI with operating cost as low as $35/ha.</p>
+                </div>
+            </div>
+            
+            <!-- Example 3 -->
+            <div class="example-card bg-base-100 flex flex-col" data-type="container" data-repeatable="true" style="position: relative;">
+                <figure class="mb-2">
+                    <img alt="Aerial view of center pivot system with corner arm extensions maximizing field coverage in irregular field" class="w-full h-48 object-cover" data-type="image" src="./images/Real-World Applications 3.png">
+                </figure>
+                <div class="p-4 flex-grow flex flex-col">
+                    <div class="flex items-center mb-2">
+                        
+                        <h3 class="case-study-title text-base" data-type="text" style="position: relative; font-size: 24px;">Corner Efficiency Boost – Heilongjiang, China</h3>
+                    </div>
+                    <div class="mt-2 mb-3">
+                        <span class="case-study-stat" data-type="text" style="position: relative; font-size: 18px;">5-span layout</span>
+                        <span class="case-study-stat" data-type="text" style="position: relative; font-size: 18px;">+10% irrigation coverage</span>
+                    </div>
+                    <p class="text-2xl text-base-content mt-auto" data-type="text" style="position: relative; font-size: 24px; line-height: 1.6;">Four-corner system increased efficiency in irregular-shaped fields.</p>
+                </div>
+            </div>
+            
+            <!-- Example 4 -->
+            <div class="example-card bg-base-100 flex flex-col" data-type="container" data-repeatable="true" style="position: relative;">
+                <figure class="mb-2">
+                    <img alt="Center pivot irrigation system operating on hilly terrain with significant slope differences" class="w-full h-48 object-cover" data-type="image" src="./images/Real-World Applications 4.png">
+                </figure>
+                <div class="p-4 flex-grow flex flex-col">
+                    <div class="flex items-center mb-2">
+                        
+                        <h3 class="case-study-title text-base" data-type="text" style="position: relative; font-size: 24px;">Slope-Tolerant Deployment – Yunnan, China</h3>
+                    </div>
+                    <div class="mt-2 mb-3">
+                        <span class="case-study-stat" data-type="text" style="position: relative; font-size: 18px;">Multi-slope field</span>
+                        <span class="case-study-stat" data-type="text" style="position: relative; font-size: 18px;">17° uphill &amp; 31° downhill</span>
+                    </div>
+                    <p class="text-2xl text-base-content mt-auto" data-type="text" style="position: relative; font-size: 24px; line-height: 1.6;">Passed slope stress tests, ensuring stable alignment in rugged terrain.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="ActionSection" data-section-type="section" class="section-white py-16">
+    <div class="container mx-auto px-8 text-center">
+        <h2 class="text-3xl font-bold text-base-content mb-8" data-type="text">Ready to Transform Your Irrigation?</h2>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8" data-type="container">
+            <button class="btn btn-primary btn-lg" data-type="button" onclick="downloadBrochure()">
+                <span class="iconify text-primary-content" data-icon="heroicons:document-arrow-down" data-width="20" data-type="icon"></span>
+                <span data-type="text">Download Brochure</span>
+            </button>
+            <button class="btn btn-secondary btn-lg" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+                <span class="iconify text-secondary-content" data-icon="heroicons:calendar-days" data-width="20" data-type="icon"></span>
+                <span data-type="text">Request Field Visit</span>
+            </button>
+        </div>
+        
+        <div data-type="container">
+            <button class="btn btn-link text-primary" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)">
+                <span class="iconify text-primary" data-icon="heroicons:arrow-left" data-width="16" data-type="icon"></span>
+                <span data-type="text">Back to Irrigation Systems</span>
+            </button>
+        </div>
+    </div>
+</div>
+    </main>
+    
+    <div data-section-id="common_footer" data-section-type="common_footer" class="bg-base-200 mt-16">
+    <footer class="footer footer-horizontal p-10 text-base-content" data-type="container">
+      <aside data-type="container">
+        <div class="flex items-center gap-3 mb-4" data-type="container">
+          <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="48" data-type="icon"></span>
+          <div data-type="container">
+            <h3 class="font-bold text-lg text-primary" data-type="text">AgroTech Solutions</h3>
+            <p class="text-sm text-base-content opacity-70" data-type="text">Advanced agricultural technology since 2010</p>
+          </div>
+        </div>
+        <p class="text-sm max-w-sm" data-type="text">Providing energy-efficient irrigation, solar solutions, and bird repellent systems for modern farming operations worldwide.</p>
+        <div class="flex gap-3 mt-4" data-type="container">
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:phone" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:email" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:whatsapp" data-width="20" data-type="icon"></span>
+        </div>
+      </aside>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Products</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation Systems</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar Solutions</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Support</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact Us</span></button>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Technical Support</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Installation Guide</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Warranty</span></a>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Language &amp; Legal</header>
+        <div class="form-control" data-type="container">
+          <label class="label cursor-pointer w-max gap-2" data-type="container">
+            <span class="iconify" data-icon="mdi:translate" data-width="16" data-type="icon"></span>
+            <select class="select select-bordered select-sm w-32" data-type="input">
+              <option selected="" data-type="text">English</option>
+              <option data-type="text">Serbian</option>
+            </select>
+          </label>
+        </div>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Privacy Policy</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Terms of Service</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">GDPR Notice</span></a>
+      </nav>
+    </footer>
+    
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content border-t border-base-300" data-type="container">
+      <aside data-type="container">
+        <p class="text-sm" data-type="text">Copyright © 2025 AgroTech Solutions. All rights reserved. | Belgrade, Serbia</p>
+      </aside>
+    </footer>
+  </div>
+  <style>
+    [data-section-id="common_footer"] .link:hover {
+      color: var(--color-secondary);
+      transition: color 0.2s ease-in-out;
+    }
+    
+    [data-section-id="common_footer"] .iconify:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+    
+    .special-font {
+      font-family: Georgia, serif !important;
+      letter-spacing: 0.3px;
+      font-style: italic;
+    }
+  </style>
+  <script>
+    (function() {
+      // Language toggle functionality
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        const languageSelect = document.querySelector(&apos;[data-section-id="common_footer"] select&apos;);
+        if (languageSelect) {
+          languageSelect.addEventListener(&apos;change&apos;, function(e) {
+            const selectedLanguage = e.target.value;
+            // Here you would implement actual language switching logic
+            console.log(&apos;Language changed to:&apos;, selectedLanguage);
+            // For demo purposes, just show an alert
+            // In a real application, this would trigger translation updates
+          });
+        }
+      });
+    })();
+  </script>
+    
+    <script>
+    /* JavaScript code for common usage, should be wrapped in a closure */
+    (function() {
+      // Navigation function for page transitions
+      window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        if (isInIframe) {
+          window.parent.postMessage({
+            type: &apos;iframeNavigation&apos;,
+            targetPageId: targetPageId
+          }, &apos;*&apos;);
+        } else {
+          window.location.href = targetFileName;
+        }
+      };
+      
+      // Get current page for navigation highlighting
+      window.getCurrentPageId = function() {
+        const path = window.location.pathname;
+        const filename = path.split(&apos;/&apos;).pop();
+        return filename.replace(&apos;.html&apos;, &apos;&apos;) || &apos;homepage&apos;;
+      };
+    })();
+  </script>
+    <script>
+/* Page-specific JavaScript for Center Pivot Irrigation Detail */
+(function() {
+    // Download brochure functionality
+    window.downloadBrochure = function() {
+        // Simulate brochure download
+        console.log(&apos;Downloading Center Pivot Irrigation brochure...&apos;);
+        // In a real application, this would trigger an actual file download
+        alert(&apos;Brochure download started! Check your downloads folder.&apos;);
+    };
+    
+    // Interactive text effects
+    function initTextEffects() {
+        const gradientText = document.getElementById('gradient-text');
+        const cardContainer = gradientText ? gradientText.closest('.bg-gray-50') : null;
+        
+        if (gradientText && cardContainer) {
+            // Hover effects
+            cardContainer.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+                this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+                this.style.backgroundColor = '#f0f4f3';
+                gradientText.style.color = '#333333';
+            });
+            
+            cardContainer.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+                this.style.backgroundColor = '#f8faf9';
+                gradientText.style.color = '#000000';
+            });
+            
+            // Click effects
+            cardContainer.addEventListener('click', function() {
+                this.style.transform = 'scale(1.03)';
+                this.style.boxShadow = '0 12px 35px rgba(0, 0, 0, 0.2)';
+                this.style.backgroundColor = '#e8f0ed';
+                gradientText.style.color = '#666666';
+                
+                // Reset after animation
+                setTimeout(() => {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+                    this.style.backgroundColor = '#f0f4f3';
+                    gradientText.style.color = '#333333';
+                }, 200);
+            });
+        }
+    }
+    
+    // Initialize page interactions
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Center Pivot Irrigation Detail page loaded');
+        initTextEffects();
+        
+        // Add any additional page-specific initialization here
+        // For example, tracking page views, setting up analytics, etc.
+    });
+})();
+</script>
+
+<script>
+      Holder.run({
+        domain: "placehold.co"
+      })
+    </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

@@ -1,0 +1,807 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Contact</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 1920
+                const height = 1080
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'homepage': 'Homepage',
+    'irrigation': 'Irrigation Systems',
+    'irrigation_center_pivot': 'Center Pivot Irrigation Detail',
+    'irrigation_linear': 'Linear Irrigation Detail',
+    'irrigation_hose_reel': 'Hose Reel Irrigation Detail',
+    'irrigation_drip': 'Drip Irrigation Detail',
+    'solar': 'Solar Solutions',
+    'solar_agri_irrigation': 'Agricultural Solar Irrigation Detail',
+    'solar_household_storage': 'Household Energy Storage Detail',
+    'solar_commercial_industrial': 'Commercial/Industrial Solar Detail',
+    'solar_water_pumps': 'Solar Water Pumps Detail',
+    'bird_repellent': 'Bird Repellent Systems',
+    'bird_ultrasonic': 'Ultrasonic Repellent Detail',
+    'bird_visual': 'Visual Deterrent Detail',
+    'contact': 'Contact',
+    'submission_confirmation': 'Inquiry Confirmation',
+    'compatibility_check': 'Compatibility Check',
+    'case_studies': 'Case Studies',
+    'case_study_farm_irrigation': 'Farm Irrigation Case Study',
+    'case_study_greenhouse_solar': 'Greenhouse Solar Case Study',
+    'case_study_orchard_repellent': 'Orchard Repellent Case Study',
+    'case_study_dryland_farming': 'Dryland Farming Case Study'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="en" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Agricultural Solutions</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+    /* CSS code for common usage*/
+    
+    /* daisyUI Theme Variables Customization
+     * Based on the selected daisyUI theme and UI guidance requirements,
+     * customize only the CSS variables that need to be different from the theme defaults.
+     */
+    
+    :root {
+      /* Brand colors customization */
+      --color-primary: rgba(85, 107, 47, 1); /* Olive Green #556B2F */
+      --color-primary-content: rgba(255, 255, 255, 1); /* White text on primary */
+      --color-secondary: rgba(135, 206, 235, 1); /* Sky Blue #87CEEB */
+      --color-secondary-content: rgba(51, 51, 51, 1); /* Dark gray text on secondary */
+      --color-accent: rgba(139, 69, 19, 1); /* Warm Earth Brown #8B4513 */
+      --color-accent-content: rgba(255, 255, 255, 1); /* White text on accent */
+      
+      /* Background colors */
+      --color-base-100: rgba(255, 255, 255, 1); /* White */
+      --color-base-200: rgba(245, 245, 245, 1); /* Light Gray */
+      --color-base-300: rgba(229, 229, 229, 1); /* Slightly darker gray for borders */
+      --color-base-content: rgba(51, 51, 51, 1); /* Dark Gray text */
+      
+      /* Semantic colors */
+      --color-success: rgba(107, 142, 35, 1); /* Muted green #6B8E23 */
+      --color-success-content: rgba(255, 255, 255, 1);
+      --color-warning: rgba(255, 165, 0, 1); /* Amber #FFA500 */
+      --color-warning-content: rgba(51, 51, 51, 1);
+      --color-error: rgba(205, 92, 92, 1); /* Terra cotta #CD5C5C */
+      --color-error-content: rgba(255, 255, 255, 1);
+      --color-info: rgba(135, 206, 235, 1); /* Soft blue #87CEEB */
+      --color-info-content: rgba(51, 51, 51, 1);
+      
+      /* Border radius - modern but restrained */
+      --radius-box: 0.25rem; /* 4px */
+      --radius-field: 0.25rem; /* 4px */
+      --radius-selector: 0.25rem; /* 4px */
+      
+      /* Border width */
+      --border: 1px;
+    }
+    
+    /* Typography - Times New Roman serif */
+    body {
+      font-family: "Times New Roman", Times, serif;
+    }
+    
+    /* Subtle shadows */
+    .shadow-custom {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Smooth transitions for interactive elements */
+    .nav-link {
+      transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    }
+    
+    .nav-link:hover {
+      border-bottom: 2px solid var(--color-secondary);
+    }
+  </style>
+    <style>
+/* Page-specific styles for contact page */
+
+/* Form validation styles */
+.form-field-error {
+    border-color: var(--color-error) !important;
+}
+
+.form-field-valid {
+    border-color: var(--color-success) !important;
+}
+
+/* Contact info card hover effects */
+.contact-info-card {
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.contact-info-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.contact-info-card:hover .contact-icon {
+    color: var(--color-secondary);
+}
+
+/* Form focus styles */
+.form-control input:focus,
+.form-control textarea:focus,
+.form-control select:focus {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+}
+
+/* Submit button disabled state */
+.btn-submit:disabled {
+    background-color: var(--color-base-300);
+    color: var(--color-base-content);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* GDPR checkbox transition */
+.gdpr-checkbox-label {
+    transition: color 0.2s ease-in-out;
+}
+
+.gdpr-checkbox:checked + .gdpr-checkbox-label {
+    color: var(--color-primary);
+}
+
+/* Map container styling */
+.map-container {
+    border: 1px solid var(--color-base-300);
+    border-radius: var(--radius-box);
+    overflow: hidden;
+}
+
+/* Alert positioning */
+.form-alert {
+    margin-bottom: 1rem;
+}
+</style>
+<script src="./assets/static/uxbot/25_6/holder.js"></script>
+<script src="./assets/interactive-enhancements.js"></script></head>
+<body class="bg-base-100">
+    <div data-section-id="common_header" data-section-type="common_header" class="navbar bg-base-100 sticky top-0 z-50 shadow-custom h-16">
+    <div class="navbar-start">
+      <button class="btn btn-ghost lg:hidden" data-type="button" onclick="toggleMobileMenu()">
+        <span class="iconify" data-icon="heroicons:bars-3" data-width="24" data-type="icon"></span>
+      </button>
+      <button class="btn btn-ghost normal-case text-xl font-bold text-primary" data-type="button" onclick="navigateTo(&apos;homepage&apos;)">
+        <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="32" data-type="icon"></span>
+        <span data-type="text">AgroTech Solutions</span>
+      </button>
+    </div>
+    
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-2">
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;homepage&apos;)" data-nav="homepage"><span data-type="text">Home</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)" data-nav="irrigation"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;solar&apos;)" data-nav="solar"><span data-type="text">Solar</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)" data-nav="bird_repellent"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)" data-nav="case_studies"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="nav-link px-4 py-2 rounded-none border-b-2 border-transparent hover:border-secondary text-base-content" data-type="button" onclick="navigateTo(&apos;contact&apos;)" data-nav="contact"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+    
+    <div class="navbar-end">
+      <button class="btn btn-primary" data-type="button" onclick="navigateTo(&apos;contact&apos;)">
+        <span data-type="text">Get Quote</span>
+      </button>
+    </div>
+    
+    <!-- Mobile menu dropdown -->
+    <div class="dropdown dropdown-end lg:hidden absolute top-16 right-0 w-full bg-base-100 shadow-lg z-40 hidden" id="mobileMenu" data-type="container">
+      <ul class="menu p-4 gap-2">
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;homepage&apos;)"><span data-type="text">Home</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button></li>
+        <li><button class="btn btn-ghost justify-start w-full" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact</span></button></li>
+      </ul>
+    </div>
+  </div>
+  <style>
+    [data-section-id="common_header"] .nav-link.active {
+      border-bottom-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    
+    [data-section-id="common_header"] .navbar {
+      border-bottom: var(--border) solid var(--color-base-300);
+    }
+  </style>
+  <script>
+    (function() {
+      // Toggle mobile menu
+      window.toggleMobileMenu = function() {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        if (mobileMenu) {
+          mobileMenu.classList.toggle(&apos;hidden&apos;);
+        }
+      };
+      
+      // Highlight active navigation item
+      function highlightActiveNav() {
+        const currentPageId = getCurrentPageId();
+        const navLinks = document.querySelectorAll(&apos;[data-section-id="common_header"] [data-nav]&apos;);
+        
+        navLinks.forEach(link => {
+          const navTarget = link.getAttribute(&apos;data-nav&apos;);
+          if (navTarget === currentPageId) {
+            link.classList.add(&apos;active&apos;);
+          } else {
+            link.classList.remove(&apos;active&apos;);
+          }
+        });
+      }
+      
+      // Initialize on page load
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        highlightActiveNav();
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener(&apos;click&apos;, function(e) {
+        const mobileMenu = document.getElementById(&apos;mobileMenu&apos;);
+        const menuButton = document.querySelector(&apos;[data-section-id="common_header"] .lg\\:hidden&apos;);
+        
+        if (mobileMenu && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+          mobileMenu.classList.add(&apos;hidden&apos;);
+        }
+      });
+    })();
+  </script>
+    
+    <main class="min-h-screen">
+        <div data-section-id="PageTitleSection" data-section-type="section" class="bg-base-100 py-16">
+    <div class="container mx-auto px-6 text-center">
+        <h1 class="text-5xl font-bold text-primary mb-4" data-type="text">Contact Us</h1>
+        <p class="text-xl text-base-content opacity-70 max-w-2xl mx-auto" data-type="text">We&apos;re here to help you with any questions about our irrigation systems, solar solutions, and bird repellent products.</p>
+    </div>
+</div><div data-section-id="ContactInfoSection" data-section-type="section" class="bg-base-200 py-16">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Map Column (2/3 width) -->
+            <div class="lg:col-span-2" data-type="container">
+                <div class="map-container shadow-custom h-96 bg-base-100" data-type="container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.123456789!2d-74.0059413!3d40.7128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzQ2LjEiTiA3NMKwMDAnMjEuNCJX!5e0!3m2!1sen!2sus!4v1234567890" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Company Location Map" data-type="other">
+                    </iframe>
+                </div>
+            </div>
+            
+            <!-- Contact Info Column (1/3 width) -->
+            <div class="space-y-6" data-type="container">
+                <!-- Address Card -->
+                <div class="card bg-base-100 shadow-custom contact-info-card p-6" data-type="container">
+                    <div class="flex items-start gap-4">
+                        <span class="iconify contact-icon text-primary text-2xl" data-icon="heroicons:map-pin" data-width="32" data-type="icon"></span>
+                        <div data-type="container">
+                            <h3 class="font-bold text-lg mb-2" data-type="text">Address</h3>
+                            <p class="text-base-content opacity-70" data-type="text">123 Agricultural Drive<br>Farm Valley, State 12345<br>United States</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Phone Card -->
+                <div class="card bg-base-100 shadow-custom contact-info-card p-6" data-type="container">
+                    <div class="flex items-start gap-4">
+                        <span class="iconify contact-icon text-primary text-2xl" data-icon="heroicons:phone" data-width="32" data-type="icon"></span>
+                        <div data-type="container">
+                            <h3 class="font-bold text-lg mb-2" data-type="text">Phone</h3>
+                            <a href="tel:+1234567890" class="text-secondary hover:underline" data-type="text">+1 (234) 567-8900</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Email Card -->
+                <div class="card bg-base-100 shadow-custom contact-info-card p-6" data-type="container">
+                    <div class="flex items-start gap-4">
+                        <span class="iconify contact-icon text-primary text-2xl" data-icon="heroicons:envelope" data-width="32" data-type="icon"></span>
+                        <div data-type="container">
+                            <h3 class="font-bold text-lg mb-2" data-type="text">Email</h3>
+                            <a href="mailto:info@agrisolutions.com" class="text-secondary hover:underline" data-type="text">info@agrisolutions.com</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- WhatsApp Card -->
+                <div class="card bg-base-100 shadow-custom contact-info-card p-6" data-type="container">
+                    <div class="flex items-start gap-4">
+                        <span class="iconify contact-icon text-primary text-2xl" data-icon="mdi:whatsapp" data-width="32" data-type="icon"></span>
+                        <div data-type="container">
+                            <h3 class="font-bold text-lg mb-2" data-type="text">WhatsApp</h3>
+                            <a href="https://wa.me/1234567890" class="text-secondary hover:underline" data-type="text">+1 (234) 567-8900</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div data-section-id="InquiryFormSection" data-section-type="section" class="bg-base-100 py-16">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-primary mb-4" data-type="text">Send Us an Inquiry</h2>
+                <p class="text-lg text-base-content opacity-70" data-type="text">Fill out the form below and we&apos;ll get back to you as soon as possible.</p>
+            </div>
+            
+            <!-- Form Alert (hidden by default) -->
+            <div id="formAlert" class="alert form-alert hidden" data-type="container">
+                <span class="iconify" data-icon="heroicons:exclamation-triangle" data-width="24" data-type="icon"></span>
+                <span id="alertMessage" data-type="text">Please fill in all required fields.</span>
+            </div>
+            
+            <form id="inquiryForm" class="card bg-base-200 shadow-custom p-8" data-type="container">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Name Field -->
+                    <div class="form-control" data-type="container">
+                        <label class="label">
+                            <span class="label-text font-semibold" data-type="text">Full Name *</span>
+                        </label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" class="input input-bordered w-full" required="" data-type="input">
+                        <label class="label">
+                            <span class="label-text-alt text-error hidden" id="nameError" data-type="text">Please enter your full name</span>
+                        </label>
+                    </div>
+                    
+                    <!-- Email Field -->
+                    <div class="form-control" data-type="container">
+                        <label class="label">
+                            <span class="label-text font-semibold" data-type="text">Email Address *</span>
+                        </label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" class="input input-bordered w-full" required="" data-type="input">
+                        <label class="label">
+                            <span class="label-text-alt text-error hidden" id="emailError" data-type="text">Please enter a valid email address</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Subject Field -->
+                <div class="form-control mb-6" data-type="container">
+                    <label class="label">
+                        <span class="label-text font-semibold" data-type="text">Subject *</span>
+                    </label>
+                    <input type="text" id="subject" name="subject" placeholder="Enter the subject of your inquiry" class="input input-bordered w-full" required="" data-type="input">
+                    <label class="label">
+                        <span class="label-text-alt text-error hidden" id="subjectError" data-type="text">Please enter a subject</span>
+                    </label>
+                </div>
+                
+                <!-- Message Field -->
+                <div class="form-control mb-6" data-type="container">
+                    <label class="label">
+                        <span class="label-text font-semibold" data-type="text">Message *</span>
+                    </label>
+                    <textarea id="message" name="message" class="textarea textarea-bordered h-32 w-full" placeholder="Please describe your inquiry in detail..." required="" data-type="input"></textarea>
+                    <label class="label">
+                        <span class="label-text-alt text-error hidden" id="messageError" data-type="text">Please enter your message</span>
+                    </label>
+                </div>
+                
+                <!-- GDPR Consent -->
+                <div class="form-control mb-8" data-type="container">
+                    <label class="label cursor-pointer justify-start gap-4">
+                        <input type="checkbox" id="gdprConsent" name="gdprConsent" class="checkbox checkbox-primary gdpr-checkbox" required="" data-type="input">
+                        <span class="label-text gdpr-checkbox-label" data-type="text">
+                            I agree to the processing of my personal data in accordance with the 
+                            <a href="#" class="text-secondary hover:underline">Privacy Policy</a> *
+                        </span>
+                    </label>
+                    <label class="label">
+                        <span class="label-text-alt text-error hidden" id="gdprError" data-type="text">You must agree to the privacy policy</span>
+                    </label>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="form-control">
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-lg w-full md:w-auto md:px-12 btn-submit" disabled="" data-type="button">
+                        <span class="iconify" data-icon="heroicons:paper-airplane" data-width="20" data-type="icon"></span>
+                        <span data-type="text">Submit Inquiry</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    </main>
+    
+    <div data-section-id="common_footer" data-section-type="common_footer" class="bg-base-200 mt-16">
+    <footer class="footer footer-horizontal p-10 text-base-content" data-type="container">
+      <aside data-type="container">
+        <div class="flex items-center gap-3 mb-4" data-type="container">
+          <span class="iconify text-primary" data-icon="mdi:agriculture" data-width="48" data-type="icon"></span>
+          <div data-type="container">
+            <h3 class="font-bold text-lg text-primary" data-type="text">AgroTech Solutions</h3>
+            <p class="text-sm text-base-content opacity-70" data-type="text">Advanced agricultural technology since 2010</p>
+          </div>
+        </div>
+        <p class="text-sm max-w-sm" data-type="text">Providing energy-efficient irrigation, solar solutions, and bird repellent systems for modern farming operations worldwide.</p>
+        <div class="flex gap-3 mt-4" data-type="container">
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:phone" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:email" data-width="20" data-type="icon"></span>
+          <span class="iconify text-primary hover:text-secondary cursor-pointer" data-icon="mdi:whatsapp" data-width="20" data-type="icon"></span>
+        </div>
+      </aside>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Products</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;irrigation&apos;)"><span data-type="text">Irrigation Systems</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;solar&apos;)"><span data-type="text">Solar Solutions</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;bird_repellent&apos;)"><span data-type="text">Bird Repellent</span></button>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;case_studies&apos;)"><span data-type="text">Case Studies</span></button>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Support</header>
+        <button class="link link-hover text-sm" data-type="button" onclick="navigateTo(&apos;contact&apos;)"><span data-type="text">Contact Us</span></button>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Technical Support</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Installation Guide</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Warranty</span></a>
+      </nav>
+      
+      <nav data-type="container">
+        <header class="footer-title text-primary" data-type="text">Language &amp; Legal</header>
+        <div class="form-control" data-type="container">
+          <label class="label cursor-pointer w-max gap-2" data-type="container">
+            <span class="iconify" data-icon="mdi:translate" data-width="16" data-type="icon"></span>
+            <select class="select select-bordered select-sm w-32" data-type="input">
+              <option selected="" data-type="text">English</option>
+              <option data-type="text">Serbian</option>
+            </select>
+          </label>
+        </div>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Privacy Policy</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">Terms of Service</span></a>
+        <a class="link link-hover text-sm" href="#" data-type="button"><span data-type="text">GDPR Notice</span></a>
+      </nav>
+    </footer>
+    
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content border-t border-base-300" data-type="container">
+      <aside data-type="container">
+        <p class="text-sm" data-type="text">Copyright © 2025 AgroTech Solutions. All rights reserved. | Belgrade, Serbia</p>
+      </aside>
+    </footer>
+  </div>
+  <style>
+    [data-section-id="common_footer"] .link:hover {
+      color: var(--color-secondary);
+      transition: color 0.2s ease-in-out;
+    }
+    
+    [data-section-id="common_footer"] .iconify:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+  </style>
+  <script>
+    (function() {
+      // Language toggle functionality
+      document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        const languageSelect = document.querySelector(&apos;[data-section-id="common_footer"] select&apos;);
+        if (languageSelect) {
+          languageSelect.addEventListener(&apos;change&apos;, function(e) {
+            const selectedLanguage = e.target.value;
+            // Here you would implement actual language switching logic
+            console.log(&apos;Language changed to:&apos;, selectedLanguage);
+            // For demo purposes, just show an alert
+            // In a real application, this would trigger translation updates
+          });
+        }
+      });
+    })();
+  </script>
+    
+    <script>
+    /* JavaScript code for common usage, should be wrapped in a closure */
+    (function() {
+      // Navigation function for page transitions
+      window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        if (isInIframe) {
+          window.parent.postMessage({
+            type: &apos;iframeNavigation&apos;,
+            targetPageId: targetPageId
+          }, &apos;*&apos;);
+        } else {
+          window.location.href = targetFileName;
+        }
+      };
+      
+      // Get current page for navigation highlighting
+      window.getCurrentPageId = function() {
+        const path = window.location.pathname;
+        const filename = path.split(&apos;/&apos;).pop();
+        return filename.replace(&apos;.html&apos;, &apos;&apos;) || &apos;homepage&apos;;
+      };
+    })();
+  </script>
+    <script>
+(function() {
+    // Form validation and submission handling
+    let formValid = false;
+    
+    // Form elements
+    const form = document.getElementById(&apos;inquiryForm&apos;);
+    const submitBtn = document.getElementById(&apos;submitBtn&apos;);
+    const formAlert = document.getElementById(&apos;formAlert&apos;);
+    const alertMessage = document.getElementById(&apos;alertMessage&apos;);
+    
+    // Form fields
+    const fields = {
+        fullName: document.getElementById(&apos;fullName&apos;),
+        email: document.getElementById(&apos;email&apos;),
+        subject: document.getElementById(&apos;subject&apos;),
+        message: document.getElementById(&apos;message&apos;),
+        gdprConsent: document.getElementById(&apos;gdprConsent&apos;)
+    };
+    
+    // Error elements
+    const errors = {
+        nameError: document.getElementById(&apos;nameError&apos;),
+        emailError: document.getElementById(&apos;emailError&apos;),
+        subjectError: document.getElementById(&apos;subjectError&apos;),
+        messageError: document.getElementById(&apos;messageError&apos;),
+        gdprError: document.getElementById(&apos;gdprError&apos;)
+    };
+    
+    // Validation functions
+    function validateField(fieldName) {
+        const field = fields[fieldName];
+        const errorElement = errors[fieldName + &apos;Error&apos;];
+        let isValid = true;
+        
+        // Remove previous error styling
+        field.classList.remove(&apos;form-field-error&apos;, &apos;form-field-valid&apos;);
+        if (errorElement) {
+            errorElement.classList.add(&apos;hidden&apos;);
+        }
+        
+        switch(fieldName) {
+            case &apos;fullName&apos;:
+                isValid = field.value.trim().length >= 2;
+                break;
+            case &apos;email&apos;:
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                isValid = emailRegex.test(field.value.trim());
+                break;
+            case &apos;subject&apos;:
+                isValid = field.value.trim().length >= 3;
+                break;
+            case &apos;message&apos;:
+                isValid = field.value.trim().length >= 10;
+                break;
+            case &apos;gdprConsent&apos;:
+                isValid = field.checked;
+                break;
+        }
+        
+        // Apply styling based on validation
+        if (!isValid && field.value.trim() !== &apos;&apos; || (fieldName === &apos;gdprConsent&apos; && !isValid)) {
+            field.classList.add(&apos;form-field-error&apos;);
+            if (errorElement) {
+                errorElement.classList.remove(&apos;hidden&apos;);
+            }
+        } else if (isValid && field.value.trim() !== &apos;&apos;) {
+            field.classList.add(&apos;form-field-valid&apos;);
+        }
+        
+        return isValid;
+    }
+    
+    function validateForm() {
+        let allValid = true;
+        
+        // Validate all fields
+        Object.keys(fields).forEach(fieldName => {
+            if (!validateField(fieldName)) {
+                allValid = false;
+            }
+        });
+        
+        // Update submit button state
+        submitBtn.disabled = !allValid;
+        formValid = allValid;
+        
+        // Hide form alert if form becomes valid
+        if (allValid) {
+            hideAlert();
+        }
+        
+        return allValid;
+    }
+    
+    function showAlert(message, type = &apos;error&apos;) {
+        alertMessage.textContent = message;
+        formAlert.className = `alert form-alert alert-${type}`;
+        formAlert.classList.remove(&apos;hidden&apos;);
+        
+        // Scroll alert into view
+        formAlert.scrollIntoView({ behavior: &apos;smooth&apos;, block: &apos;nearest&apos; });
+    }
+    
+    function hideAlert() {
+        formAlert.classList.add(&apos;hidden&apos;);
+    }
+    
+    // Event listeners for real-time validation
+    Object.keys(fields).forEach(fieldName => {
+        const field = fields[fieldName];
+        
+        if (fieldName === &apos;gdprConsent&apos;) {
+            field.addEventListener(&apos;change&apos;, () => {
+                validateForm();
+            });
+        } else {
+            field.addEventListener(&apos;blur&apos;, () => {
+                validateField(fieldName);
+                validateForm();
+            });
+            
+            field.addEventListener(&apos;input&apos;, () => {
+                // Clear error state on input
+                field.classList.remove(&apos;form-field-error&apos;);
+                const errorElement = errors[fieldName + &apos;Error&apos;];
+                if (errorElement) {
+                    errorElement.classList.add(&apos;hidden&apos;);
+                }
+                
+                // Validate after a short delay
+                setTimeout(() => {
+                    validateForm();
+                }, 300);
+            });
+        }
+    });
+    
+    // Form submission
+    form.addEventListener(&apos;submit&apos;, function(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            showAlert(&apos;Please fill in all required fields correctly.&apos;);
+            return;
+        }
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = &apos;<span class="loading loading-spinner loading-sm"></span><span>Submitting...</span>&apos;;
+        
+        // Simulate form submission delay
+        setTimeout(() => {
+            // Navigate to confirmation page
+            navigateTo(&apos;submission_confirmation&apos;);
+        }, 1000);
+    });
+    
+    // Initialize form validation on page load
+    document.addEventListener(&apos;DOMContentLoaded&apos;, function() {
+        validateForm();
+    });
+    
+    // Tooltip functionality for disabled submit button
+    submitBtn.addEventListener(&apos;mouseenter&apos;, function() {
+        if (submitBtn.disabled && !formValid) {
+            // Create tooltip for disabled button
+            const tooltip = document.createElement(&apos;div&apos;);
+            tooltip.className = &apos;tooltip-content absolute bg-base-300 text-base-content text-sm p-2 rounded shadow-lg z-50&apos;;
+            tooltip.textContent = &apos;Please fill in all required fields&apos;;
+            tooltip.style.bottom = &apos;100%&apos;;
+            tooltip.style.left = &apos;50%&apos;;
+            tooltip.style.transform = &apos;translateX(-50%)&apos;;
+            tooltip.style.marginBottom = &apos;8px&apos;;
+            tooltip.id = &apos;submitTooltip&apos;;
+            
+            submitBtn.style.position = &apos;relative&apos;;
+            submitBtn.appendChild(tooltip);
+        }
+    });
+    
+    submitBtn.addEventListener(&apos;mouseleave&apos;, function() {
+        const tooltip = document.getElementById(&apos;submitTooltip&apos;);
+        if (tooltip) {
+            tooltip.remove();
+        }
+    });
+})();
+</script>
+
+<script>
+      Holder.run({
+        domain: "placehold.co"
+      })
+    </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            
